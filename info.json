@@ -1,0 +1,75 @@
+{
+
+    "name" : "Editor-DEV",
+
+    "version" : "1.0",
+    "stage"   : "beta",
+    "api"     : "a100d2",
+
+    "language" : {
+
+        "default" : "en-en",
+        "list"    : [ "en-en" ]
+
+    },
+
+    "device" : {
+
+        "desktop" : {
+
+            "primary" : "main",
+            "service" : [],
+            "common" : {
+
+                "css"    : [],
+                "script" : [],
+                "start"  : []
+
+            },
+
+            "view" : {
+
+                "main" : {
+
+                    "template" : "main.html",
+
+                    "maxizable" : true,
+                    "resizable" : true,
+
+                    "width"  : {
+
+                        "default" : 864,
+                        "min"     : 864,
+                        "max"     : 0
+
+                    },
+
+                    "height" : {
+
+                        "default" : 536,
+                        "min"     : 536,
+                        "max"     : 0
+
+                    },
+
+                    "css"    : [
+                        "flaticon.css",
+                        "style.css"
+                    ],
+                    "script" : [
+                        "script.js"
+                    ],
+                    "start"  : [
+                        
+                    ]
+
+                }
+            }
+        }
+
+    },
+    "permission" : {
+        "fs" : { "create" : true, "modify" : true, "read" : true}
+    }
+
+}
