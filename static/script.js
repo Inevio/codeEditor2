@@ -1,3 +1,79 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(1);
+
+console.log('Hello World');
+
 // CodeMirror
 // var myCodeMirror = CodeMirror.fromTextArea($('#myTextArea')[0], {
 //   lineNumbers: true,
@@ -7,70 +83,12 @@
 // });
 
 // Sidebar
-var folder = ['']
 
-// Guardamos el objeto que representa la venta en editor_win
-var editor_win = $(this);
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
-// Fijate que cuando abres la app este archivo empieza a ejecutarse
-// y por eso en la consola del navegador sale este console
-console.log('Hello World')
+// removed by extract-text-webpack-plugin
 
-// Pido el FSNode que representa el directorio raiz para poder pedirle todos sus archivos y carpetas
-api.fs( 'root', ( err, fsnode ) => {
-  // Compruebo si hay error para no seguir
-  if( err ) return console.log( 'Error al pedir el FSNode de la carpeta raiz:\n', err ) // \n es un salto de linea (como un intro)
-
-  // DEBUG
-  console.log( 'El resultado de pedir el FSNode de la carpeta raiz son:\n', fsnode )
-  // Lo pongo con comas porque una cosa es un string y otra un objeto
-  //y si uso el + el objeto me lo pinta normalmente ocmo [Object object] y no me muestra informacion sobre el
-
-
-  // Pedimos al FSNode que representa el directorio raiz de Files todos sus archivos y carpetas
-  fsnode.list( ( err, fsnodeList ) => {
-    // Comprobamos si hay error
-    if( err ) return console.log( 'Error al pedir los archivos y carpetas al directorio raiz de Files:\n', err )
-
-
-    // Todo funciono correctamente y ahora en fsnodeList tengo un array de fsNodes a los que le puedo volver a hacer list para listar (SI SON CARPETAS) etc etc
-    console.log('El resultado de pedir los archivos y carpetas del directorio raiz son:\n', fsnodeList )
-  })
-
-})
-
-// Metodos utiles
-let isFile = (type) => { type === 3 }
-let isDirectory = (type) => { type !== 3 }
-
-
-let obtenerTodosLosArchivos = ( (idRutaOrigen, callback ) => {
-  api.fs( idRutaOrigen, ( err, fsnode ) => {
-    if( err ) return callback( err )
-    // ¿Por que ahora es callback y no console.log? Porque estamos en una funcion que el resultado se devuelve por callback
-
-    // Si es una carpeta hacemos recursion
-    if( isDirectory( fsnode.type ) ){
-      fsnode.list( ( err, fsnodeList ) => {
-        if( err ) return callback( err )
-        fsnodeList.forEach( (elem) => {
-          recorrerTodosLosArchivos( elem.id, ( err, res ) => {
-            if( err ) return callback( err )
-            callback( null, err )
-          }) // Esta version no funciona pero ilusta la idea de la recursion
-        })
-      })
-    }else{
-      // Es un archivo
-      callback( null, fsnode )
-    }
-
-  })
-})
-/*
-console.log('Vamos a obtener todos los archivos')
-obtenerTodosLosArchivos( 'root', ( err, res ) => {
-  if( err ) return console.log( 'Error:\n', err ) // Aqui es donde ponemos el console
-  console.log( 'Res:\n', res )
-})
-*/
+/***/ })
+/******/ ]);
