@@ -29,9 +29,8 @@
 .icon-html:before { content: "\F102"; }
 .icon-black:before { content: "\F103"; }
 .icon-white:before { content: "\F104"; }
-.icon-menu:before { content: "\F105"; }/*@import url('./codemirror.css');*/
-/*@import url('./monokai.css');*/
-/*@import url('./codemirror/addon/dialog/dialog.css')*/
+.icon-menu:before { content: "\F105"; }/*@import url('./codemirror/lib/codemirror.css');*/
+/*@import url('./codemirror/theme/monokai.css');*/
 
 .wz-view {
   background: transparent;

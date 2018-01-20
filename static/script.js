@@ -72,18 +72,6 @@
 
 __webpack_require__(1);
 
-console.log('Hello World');
-
-// CodeMirror
-// var myCodeMirror = CodeMirror.fromTextArea($('#myTextArea')[0], {
-//   lineNumbers: true,
-//   mode: "javascript",
-//   theme: "monokai",
-//   keyMap: "sublime"
-// });
-
-// Sidebar
-
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {

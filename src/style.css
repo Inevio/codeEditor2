@@ -1,7 +1,6 @@
 @import url('./flaticon.css');
-/*@import url('./codemirror.css');*/
-/*@import url('./monokai.css');*/
-/*@import url('./codemirror/addon/dialog/dialog.css')*/
+/*@import url('./codemirror/lib/codemirror.css');*/
+/*@import url('./codemirror/theme/monokai.css');*/
 
 .wz-view {
   background: transparent;
