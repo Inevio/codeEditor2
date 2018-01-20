@@ -1,13 +1,5 @@
-  <link rel="stylesheet" href="static/style.js">
+  <link rel="stylesheet" href="static/style.css">
   <section class="ui-header wz-dragger">
-    <nav class="navigation">
-      <ul>
-        <li>New File</li>
-        <li>Open File</li>
-        <li>Open Folder</li>
-      </ul>
-    </nav>
-
     <section class="ui-header-buttons">
       <figure class="ui-minimize"><i></i></figure>
       <figure class="ui-maximize"><i></i></figure>
@@ -15,9 +7,24 @@
     </section>
   </section>
 
+  <nav class="navigation">
+    <ul>
+      <li>File</li>
+      <li>Edit</li>
+      <li>Selection</li>
+      <li>Find</li>
+      <li>View</li>
+      <li>Goto</li>
+      <li>Tools</li>
+      <li>Project</li>
+      <li>Preferences</li>
+      <li>Help</li>
+    </ul>
+  </nav>
+
   <section class="container">
       <div class="sidebar">
-        <ul>
+        <ul id="lista">
           <li><i class="icon-white"></i> Project</li>
           <ul>
             <li><i class="icon-white"></i> static</li>
@@ -33,12 +40,12 @@
 
       <div class="code">
         <div class="tabs-container">
-          <div class="tabs">
-            <div class="tab"><span>untitled</span></div>
-            <div class="tab on"><span>main.html</span></div>
-            <div class="tab"><span>style.css</span></div>
-            <div class="tab"><span>script.js</span></div>
-          </div>
+          <ul class="tabs">
+            <li class="tab"><span>untitled</span></li>
+            <li class="tab on"><span>main.html</span></li>
+            <li class="tab"><span>style.css</span></li>
+            <li class="tab"><span>script.js</span></li>
+          </ul>
           <div class="tabs-menu">
             <div class="menu">
               <i class="icon-menu"></i>
@@ -47,7 +54,7 @@
         </div>
 
         <div class="text">
-          <textarea id="myTextArea" class="content"></textarea>
+          <textarea id="myTextArea"></textarea>
         </div>
       </div>
   </section>

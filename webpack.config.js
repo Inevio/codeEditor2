@@ -1,5 +1,6 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -17,7 +18,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015', 'es2016']
+            presets: ['es2015']
           }
         }
       },
@@ -41,6 +42,7 @@ module.exports = {
   },
   plugins: [
     // Here will be the imported plugins
-    new ExtractTextPlugin(path.join('style.css'))
+    new ExtractTextPlugin(path.join('style.css')),
+    new UglifyJsPlugin()
   ]
 }
