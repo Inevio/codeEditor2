@@ -2,7 +2,7 @@ import './style.css'
 // import './cm/lib/codemirror.js'
 // import './cm/mode/javascript/javascript.js'
 
-// const window = $(this).parents().slice(-1)[0].parentNode.defaultView;
+// const window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
 // const document = window.document;
 
 // console.log(`Hello World: ${document}`)
@@ -14,7 +14,7 @@ import './style.css'
 //   // keyMap: "sublime"
 // });
 
-// Sidebar
-
-// New Tab
-
+// Barra de navegacion: File, desplegar sub menu.
+$('#file').click(function () {
+  $('#fileItems').toggleClass('hide')
+})

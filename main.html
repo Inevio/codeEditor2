@@ -8,17 +8,24 @@
   </section>
 
   <nav class="navigation">
-    <ul>
-      <li>File</li>
-      <li>Edit</li>
-      <li>Selection</li>
-      <li>Find</li>
-      <li>View</li>
-      <li>Goto</li>
-      <li>Tools</li>
-      <li>Project</li>
-      <li>Preferences</li>
-      <li>Help</li>
+    <ul class="nav">
+      <li class="i file" id="file">
+        File
+        <ul class="barFile hide" id="fileItems">
+          <li class="itemFile">New File</li>
+          <li class="itemFile">Open File</li>
+          <li class="itemFile">Open Folder</li>
+        </ul>
+      </li>
+      <li class="i">Edit</li>
+      <li class="i">Selection</li>
+      <li class="i">Find</li>
+      <li class="i">View</li>
+      <li class="i">Goto</li>
+      <li class="i">Tools</li>
+      <li class="i">Project</li>
+      <li class="i">Preferences</li>
+      <li class="i">Help</li>
     </ul>
   </nav>
 
@@ -41,10 +48,7 @@
       <div class="code">
         <div class="tabs-container">
           <ul class="tabs">
-            <li class="tab"><span>untitled</span></li>
-            <li class="tab on"><span>main.html</span></li>
-            <li class="tab"><span>style.css</span></li>
-            <li class="tab"><span>script.js</span></li>
+            <li class="tab on"><span>untitled</span></li>
           </ul>
           <div class="tabs-menu">
             <div class="menu">
@@ -54,8 +58,9 @@
         </div>
 
         <div class="text">
-          <textarea id="myTextArea"></textarea>
+          <textarea id="myTextArea1"></textarea>
         </div>
       </div>
   </section>
+  <script src="https://cdn.horbito.com/script/jquery.min.js"></script>
   <script src="static/script.js"></script>
