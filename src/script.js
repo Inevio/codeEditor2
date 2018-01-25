@@ -68,32 +68,16 @@ const barOpts = [
     "id": "menu-view"
   },
   {
+    "name": "Selection",
+    "id": "menu-find"
+  },
+  {
     "name": "Find",
     "id": "menu-find"
   },
   {
-    "name": "View",
+    "name": "Packages",
     "id": "menu-view"
-  },
-  {
-    "name": "Goto",
-    "id": "menu-goto"
-  },
-  {
-    "name": "Tools",
-    "id": "menu-tools"
-  },
-  {
-    "name": "Project",
-    "id": "menu-project"
-  },
-  {
-    "name": "Preferences",
-    "id": "menu-preferences"
-  },
-  {
-    "name": "Help",
-    "id": "menu-help"
   }
 ]
 
