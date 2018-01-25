@@ -18,7 +18,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015']
+            presets: ['es2015', 'es2016']
           }
         }
       },
@@ -26,7 +26,10 @@ module.exports = {
         test: /\.css$/, // File Type
         // use: ['style-loader', 'css-loader'] // Loader(s)
         use: ExtractTextPlugin.extract({ // Loader + Extractor Plugin
-          use: 'css-loader'
+          loader: 'css-loader',
+          options: {
+            minimize: true
+          }
         })
       },
       {
