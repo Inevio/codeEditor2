@@ -148,10 +148,10 @@ function clickingItems(subClass, item) {
   hidingItems(barOpts)
   // Al cliquear algun item, mostrar su respectivo sub-menu
   $(`.${item}`).click(() => {
-    // Ocultar todos los sub-menus cuando se le da click a otro item (y luego mostrar el sub-menu respectivo)
-    hidingItems(barOpts)
     // Si el elemento esta oculto
     if ($(`.${subClass}`).css('display') === 'none') {
+      // Ocultar todos los sub-menus cuando se le da click a otro item (y luego mostrar el sub-menu respectivo)
+      hidingItems(barOpts)
       // Mostrarlo
       $(`.${subClass}`).show()
     } else {
