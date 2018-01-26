@@ -5,7 +5,7 @@
   "main": "script.js",
   "scripts": {
     "lint": "standard",
-    "build": "webpack"
+    "build": "webpack --watch"
   },
   "author": "Joaquin Araujo <joaquinaraujojs@gmail.com> (https://twitter.com/JoaquinAraujoJS)",
   "devDependencies": {

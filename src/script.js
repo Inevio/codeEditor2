@@ -7,8 +7,6 @@ import './style.css'
 // const window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
 // const document = window.document;
 
-// console.log(`Hello World: ${document}`)
-
 // const editor = CodeMirror.fromTextArea(document.getElementById('myTextArea'), {
 //   // lineNumbers: true,
 //   // mode: "javascript",
@@ -16,71 +14,7 @@ import './style.css'
 //   // keyMap: "sublime"
 // });
 
-// -- Barra de navegacion:
-// Database de opciones
-/* JSON
- * name: Nombre del item
- * id: Clase unica (ID) del item
- * subClass: Clase unica (ID) del submenu de items
- * sub: Array de Objetos que contienen (o no) las mismas propiedades que aqui se describen
- */
-const barOpts = [
-  {
-    "name": "File",
-    "id": "menu-file",
-    "subClass": "sub-menu-file",
-    "sub": [
-      {
-        "name": "New File",
-        "id": "menu-file-new-file"
-      },
-      {
-        "name": "Open File",
-        "id": "menu-file-open-file"
-      },
-      {
-        "name": "Open Folder",
-        "id": "menu-file-open-folder"
-      }
-    ]
-  },
-  {
-    "name": "Edit",
-    "id": "menu-edit",
-    "subClass": "sub-menu-edit",
-    "sub": [
-      {
-        "name": "Copy",
-        "id": "menu-edit-copy"
-      },
-      {
-        "name": "Cut",
-        "id": "menu-edit-cut"
-      },
-      {
-        "name": "Paste",
-        "id": "menu-edit-paste"
-      }
-    ]
-  },
-  {
-    "name": "View",
-    "id": "menu-view"
-  },
-  {
-    "name": "Selection",
-    "id": "menu-find"
-  },
-  {
-    "name": "Find",
-    "id": "menu-find"
-  },
-  {
-    "name": "Packages",
-    "id": "menu-view"
-  }
-]
-
+// -- Funciones utiles:
 // Crear lista desordenada
 /* parentID: Clase del elemento padre
  * elementId: Clase que se le aplicara al elemento que se adjunta
@@ -99,8 +33,73 @@ function itemLI (parentID, objectId, elementId, el) {
   $(`.${parentID}`).append(`<li class="${objectId} ${elementId}">${el}</li>`)
 }
 
+// -- Barra de navegacion:
+// Database de opciones
+/* JSON
+ * name: Nombre del item
+ * id: Clase unica (ID) del item
+ * subClass: Clase unica (ID) del submenu de items
+ * sub: Array de Objetos que contienen (o no) las mismas propiedades que aqui se describen
+ */
+const barOpts = [
+  {
+    "id": "menu-file",
+    "name": "File",
+    "subClass": "sub-menu-file",
+    "sub": [
+      {
+        "id": "menu-file-new-file",
+        "name": "New File"
+      },
+      {
+        "id": "menu-file-open-file",
+        "name": "Open File"
+      },
+      {
+        "id": "menu-file-open-folder",
+        "name": "Open Folder"
+      }
+    ]
+  },
+  {
+    "id": "menu-edit",
+    "name": "Edit",
+    "subClass": "sub-menu-edit",
+    "sub": [
+      {
+        "id": "menu-edit-copy",
+        "name": "Copy"
+      },
+      {
+        "id": "menu-edit-cut",
+        "name": "Cut"
+      },
+      {
+        "id": "menu-edit-paste",
+        "name": "Paste"
+      }
+    ]
+  },
+  {
+    "id": "menu-view",
+    "name": "View"
+  },
+  {
+    "id": "menu-find",
+    "name": "Selection"
+  },
+  {
+    "id": "menu-find",
+    "name": "Find"
+  },
+  {
+    "id": "menu-view",
+    "name": "Packages"
+  }
+]
+
 // Builder
-function recursive (opts) {
+function renderMenuSync (opts) {
   // [UL] Crear lista desordenada
   listUL('navigation', 'nav')
 
@@ -123,9 +122,9 @@ function recursive (opts) {
   })
 }
 
-recursive(barOpts)
+renderMenuSync(barOpts)
 
-// -- Eventos en la barra de navegacion
+// Eventos en la barra de navegacion
 // Clickeando Items
 function clickingItems(subClass, item) {
   // Ocultar todos los sub-menus
@@ -168,5 +167,3 @@ function clickingOutside(area) {
 
 clickingOutside('container')
 clickingOutside('ui-header')
-
-// 

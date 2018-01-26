@@ -1,5 +1,14 @@
   <link rel="stylesheet" href="static/style.css">
   <section class="ui-header wz-dragger">
+    <section class="ui-header-brand wz-dragger">
+      <div class="title">
+        <figure class="wz-dragger">
+          <i class="wz-dragger">Logo</i>
+        </figure>
+        <span class="app-title wz-dragger">Code editor</span>
+      </div>
+    </section>
+
     <section class="ui-header-buttons">
       <figure class="ui-minimize"><i></i></figure>
       <figure class="ui-maximize"><i></i></figure>
@@ -12,25 +21,28 @@
   </nav>
 
   <section class="container">
-      <div class="sidebar">
-        <ul id="lista">
-          <li><i class="icon-white"></i> Project</li>
-          <ul>
-            <li><i class="icon-white"></i> static</li>
+      <div class="sidebar" style="display: none">
+        <!-- <ul id="lista">
+          <li><i class="icon-white"></i>
+            Project
             <ul>
-              <li class="selected"><i class="icon-js"></i> script.js</li>
-              <li><i class="icon-css"></i> style.css</li>
+              <li><i class="icon-white"></i>
+                static
+                <ul>
+                  <li class="selected"><i class="icon-js"></i> script.js</li>
+                  <li><i class="icon-css"></i> style.css</li>
+                </ul>
+              </li>
+              <li><i class="icon-black"></i> assets</li>
+              <li><i class="icon-html"></i> main.html</li>
             </ul>
-            <li><i class="icon-black"></i> assets</li>
-            <li><i class="icon-html"></i> main.html</li>
-          </ul>
-        </ul>
+          </li>
+        </ul> -->
       </div>
 
       <div class="code">
         <div class="tabs-container">
           <ul class="tabs">
-            <li class="tab on"><span>untitled</span></li>
           </ul>
           <div class="tabs-menu">
             <div class="menu">
@@ -40,7 +52,7 @@
         </div>
 
         <div class="text">
-          <textarea id="myTextArea"></textarea>
+          <!-- <textarea id="myTextArea"></textarea> -->
         </div>
       </div>
   </section>

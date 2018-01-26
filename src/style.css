@@ -6,6 +6,22 @@
   background: transparent;
 }
 
+.app-title {
+  color: #cbd4d9;
+}
+  section.ui-header {
+    padding: 5px 0 0 0;
+  }
+    .wz-app-238-view-main .ui-header-brand {
+      padding: 14px 0 2px 20px;
+    }
+
+div.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* Barra de la nube Horbito */
 .ui-window-content {
   width: 100%;
@@ -14,10 +30,10 @@
 }
 
 .ui-header {
-  height: 50px;
-  background-color: #33393b;
+  height: 40px;
+  background-color: #272a31;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 0;
 }
@@ -25,24 +41,25 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 20px;
+    height: 30px;
     position: relative;
-    background-color: #e8e8e7;
+    background-color: #272a31;
     z-index: 3;
     list-style: none;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
   }
     nav.navigation ul.nav li.item {
       cursor: pointer;
-      color: #7c7c7c;
+      color: #979da4;
       /*height: 16px;*/
+      padding: 0 8px;
     }
 
     nav.navigation ul.nav li.item:hover {
-      color: #0074D9;
-      border-bottom: 1px solid #0074D9;
+      color: #49eecc;
+      /*border-bottom: 1px solid #49eecc;*/
     }
     
     nav.navigation ul.nav li.menu-file ul.sub-menu-file,
@@ -51,15 +68,14 @@
       padding: 0;
       position: absolute;
       z-index: 2;
-      top: 20px;
-      background-color: #f9f9f9;
-      /*display: none;*/
+      top: 30px;
+      background-color: #272a31;
       user-select: none;
     }
 
       nav.navigation ul.nav li.item ul.sub-menu-file li.item:hover,
       nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover {
-        background-color: #f2f2f2;
+        background-color: #2e3035;
         border-bottom: 0;
       }
       nav.navigation ul.nav li.item ul.sub-menu-file li.item,
@@ -119,7 +135,7 @@ i {
   i.icon-white,
   i.icon-black,
   i.icon-menu {
-    color: #0074D9;
+    color: #979da4;
     font-size: 18px;
   }
     i.icon-menu {
@@ -133,20 +149,20 @@ section.container {
   width: 100%;
   height: ~'calc(100% - 70px)';
   display: flex;
-  background-color: #0c1011;
+  background-color: #34383e;
 }
   
   /* Barra lateral que lista los directorios y archivos */
   section.container div.sidebar {
     color: white;
-    width: 18%;
+    width: 25%;
     margin-top: 7px;
     overflow: auto;
   }
 
   /* Area de trabajo: Codigo + tabs */
   section.container div.code {
-    width: 82%;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -154,20 +170,20 @@ section.container {
       width: 15px;
   }
   ::-webkit-scrollbar-track {
-      background-color: #0c1011;
+      background-color: #34383e;
   }
   ::-webkit-scrollbar-thumb {
       background-color: #273542;
   }
   ::-webkit-scrollbar-corner {
-      background-color: #0c1011;
+      background-color: #34383e;
   }
     
     /* Contenedor de tabs y menu desplegable */
     section.container div.code div.tabs-container {
       display: flex;
       justify-content: space-between;
-      box-shadow: 0 1px 1px black;
+      /*box-shadow: 0 1px 1px black;*/
       z-index: 1;
       width: 100%;
       height: 50px;
@@ -182,13 +198,14 @@ section.container {
 
       /* Tab: individual */
       section.container div.code div.tabs-container ul.tabs li.tab {
-        width: 100px;
+        width: 180px;
+        color: #49eecc;
+        font-weight: bold;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        background-color: #1f2326;
-        border-left: 2px solid #0c1011;
+        background-color: #404551;
       }
 
       section.container div.code div.tabs-container ul.tabs li.tab:hover {
@@ -196,8 +213,8 @@ section.container {
       }
 
       section.container div.code div.tabs-container ul.tabs li.tab.on {
-        border-bottom: 4px solid #5496ca;
-        background-color: #101011;
+        border-top: 2px solid #49eecc;
+        background-color: #404551;
       }
 
     section.container div.code div.tabs-menu div.menu {
