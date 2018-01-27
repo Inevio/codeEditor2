@@ -167,3 +167,122 @@ function clickingOutside(area) {
 
 clickingOutside('container')
 clickingOutside('ui-header')
+
+// -- Code:
+// Contador de pestanas GLOBAL
+let tabs = 0
+
+// Arreglo de archivos abiertos
+let filesOpened = []
+
+// Creador de archivos
+class FileCreator {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+}
+
+// Nuevo Archivo
+function newFile (id, name) {
+  // Agregar un objeto (que representa a un archivo) al arreglo "Archivos Abiertos"
+  filesOpened.push(new FileCreator(id, name))
+
+  // Adjuntar tab en el editor (en el HTML)
+  itemLI('tabs', 'tab', `tab-${id}`, name)
+
+  // Agregar ON a la tab que se crea segun su ID
+  addOnTab(id)
+
+  // Ocultar todos los textareas NO RELACIONADOS a la nueva tab
+  hideTextareas(id)
+
+  // Adjuntar textarea en el editor (en el HTML)
+  $('.text').append(`<textarea class="myTextArea-${id}"></textarea>`)
+}
+
+// Eliminar focus de todas las tabs y agregarlo a la clickeada o creada
+function addOnTab (idTab) {
+  // Eliminar de todos los tabs la clase ON (el focus)
+  filesOpened.forEach(element => {
+    $(`.tab-${element.id}`).removeClass('on')
+  })
+
+  // Agregar el focus a la tab que se crea o que se clickea
+  $(`.tab-${idTab}`).addClass('on')
+}
+
+// Ocultar todos los textareas y mostrar el relacionado a cada tab
+function hideTextareas (idTextArea) {
+  // Ocultar todos los textareas
+  filesOpened.forEach(element => {
+    $(`.myTextArea-${element.id}`).hide()
+  })
+
+  $(`.myTextArea-${idTextArea}`).show()
+}
+
+// Activar ON (focus) al hacer click en un tab
+function enableClicksOnTabs() {
+  // Obtener elemento (tab) clickeado
+  $('.tab').click(function () {
+    // Obtener las clases del tab
+    const className = $(this).attr('class')
+
+    // Verificar que el elemento tenga la clase ON (no este seleccionado)
+    // En caso de tener el focus, salir de la ejecucion
+    if (className.search('on') !== -1) return
+
+    // Confirmar que tenga el elemento una clase (y evitar errores)
+    if (className) {
+      // Determinar el ID del elemento clickeado
+      const id = className.split('tab tab-')[1]
+
+      // Agregar focus al tab :)
+      addOnTab(id)
+
+      // Mostrar textarea relacionada a la tab
+      hideTextareas(id)
+    }
+  })
+}
+
+// Eventos de los tabs y textareas
+// Nuevo Archivo
+$('.menu-file-new-file').click(() => {
+  // Builder
+  newFile(tabs++, 'untitled')
+
+  // Habilitar clicks en las pestanas
+  // Agregar focus a los tabs seleccionados
+  enableClicksOnTabs()
+})
+
+// -- Sidebar
+
+
+
+
+
+
+
+
+
+// Emulacion de fsnode de Horbito
+const fsnodeOpts = {
+  "id": 1,
+  "type": 0,
+  "name": 2410335
+}
+
+// Builder
+function renderSidebarSync (fsnode) {
+  // [UL] Crear lista desordenada
+  listUL('sidebar', 'base')
+
+  for (let key in fsnode) {
+    console.log(key)
+  }
+}
+
+renderSidebarSync(fsnodeOpts)

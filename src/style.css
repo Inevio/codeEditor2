@@ -137,6 +137,7 @@ i {
   i.icon-menu {
     color: #979da4;
     font-size: 18px;
+    background-color: #34383e;
   }
     i.icon-menu {
       font-size: 28px;
@@ -205,11 +206,11 @@ section.container {
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        background-color: #404551;
+        background-color: #34383e;
       }
 
       section.container div.code div.tabs-container ul.tabs li.tab:hover {
-        background-color: #101011;
+        background-color: #303238;
       }
 
       section.container div.code div.tabs-container ul.tabs li.tab.on {
