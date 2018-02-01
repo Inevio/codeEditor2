@@ -1,18 +1,21 @@
 'use strict'
 
+// var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
+// var document = window.document;
+
 import './style.css'
-// import './cm/lib/codemirror.js'
-// import './cm/mode/javascript/javascript.js'
-
-// const window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
-// const document = window.document;
-
-// const editor = CodeMirror.fromTextArea(document.getElementById('myTextArea'), {
-//   // lineNumbers: true,
-//   // mode: "javascript",
-//   // theme: "monokai",
-//   // keyMap: "sublime"
-// });
+// // CodeMirror
+// import CodeMirror from './cm/lib/codemirror.js'
+// // CodeMirror: Mode
+// import './cm/mode/htmlmixed/htmlmixed.js'
+// // CodeMirror: KeyMap
+// import './cm/keymap/sublime.js'
+// // CodeMirror: Addon
+// import './cm/addon/search/search.js'
+// import './cm/addon/search/searchcursor.js'
+// import './cm/addon/search/jump-to-line.js'
+// // CodeMirror: Dialog
+// import './cm/addon/dialog/dialog.js'
 
 // -- Funciones utiles:
 // Crear lista desordenada
@@ -49,14 +52,17 @@ const barOpts = [
     "sub": [
       {
         "id": "menu-file-new-file",
+        "idEvent": "...",
         "name": "New File"
       },
       {
         "id": "menu-file-open-file",
+        "idEvent": "...",
         "name": "Open File"
       },
       {
         "id": "menu-file-open-folder",
+        "idEvent": "openFolderIdClick",
         "name": "Open Folder"
       }
     ]
@@ -116,7 +122,12 @@ function renderMenuSync (opts) {
       // New File, Open File, Open Folder...
       element.sub.forEach(subElement => {
         // [LI] Crear items dentro de UL
-        itemLI(element.subClass, 'item', subElement.id, subElement.name)
+        if (subElement.idEvent) {
+          // subElement.idEvent: Id del evento a ejecutar dentro de Horbito
+          itemLI(element.subClass, `item ${subElement.idEvent}`, subElement.id, subElement.name)
+        } else {
+          itemLI(element.subClass, 'item', subElement.id, subElement.name)
+        }
       })
     }
   })
@@ -184,7 +195,7 @@ class FileCreator {
 }
 
 // Nuevo Archivo
-function newFile (id, name) {
+function newFile (id, name, config) {
   // Agregar un objeto (que representa a un archivo) al arreglo "Archivos Abiertos"
   filesOpened.push(new FileCreator(id, name))
 
@@ -197,8 +208,11 @@ function newFile (id, name) {
   // Ocultar todos los textareas NO RELACIONADOS a la nueva tab
   hideTextareas(id)
 
-  // Adjuntar textarea en el editor (en el HTML)
-  $('.text').append(`<textarea class="myTextArea-${id}"></textarea>`)
+  // Adjuntar textarea-div en el editor (en el HTML)
+  $('.text').append(`<div class="myTextArea-${id}"></div>`)
+  // CodeMirror
+  // config: Es un objeto de configuraciones para CodeMirror
+  let editor = CodeMirror($(`.myTextArea-${id}`)[0], config);
 }
 
 // Eliminar focus de todas las tabs y agregarlo a la clickeada o creada
@@ -251,38 +265,94 @@ function enableClicksOnTabs() {
 // Nuevo Archivo
 $('.menu-file-new-file').click(() => {
   // Builder
-  newFile(tabs++, 'untitled')
+  newFile(tabs++, 'untitled', {
+    lineNumbers: true,
+    mode: "htmlmixed",
+    theme: "monokai",
+    keyMap: "sublime"
+  })
 
   // Habilitar clicks en las pestanas
   // Agregar focus a los tabs seleccionados
   enableClicksOnTabs()
 })
 
+// -- -- Open File: Integracion con Horbito
+
+
+
+
+
+
+
+
+
+
 // -- Sidebar
+// Abre una carpeta y lista sus archivos y directorios
+function openFolderSidebar (folder, cb) {
+  // API FileSystem de Horbito
+  api.fs(folder, (err, fsnode) => {
+    if (err) return console.log(err) // En caso de error
 
+    // console.log(fsnode) // Carpeta Root
 
+    // Listar carpeta y archivos: $ ls
+    fsnode.list(function (err, fsnodeList) {
+      if (err) return console.log(err) // En caso de error
 
+      // Array con los archivos y carpeta del directorio listado
+      // En caso de existir directorios dentro, se pueden listar tambien
+      // type: 3 ---> Es un Archivo
+      // console.log(fsnodeList)
 
-
-
-
-
-
-// Emulacion de fsnode de Horbito
-const fsnodeOpts = {
-  "id": 1,
-  "type": 0,
-  "name": 2410335
+      cb(fsnodeList)
+    })
+  })
 }
 
-// Builder
-function renderSidebarSync (fsnode) {
+// Renderizar Sidebar
+function renderSidebarSync (element) {
   // [UL] Crear lista desordenada
   listUL('sidebar', 'base')
 
-  for (let key in fsnode) {
-    console.log(key)
-  }
+  element.forEach(e => {
+    // [LI] Crear items dentro de UL
+    if (e.type !== 3) {
+      itemLI('base', 'item', '', `<i class="icon-black"></i> <span>${e.name}</span>`)
+    } else {
+      itemLI('base', 'item', '', `<i class=""></i> <span>${e.name}</span>`)
+    }
+  })
+
+  // Mostrar Sidebar
+  $('.sidebar').show()
 }
 
-renderSidebarSync(fsnodeOpts)
+// Eventos de los tabs y textareas
+// Open Folder
+$(".openFolderIdClick").click(() => {
+  // En caso de existir alguna carpeta abierta
+  if ($('.base')) $('.base').remove()
+
+  // Objeto de configuracion para el explorador
+  var options = {
+    title   : 'Select folder to open',
+    mode    : 'directory',
+    multiple: false
+  }
+
+  // Abrir ventana para seleccionar
+  api.fs.selectSource(options, (err, fsNodeId) => {
+    if (err) return console.log(err) // En caso de error
+
+    // Abrir carpeta en el sidebar
+    openFolderSidebar(fsNodeId[0], element => {
+      renderSidebarSync(element)
+    })
+  })
+})
+
+
+// var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
+// var document = window.document;
