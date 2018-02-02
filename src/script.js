@@ -4,18 +4,18 @@
 // var document = window.document;
 
 import './style.css'
-// // CodeMirror
-// import CodeMirror from './cm/lib/codemirror.js'
-// // CodeMirror: Mode
-// import './cm/mode/htmlmixed/htmlmixed.js'
-// // CodeMirror: KeyMap
-// import './cm/keymap/sublime.js'
-// // CodeMirror: Addon
-// import './cm/addon/search/search.js'
-// import './cm/addon/search/searchcursor.js'
-// import './cm/addon/search/jump-to-line.js'
-// // CodeMirror: Dialog
-// import './cm/addon/dialog/dialog.js'
+// CodeMirror
+import CodeMirror from './cm/lib/codemirror.js'
+// CodeMirror: Mode
+import './cm/mode/htmlmixed/htmlmixed.js'
+// CodeMirror: KeyMap
+import './cm/keymap/sublime.js'
+// CodeMirror: Addon
+import './cm/addon/search/search.js'
+import './cm/addon/search/searchcursor.js'
+import './cm/addon/search/jump-to-line.js'
+// CodeMirror: Dialog
+import './cm/addon/dialog/dialog.js'
 
 // -- Funciones utiles:
 // Crear lista desordenada
@@ -52,12 +52,11 @@ const barOpts = [
     "sub": [
       {
         "id": "menu-file-new-file",
-        "idEvent": "...",
         "name": "New File"
       },
       {
         "id": "menu-file-open-file",
-        "idEvent": "...",
+        "idEvent": "openFileIdClick",
         "name": "Open File"
       },
       {
@@ -200,7 +199,7 @@ function newFile (id, name, config) {
   filesOpened.push(new FileCreator(id, name))
 
   // Adjuntar tab en el editor (en el HTML)
-  itemLI('tabs', 'tab', `tab-${id}`, name)
+  itemLI('tabs', 'tab', `tab-${id}`, `${name} <i class="icon-close"><span>`)
 
   // Agregar ON a la tab que se crea segun su ID
   addOnTab(id)
@@ -261,32 +260,31 @@ function enableClicksOnTabs() {
   })
 }
 
-// Eventos de los tabs y textareas
-// Nuevo Archivo
-$('.menu-file-new-file').click(() => {
-  // Builder
-  newFile(tabs++, 'untitled', {
-    lineNumbers: true,
-    mode: "htmlmixed",
-    theme: "monokai",
-    keyMap: "sublime"
+// Cerrar tabs hacer click en close [x]
+function closeTabs () {
+  $('.icon-close').click(function () {
+
+    // Obtener las clases del tab
+    const className = $(this).parent().attr('class')
+
+    if (className) {
+      // Determinar el ID del elemento clickeado
+      let id = className.split('tab tab-')[1]
+
+      // Si la tab tiene el focus (ON) retornara ['# on']
+      // Determinar el ID del elemento clickeado tomando en cuenta la clase ['on']
+      if (className.search('on') !== -1) {
+        id = id.split(' ')
+      }
+
+      // Cerrar tab
+      $(`.tab-${id}`).hide()
+
+      // Cerrar Textarea
+      $(`.myTextArea-${id}`).hide()
+    }
   })
-
-  // Habilitar clicks en las pestanas
-  // Agregar focus a los tabs seleccionados
-  enableClicksOnTabs()
-})
-
-// -- -- Open File: Integracion con Horbito
-
-
-
-
-
-
-
-
-
+}
 
 // -- Sidebar
 // Abre una carpeta y lista sus archivos y directorios
@@ -319,18 +317,76 @@ function renderSidebarSync (element) {
   element.forEach(e => {
     // [LI] Crear items dentro de UL
     if (e.type !== 3) {
-      itemLI('base', 'item', '', `<i class="icon-black"></i> <span>${e.name}</span>`)
+      itemLI('base', 'item', '', `<i class="icon-folder"></i> <span>${e.name}</span>`)
     } else {
-      itemLI('base', 'item', '', `<i class=""></i> <span>${e.name}</span>`)
+      itemLI('base', 'item', '', `<i class="icon-file"></i> <span>${e.name}</span>`)
     }
   })
 
   // Mostrar Sidebar
   $('.sidebar').show()
+  $('.code').css('width', '80%')
 }
 
 // Eventos de los tabs y textareas
-// Open Folder
+// -- --- New File
+$('.menu-file-new-file').click(() => {
+  // Builder
+  newFile(tabs++, 'untitled', {
+    lineNumbers: true,
+    mode: "htmlmixed",
+    theme: "monokai",
+    keyMap: "sublime"
+  })
+
+  // Habilitar clicks en las pestanas
+  // Agregar focus a los tabs seleccionados
+  enableClicksOnTabs()
+
+  // Habilitar funcion para cerrar las pestanas y textareas
+  closeTabs()
+})
+
+// -- -- Open File
+$(".openFileIdClick").click(() => {
+  // Objeto de configuracion para el explorador
+  var options = {
+    title   : 'Select file to open',
+    mode    : 'file',
+    multiple: false
+  }
+
+  // Abrir ventana para seleccionar
+  api.fs.selectSource(options, (err, fsNodeId) => {
+    if (err) return console.log(err) // En caso de error
+
+    // Abrir archivo en el sidebar
+    api.fs(fsNodeId[0], (err, fsNode) => {
+      if (err) return console.log(err) // En caso de error
+
+      // Abrir archivo
+      fsNode.read(function (err, fileContent) {
+        // Crear nuevo archivo: Crear tab y textarea
+        newFile(tabs++, fsNode.name, {
+          lineNumbers: true,
+          mode: "htmlmixed",
+          theme: "monokai",
+          keyMap: "sublime",
+          value: fileContent
+        })
+
+        // Habilitar clicks en las pestanas
+        // Agregar focus a los tabs seleccionados
+        enableClicksOnTabs()
+
+        // Habilitar funcion para cerrar las pestanas y textareas
+        closeTabs()
+      })
+    })
+  })
+})
+
+// -- -- Open Folder
 $(".openFolderIdClick").click(() => {
   // En caso de existir alguna carpeta abierta
   if ($('.base')) $('.base').remove()
@@ -352,7 +408,6 @@ $(".openFolderIdClick").click(() => {
     })
   })
 })
-
 
 // var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
 // var document = window.document;

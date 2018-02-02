@@ -19,14 +19,12 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
-  font-size: 20px;
-  font-style: normal;
-  margin-left: 20px;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
 }
 
-.icon-js:before { content: "\f100"; }
-.icon-css:before { content: "\f101"; }
-.icon-html:before { content: "\f102"; }
-.icon-black:before { content: "\f103"; }
-.icon-white:before { content: "\f104"; }
-.icon-menu:before { content: "\f105"; }
+.icon-folder:before { content: "\f100"; }
+.icon-close:before { content: "\f101"; }
+.icon-file:before { content: "\f102"; }
+.icon-menu:before { content: "\f103"; }

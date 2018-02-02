@@ -125,21 +125,11 @@ i {
   font-family: Flaticon;
   font-style: normal;
 }
-  i.icon-html {
-    color: #FF5733;
-  }
-  i.icon-css {
-    color: #0093ff;
-  }
-  i.icon-js {
-    color: #fce446;
-  }
-  i.icon-white,
-  i.icon-black,
+  i.icon-folder,
+  i.icon-file,
   i.icon-menu {
     color: #49eecc;
     font-size: 18px;
-    background-color: #34383e;
   }
     i.icon-menu {
       font-size: 28px;
@@ -170,16 +160,13 @@ section.container {
     flex-direction: column;
   }
   ::-webkit-scrollbar {
-      width: 15px;
+      width: 10px;
   }
   ::-webkit-scrollbar-track {
-      background-color: #34383e;
+      background-color: #272a31;
   }
   ::-webkit-scrollbar-thumb {
-      background-color: #273542;
-  }
-  ::-webkit-scrollbar-corner {
-      background-color: #34383e;
+      background-color: #4ed8bc;
   }
     
     /* Contenedor de tabs y menu desplegable */
@@ -208,7 +195,25 @@ section.container {
         align-items: center;
         cursor: pointer;
         background-color: #34383e;
+        position: relative;
       }
+
+        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close {
+          position: absolute;
+          right: 15px;
+          top: 15px;
+          color: #979da4;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 8px;
+        }
+
+        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close:hover {
+          color: #e0e2e5;
+        }
 
       section.container div.code div.tabs-container ul.tabs li.tab:hover {
         background-color: #303238;
@@ -219,9 +224,12 @@ section.container {
         background-color: #404551;
       }
 
-    section.container div.code div.tabs-menu div.menu {
-      padding: 8px;
+    section.container div.code div.tabs-menu {
+      background-color: #34383e;
     }
+      section.container div.code div.tabs-menu div.menu {
+        padding: 8px;
+      }
 
   /* Codemirror */
   section.container div.text {
@@ -230,6 +238,5 @@ section.container {
     background-color: #3c4450;
   }
     .CodeMirror {
-      height: 100%;
       font-size: 18px;
     }
