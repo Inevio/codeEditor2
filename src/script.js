@@ -29,7 +29,7 @@ render.navigationBar(barOpts)
 
 // Nuevo Archivo
 $('.menu-file-new-file').click(() => {
-  render.newFile(tabs++, 'untitled', newFileOpts('htmlmixed'))
+  render.newFile(tabs++, 'untitled-untitled', newFileOpts('htmlmixed'))
 })
 
 // Abrir Archivo

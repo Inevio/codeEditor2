@@ -32,7 +32,7 @@ function itemLIHorbitoSidebar (parentID, elementId, objectId, icon, el) {
  * icon: Icono que se asigna al item con el fin de mejorar su diseno, en este caso se ubica en la parte derecha
  */
 function itemLIHorbitoTab (parentID, elementId, objectId, el, icon) {
-  $(`.${parentID}`).append(`<li class="${elementId}" idhorbito="${objectId}">${el}<i class="${icon}"></i></li>`)
+  $(`.${parentID}`).append(`<li class="${elementId}" idhorbito="${objectId}">${ellipsis(el, 13)}<i class="${icon}"></i></li>`)
 }
 
 // Crear items en una lista (Tab)
@@ -53,9 +53,18 @@ class FileCreator {
 // Arreglo de archivos abiertos
 let filesOpened = []
 
+// Puntos suspensivos para los nombres largos en las pestanas
+function ellipsis(text, limit) {
+  if(text.length > limit) {
+    return `${text.substring(0,limit)}...`
+  }
+  return text
+}
+
 // listUL: Crea una lista desordenada <ul><ul>
 // itemLIBar: Crear items en la Barra de Navegacion <li><li>
 // itemLIHorbito: Crear items en el contenedor de pestanas, el area de edicion y en el sidebar vinculados entre si <li><li>
 // FileCreator: Es una clase que crea objetos que representan un archivo dentro del editor
 // filesOpened: Es un array que contiene objetos que representan archivos dentro de editor
-export { listUL, itemLIBar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened }
+// ellipsis: Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
+export { listUL, itemLIBar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened, ellipsis }
