@@ -32,7 +32,7 @@ function itemLIHorbitoSidebar (parentID, elementId, objectId, icon, el) {
  * icon: Icono que se asigna al item con el fin de mejorar su diseno, en este caso se ubica en la parte derecha
  */
 function itemLIHorbitoTab (parentID, elementId, objectId, el, icon) {
-  $(`.${parentID}`).append(`<li class="${elementId}" idhorbito="${objectId}">${ellipsis(el, 13)}<i class="${icon}"></i></li>`)
+  $(`.${parentID}`).append(`<li class="${elementId}" idhorbito="${objectId}">${ellipsis(el, 12)}<i class="${icon}"></i></li>`)
 }
 
 // Crear items en una lista (Tab)

@@ -46,7 +46,7 @@ $(".openFileIdClick").click(() => {
     if (err) return console.log(err) // En caso de error
 
     // Leer archivo y renderizar contenido
-    fsRead(fsNodeId[0], tabs)
+    fsRead(fsNodeId[0], tabs++)
   })
 })
 

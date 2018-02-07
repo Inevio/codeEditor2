@@ -42,14 +42,7 @@ function fsRead (idFile, tabs) {
       if (err) return console.log(err) // En caso de error
 
       // Crear nuevo archivo: Crear tab y textarea
-      render.newFile(tabs++, fsNode.name, newFileOpts('htmlmixed', fileContent))
-
-      // Habilitar clicks en las pestanas
-      // Agregar focus a los tabs seleccionados
-      enableClicksOnTabs()
-
-      // Habilitar funcion para cerrar las pestanas y textareas
-      closeTabs()
+      render.newFile(tabs, fsNode.name, newFileOpts('htmlmixed', fileContent))
     })
   })
 }
