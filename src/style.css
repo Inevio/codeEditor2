@@ -52,7 +52,6 @@ div.title {
     /*justify-content: space-around;*/
   }
     nav.navigation ul.nav li.item {
-      cursor: pointer;
       color: #979da4;
       /*height: 16px;*/
       padding: 0 8px;
@@ -111,6 +110,11 @@ div.sidebar ul.base li.item ul.fs-node /*sub UL*/ {
     list-style: none;
     padding: 2.5px 1px 2.5px 10px;
     cursor: pointer;
+    width: 100%;
+  }
+
+  div.sidebar ul.base li.item ul.subItem li.item {
+    padding: 6px 0 0 20px; /* <----------------------------------------- */
   }
 
     div.sidebar ul.base li.selected {
@@ -119,6 +123,7 @@ div.sidebar ul.base li.item ul.fs-node /*sub UL*/ {
     }
     div.sidebar ul.base li.item span:hover {
       color: #fff;
+      cursor: pointer;
     }
 
 i {
@@ -148,9 +153,10 @@ section.container {
   /* Barra lateral que lista los directorios y archivos */
   section.container div.sidebar {
     color: white;
-    width: 25%;
+    width: 20%;
     margin-top: 7px;
-    overflow: auto;
+    overflow-x: scroll;
+    overflow-y: auto;
   }
 
   /* Area de trabajo: Codigo + tabs */
@@ -160,13 +166,18 @@ section.container {
     flex-direction: column;
   }
   ::-webkit-scrollbar {
-      width: 10px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
       background-color: #272a31;
+      border-radius: 26px;
   }
   ::-webkit-scrollbar-thumb {
       background-color: #4ed8bc;
+  }
+  ::-webkit-scrollbar-corner {
+      background: transparent;
   }
     
     /* Contenedor de tabs y menu desplegable */
@@ -201,7 +212,7 @@ section.container {
         section.container div.code div.tabs-container ul.tabs li.tab i.icon-close {
           position: absolute;
           right: 15px;
-          top: 15px;
+          top: 14px;
           color: #979da4;
           width: 18px;
           height: 18px;
@@ -232,11 +243,13 @@ section.container {
       }
 
   /* Codemirror */
-  section.container div.text {
+  section.container div.code div.text {
     height: 100%;
     width: 100%;
     background-color: #3c4450;
+    overflow: auto;
   }
     .CodeMirror {
       font-size: 18px;
+      height: 420px;
     }
