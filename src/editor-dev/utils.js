@@ -44,9 +44,11 @@ function itemLIHorbitoTextarea (parentID, objectId) {
 
 // Generador de archivos
 class FileCreator {
-  constructor(id, name) {
+  constructor(id, name, type, content) {
     this.id = id;
     this.name = name;
+    this.type = type;
+    this.content = content;
   }
 }
 

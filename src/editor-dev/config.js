@@ -20,12 +20,12 @@ const barOpts = [
       },
       {
         "id": "menu-file-open-file",
-        "idEvent": "openFileIdClick",
+        "idEvent": "open-file-event",
         "name": "Open File"
       },
       {
         "id": "menu-file-open-folder",
-        "idEvent": "openFolderIdClick",
+        "idEvent": "open-folder-event",
         "name": "Open Folder"
       }
     ]
@@ -72,6 +72,9 @@ const barOpts = [
 /* mode: highlight del lenguaje de programacion con el cual se trabajara en el area de edicion
  */
 function newFileOpts (mode, value = '') {
+  // Validador de extenciones
+  if (mode === 'text/html') mode = 'htmlmixed'
+
   return {
     lineNumbers: true,
     keyMap: "sublime",

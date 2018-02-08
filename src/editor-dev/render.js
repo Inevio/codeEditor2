@@ -4,6 +4,8 @@
 import CodeMirror from '../cm/lib/codemirror.js'
 // Utilidades
 import { listUL, itemLIBar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened } from './utils.js'
+// Opciones del menu y creacion de una nueva zona de edicion
+import { newFileOpts } from './config.js'
 // Eventos del menu
 import { clickItems } from './area/menu.js'
 // Code: Edicion
@@ -44,28 +46,62 @@ function navigationBar (barOpts) {
   // Continuar con el resto de items...
 }
 
-
 // Code: Edicion
 // Renderiza una nueva area de edicion (pestana y area de texto)
-function newFile (id, name, config) {
+function newFile (id, name, type, content) {
+  const file = new FileCreator(id, name, type, content)
+  
+  /*if (filesOpened.length >= 1) { // Verificar si el archivo ya se encuentra abierto en el editor
+    filesOpened.forEach(element => {
+      // Comparar IDs entre el "archivo que se pretende abrir" y los "archivos ya abiertos" en el editor
+      if (element.id === file.id) {
+        // Clickear la pestana del archivo dentro del editor
+        // Agregar focus al tab :)
+        addFocus(element.id)
+        // Mostrar textarea relacionada a la tab
+        hideTextareas(element.id)
+      } else { // En caso de que el archivo no se encuentre abierto en el editor
+        documentGenerator(id, name, type, content)
+      }
+    })
+  } else { // En caso de que el archivo no se encuentre abierto en el editor
+    documentGenerator(id, name, type, content)
+  }*/
+
+  // En tester se almacena el resulado de la operacion de busqueda de igualdad
+  let tester = filesOpened.find(element => { return element.id === file.id })
+  // Antes de entrar al IF, si ya exite un archivo con el mismo ID la variable tester sera el objeto (es decir, true)
+  if (tester) {
+    // Clickear la pestana del archivo dentro del editor
+    // Agregar focus al tab :)
+    addFocus(file.id)
+    // Mostrar textarea relacionada a la tab
+    hideTextareas(file.id)
+  } else { // En caso de que el archivo no se encuentre abierto en el editor
+    documentGenerator(file)
+  }
+}
+
+// Generador de areas de trabajo
+function documentGenerator (file) {
   // Agregar un objeto (que representa a un archivo) al arreglo "Archivos Abiertos"
-  filesOpened.push(new FileCreator(id, name))
+  filesOpened.push(file)
 
   // Adjuntar tab en el editor (en el HTML)
-  itemLIHorbitoTab('tabs', 'tab', id, name, 'icon-close')
+  itemLIHorbitoTab('tabs', 'tab', file.id, file.name, 'icon-close')
 
   // Agregar ON a la tab que se crea segun su ID
-  addFocus(id)
+  addFocus(file.id)
 
   // Ocultar todos los textareas NO RELACIONADOS a la nueva tab
-  hideTextareas(id)
+  hideTextareas(file.id)
 
   // Adjuntar textarea-div en el editor (en el HTML)
-  itemLIHorbitoTextarea('text', id)
+  itemLIHorbitoTextarea('text', file.id)
 
   // CodeMirror
   // config: Es un objeto de configuraciones para CodeMirror
-  let editor = CodeMirror($(`.myTextArea-${id}`)[0], config)
+  let editor = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
 
   // Habilitar clicks en las pestanas
   // Agregar focus a los tabs seleccionados

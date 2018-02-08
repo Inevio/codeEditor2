@@ -2,8 +2,6 @@
 
 // Renderizado
 import { render } from '../render.js'
-// Opciones para la creacion de una nueva zona de edicion
-import { newFileOpts } from '../config.js'
 
 // Listar carpetas con FS de Horbito
 /* folder: ID de la carpeta a listar
@@ -34,15 +32,15 @@ function fsList (idFolder, cb) {
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
  */
-function fsRead (idFile, tabs) {
+function fsRead (idFile) {
   api.fs(idFile, (err, fsNode) => {
     if (err) return console.log(err) // En caso de error
 
     fsNode.read(function (err, fileContent) {
       if (err) return console.log(err) // En caso de error
-
+      
       // Crear nuevo archivo: Crear tab y textarea
-      render.newFile(tabs, fsNode.name, newFileOpts('htmlmixed', fileContent))
+      render.newFile(fsNode.id, fsNode.name, fsNode.mime, fileContent)
     })
   })
 }

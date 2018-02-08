@@ -14,7 +14,7 @@ import './cm/addon/dialog/dialog.js'
 // Utilidades
 import { listUL, itemLIBar, itemLIHorbito } from './editor-dev/utils.js'
 // Opciones del menu y creacion de una nueva zona de edicion
-import { barOpts, newFileOpts } from './editor-dev/config.js'
+import { barOpts } from './editor-dev/config.js'
 // Renderizado
 import { render } from './editor-dev/render.js'
 // Area de trabajo
@@ -29,15 +29,15 @@ render.navigationBar(barOpts)
 
 // Nuevo Archivo
 $('.menu-file-new-file').click(() => {
-  render.newFile(tabs++, 'untitled-untitled', newFileOpts('htmlmixed'))
+  render.newFile(tabs++, 'untitled', 'text/html')
 })
 
 // Abrir Archivo
-$(".openFileIdClick").click(() => {
+$(".open-file-event").click(() => {
   // Objeto de configuracion para el explorador
   const options = {
-    title   : 'Select file to open',
-    mode    : 'file',
+    title: 'Select file to open',
+    mode: 'file',
     multiple: false
   }
 
@@ -46,16 +46,16 @@ $(".openFileIdClick").click(() => {
     if (err) return console.log(err) // En caso de error
 
     // Leer archivo y renderizar contenido
-    fsRead(fsNodeId[0], tabs++)
+    fsRead(fsNodeId[0])
   })
 })
 
 // Abrir Carpeta
-$(".openFolderIdClick").click(() => {
+$(".open-folder-event").click(() => {
   // Objeto de configuracion para el explorador
   const options = {
-    title   : 'Select folder to open',
-    mode    : 'directory',
+    title: 'Select folder to open',
+    mode: 'directory',
     multiple: false
   }
 
