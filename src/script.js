@@ -33,7 +33,7 @@ $('.menu-file-new-file').click(() => {
 })
 
 // Abrir Archivo
-$(".open-file-event").click(() => {
+$('.open-file-event').click(() => {
   // Objeto de configuracion para el explorador
   const options = {
     title: 'Select file to open',
@@ -51,7 +51,7 @@ $(".open-file-event").click(() => {
 })
 
 // Abrir Carpeta
-$(".open-folder-event").click(() => {
+$('.open-folder-event').click(() => {
   // Objeto de configuracion para el explorador
   const options = {
     title: 'Select folder to open',
@@ -65,9 +65,9 @@ $(".open-folder-event").click(() => {
 
     // En caso de existir alguna carpeta abierta, eliminarla
     if ($('.base')) $('.base').remove()
-
+    
     // Abrir carpeta en el sidebar
-    fsList(fsNodeId[0], listFiles => {
+    fsList(fsNodeId[0], (err, listFiles) => {
 
       // Renderizar carpetas y archivos en el sidebar
       render.sidebar(listFiles)

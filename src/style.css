@@ -100,15 +100,13 @@ section.container div.text {
   border: 0;
 }
 
-div.sidebar ul.base,
-div.sidebar ul.base li.item ul.fs-node /*sub UL*/ {
-  margin: 0;
+div.sidebar ul.base {
   color: #d2dce2;
-  padding-left: 15px;
+  margin: 5px 0;
 }
   div.sidebar ul.base li.item {
     list-style: none;
-    padding: 2.5px 1px 2.5px 10px;
+    padding: 2.5px 1px 2.5px 22.5px;
     cursor: pointer;
     width: 100%;
   }
@@ -121,7 +119,12 @@ div.sidebar ul.base li.item ul.fs-node /*sub UL*/ {
       background-color: #3c4450;
       color: #fff;
     }
-    div.sidebar ul.base li.item span:hover {
+    div.sidebar ul.base li.item div i {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    div.sidebar ul.base li.item div:hover {
       color: #fff;
       cursor: pointer;
     }
@@ -148,15 +151,14 @@ section.container {
   height: ~'calc(100% - 70px)';
   display: flex;
   background-color: #34383e;
+  overflow-x: scroll;
 }
   
   /* Barra lateral que lista los directorios y archivos */
   section.container div.sidebar {
     color: white;
     width: 20%;
-    margin-top: 7px;
-    overflow-x: scroll;
-    overflow-y: auto;
+    overflow: auto;
   }
 
   /* Area de trabajo: Codigo + tabs */
@@ -174,7 +176,7 @@ section.container {
       border-radius: 26px;
   }
   ::-webkit-scrollbar-thumb {
-      background-color: #4ed8bc;
+      background-color: rgba(78, 216, 188, .50);
   }
   ::-webkit-scrollbar-corner {
       background: transparent;

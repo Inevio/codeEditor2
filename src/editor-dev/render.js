@@ -3,13 +3,15 @@
 // CodeMirror
 import CodeMirror from '../cm/lib/codemirror.js'
 // Utilidades
-import { listUL, itemLIBar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened } from './utils.js'
+import { listUL, itemLIBar, itemLIHorbitoSidebar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened } from './utils.js'
 // Opciones del menu y creacion de una nueva zona de edicion
 import { newFileOpts } from './config.js'
 // Eventos del menu
 import { clickItems } from './area/menu.js'
 // Code: Edicion
 import { addFocus, closeTabs, hideTextareas, enableClicksOnTabs } from './area/code.js'
+// Utilidades
+import { listFolderAndClickItem } from './area/sidebar.js'
 
 // Menu:
 // Renderiza el menu basado en el objeto de opciones
@@ -49,24 +51,8 @@ function navigationBar (barOpts) {
 // Code: Edicion
 // Renderiza una nueva area de edicion (pestana y area de texto)
 function newFile (id, name, type, content) {
+  // Se crea el objeto partiendo de la clase FileCreator
   const file = new FileCreator(id, name, type, content)
-  
-  /*if (filesOpened.length >= 1) { // Verificar si el archivo ya se encuentra abierto en el editor
-    filesOpened.forEach(element => {
-      // Comparar IDs entre el "archivo que se pretende abrir" y los "archivos ya abiertos" en el editor
-      if (element.id === file.id) {
-        // Clickear la pestana del archivo dentro del editor
-        // Agregar focus al tab :)
-        addFocus(element.id)
-        // Mostrar textarea relacionada a la tab
-        hideTextareas(element.id)
-      } else { // En caso de que el archivo no se encuentre abierto en el editor
-        documentGenerator(id, name, type, content)
-      }
-    })
-  } else { // En caso de que el archivo no se encuentre abierto en el editor
-    documentGenerator(id, name, type, content)
-  }*/
 
   // En tester se almacena el resulado de la operacion de busqueda de igualdad
   let tester = filesOpened.find(element => { return element.id === file.id })
@@ -117,18 +103,31 @@ function sidebar (filesOpts) {
   // Crear lista desordenada [UL]
   listUL('sidebar', 'base')
   
-  filesOpts.forEach(file => {
+  for (let file of filesOpts) {
     // Crear items en una lista (Tab, CodeMirror y Sidebar)
     if (file.type !== 3) {
       itemLIHorbitoSidebar('base', 'item', file.id, 'icon-folder', file.name)
     } else {
       itemLIHorbitoSidebar('base', 'item', file.id, 'icon-file', file.name)
     }
-  })
+  }
 
   // Mostrar Sidebar
   $('.sidebar').show()
   $('.code').css('width', '80%')
+
+  // $()
+  $('div[idhorbito]').click(function () {
+    // ID de la carpeta
+    const id = $(this).attr('idhorbito')
+
+    if ($(`div[idhorbito='${id}']`).siblings()[0]) { // Determinar si la carpeta ya esta listada
+      // Plegar carpeta, eliminar la lista que contiene los archivos y carpetas desplegados
+      $(`div[idhorbito='${id}']`).siblings()[0].remove()
+    } else { // En caso de no estarlo, listartla (desplegarla)
+      listFolderAndClickItem(id)
+    }
+  })
 }
 
 // navigationBar: Renderiza el menus

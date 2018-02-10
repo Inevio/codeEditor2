@@ -24,7 +24,19 @@ function itemLIBar (parentID, elementId, objectId, el) {
  * icon: Icono que se asigna al item con el fin de mejorar su diseno, en este caso se ubica en la parte izquierda
  */
 function itemLIHorbitoSidebar (parentID, elementId, objectId, icon, el) {
-  $(`.${parentID}`).append(`<li class="${elementId}"><i class="${icon}"></i> <span idhorbito="${objectId}>${el}</span></li>`)
+  $(`.${parentID}`).append(`<li class="${elementId}"><div idhorbito="${objectId}"><i class="${icon}"></i>${el}</div></li>`)
+}
+
+// Crear la base de una lista desordenada (UL) para el contenido de los directorios listados
+/* id: ID del archivo o directorio en Horbito
+ */
+function baseULHorbitoSidebarSUB (id, elementId) {
+  $(`div[idhorbito='${id}']`).parent().append(`<ul class="${elementId}" idhorbito="${id}"></ul>`)
+}
+
+// Crear items (contenido) en una lista desordenada (UL) dentro de un directorio listado
+function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el) {
+  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}"><i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear items en una lista (Tab)
@@ -69,4 +81,4 @@ function ellipsis(text, limit) {
 // FileCreator: Es una clase que crea objetos que representan un archivo dentro del editor
 // filesOpened: Es un array que contiene objetos que representan archivos dentro de editor
 // ellipsis: Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
-export { listUL, itemLIBar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened, ellipsis }
+export { listUL, itemLIBar, itemLIHorbitoSidebar, baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened, ellipsis }
