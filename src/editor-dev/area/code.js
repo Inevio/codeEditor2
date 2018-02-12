@@ -11,7 +11,7 @@ function addFocus (idTab) {
   })
 
   // Agregar el focus a la tab que se crea o que se clickea
-    $(`.tab[idhorbito='${idTab}']`).addClass('on')
+  $(`.tab[idhorbito='${idTab}']`).addClass('on')
 }
 
 // Ocultar todos los textareas y mostrar el relacionado a cada tab
@@ -25,42 +25,51 @@ function hideTextareas (idTextArea) {
 }
 
 // Cerrar pestanas
-function closeTabs () {
-  $('.icon-close').click(function () {
-    // Obtener las clases del tab
-    const id = $(this).parent().attr('idhorbito')
+$('.code').on('click', '.icon-close', function () {
+  // Obtener las clases del tab
+  const id = $(this).parent().attr('idhorbito')
+  let click = 0
 
-    // Cerrar tab
-    $(`.tab[idhorbito='${id}']`).hide()
+  click++
+  if (click === 1) {
+    setTimeout(function () {
+      // Cerrar tab
+      $(`.tab[idhorbito='${id}']`).remove()
 
-    // Cerrar Textarea
-    $(`.myTextArea-${id}`).hide()
-  })
-}
+      // Cerrar Textarea
+      $(`.myTextArea-${id}`).remove()
+
+      // Eliminar documento del array que contiene los archivos abiertos en el editor
+      filesOpened.forEach(function (element, index) {
+        // Si el ID es igual al de un objeto, eliminarlo
+        if (element.id === Number(id)) filesOpened.splice(index, 1)
+      })
+      click = 0
+    }, 500)
+  }
+})
 
 // Activar FOCUS al hacer click en una pestana
-function enableClicksOnTabs() {
-  // Obtener elemento (tab) clickeado
-  $('.tab').click(function () {
-    // Obtener las clases del tab
-    const className = $(this).attr('class')
+// Obtener elemento (tab) clickeado
+$('.code').on('click', '.tab', function () {
+  // Obtener las clases del tab
+  const className = $(this).attr('class')
 
-    // Verificar que el elemento tenga la clase ON (no este seleccionado)
-    // En caso de tener el focus, salir de la ejecucion
-    if (className.search('on') !== -1) return
+  // Verificar que el elemento tenga la clase ON (no este seleccionado)
+  // En caso de tener el focus, salir de la ejecucion
+  if (className.search('on') !== -1) return
 
-    // Determinar el ID del elemento clickeado
-    const id = $(this).attr('idhorbito')
+  // Determinar el ID del elemento clickeado
+  const id = $(this).attr('idhorbito')
 
-    // Agregar focus al tab :)
-    addFocus(id)
+  // Agregar focus al tab :)
+  addFocus(id)
 
-    // Mostrar textarea relacionada a la tab
-    hideTextareas(id)
-  })
-}
+  // Mostrar textarea relacionada a la tab
+  hideTextareas(id)
+})
 
 // addFocus: Marca como seleccionada una carpeta, como parametro se le pasa el ID del archivo
 // closeTabs: Cierra un archivo en el editor, como parametro se le pasa el ID del archivo
 // hideTextareas: Se encarga de cerrar todos los textareas y mostrar el relacionado con la pestana activa, como parametro se le pasa el ID del archivo
-export { addFocus, closeTabs, hideTextareas, enableClicksOnTabs }
+export { addFocus, hideTextareas }

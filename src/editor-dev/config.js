@@ -54,12 +54,23 @@ const barOpts = [
     "name": "View"
   },
   {
-    "id": "menu-find",
+    "id": "menu-selection",
     "name": "Selection"
   },
   {
     "id": "menu-find",
     "name": "Find"
+  },
+  {
+    "id": "menu-project",
+    name: "Project",
+    subClass: "sub-menu-project",
+    sub: [
+      {
+        "id": "menu-file-open-project",
+        "name": "Open Project"
+      }
+    ]
   },
   {
     "id": "menu-view",
@@ -74,11 +85,13 @@ const barOpts = [
 function newFileOpts (mode, value = '') {
   // Validador de extenciones
   if (mode === 'text/html') mode = 'htmlmixed'
+  if (mode === 'text/css') mode = 'css'
+  if (mode === 'application/javascript') mode = 'javascript'
 
   return {
     lineNumbers: true,
     keyMap: "sublime",
-    theme: "monokai",
+    theme: "joe",
     mode: mode,
     value: value
   }

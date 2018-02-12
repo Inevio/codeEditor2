@@ -19,7 +19,7 @@ import { barOpts } from './editor-dev/config.js'
 import { render } from './editor-dev/render.js'
 // Area de trabajo
 // Sidebar
-import { fsList, fsRead } from './editor-dev/area/sidebar.js'
+import { fsRead } from './editor-dev/area/sidebar.js'
 
 // TEST
 let tabs = 0
@@ -28,12 +28,12 @@ let tabs = 0
 render.navigationBar(barOpts)
 
 // Nuevo Archivo
-$('.menu-file-new-file').click(() => {
+$('.menu-file-new-file').on('click', () => {
   render.newFile(tabs++, 'untitled', 'text/html')
 })
 
 // Abrir Archivo
-$('.open-file-event').click(() => {
+$('.open-file-event').on('click', () => {
   // Objeto de configuracion para el explorador
   const options = {
     title: 'Select file to open',
@@ -51,7 +51,7 @@ $('.open-file-event').click(() => {
 })
 
 // Abrir Carpeta
-$('.open-folder-event').click(() => {
+$('.open-folder-event').on('click', () => {
   // Objeto de configuracion para el explorador
   const options = {
     title: 'Select folder to open',
@@ -65,12 +65,14 @@ $('.open-folder-event').click(() => {
 
     // En caso de existir alguna carpeta abierta, eliminarla
     if ($('.base')) $('.base').remove()
-    
-    // Abrir carpeta en el sidebar
-    fsList(fsNodeId[0], (err, listFiles) => {
 
-      // Renderizar carpetas y archivos en el sidebar
-      render.sidebar(listFiles)
+    // API FileSystem de Horbito
+    api.fs(fsNodeId[0], (err, fsNode) => {
+      if (err) return console.log(err) // En caso de error
+
+      // console.log(fsNode) // Carpeta Root
+      // Array de objetos (que representan archivos en Horbito) de la carpeta raiz
+      render.sidebar(fsNode)
     })
   })
 })

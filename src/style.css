@@ -62,8 +62,10 @@ div.title {
       /*border-bottom: 1px solid #49eecc;*/
     }
     
+    /* Desplegar menus */
     nav.navigation ul.nav li.menu-file ul.sub-menu-file,
-    nav.navigation ul.nav li.menu-edit ul.sub-menu-edit {
+    nav.navigation ul.nav li.menu-edit ul.sub-menu-edit,
+    nav.navigation ul.nav li.menu-project ul.sub-menu-project {
       list-style: none;
       padding: 0;
       position: absolute;
@@ -74,14 +76,17 @@ div.title {
     }
 
       nav.navigation ul.nav li.item ul.sub-menu-file li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover {
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover,
+      nav.navigation ul.nav li.item ul.sub-menu-project li.item:hover {
         background-color: #2e3035;
         border-bottom: 0;
       }
       nav.navigation ul.nav li.item ul.sub-menu-file li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item {
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item,
+      nav.navigation ul.nav li.item ul.sub-menu-project li.item {
         padding: 5px 15px;
       }
+      /* Continuar con el resto de items... */
 
 /* ----------- = ------------ */
 
@@ -100,31 +105,27 @@ section.container div.text {
   border: 0;
 }
 
-div.sidebar ul.base {
+div.sidebar ul.subItem {
   color: #d2dce2;
   margin: 5px 0;
 }
-  div.sidebar ul.base li.item {
+  div.sidebar ul.subItem li.item {
     list-style: none;
-    padding: 2.5px 1px 2.5px 22.5px;
+    padding: 0 0 0 20px;
     cursor: pointer;
     width: 100%;
   }
 
-  div.sidebar ul.base li.item ul.subItem li.item {
-    padding: 6px 0 0 20px; /* <----------------------------------------- */
-  }
-
-    div.sidebar ul.base li.selected {
+    div.sidebar ul.subItem li.selected {
       background-color: #3c4450;
       color: #fff;
     }
-    div.sidebar ul.base li.item div i {
+    div.sidebar ul.subItem li.item div i {
       margin-right: 5px;
       cursor: pointer;
     }
 
-    div.sidebar ul.base li.item div:hover {
+    div.sidebar ul.subItem li.item div:hover {
       color: #fff;
       cursor: pointer;
     }
@@ -254,4 +255,8 @@ section.container {
     .CodeMirror {
       font-size: 18px;
       height: 416px;
+    }
+    .CodeMirror *{
+      font-family: monospace;
+      direction: ltr;
     }

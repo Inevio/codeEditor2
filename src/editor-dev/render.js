@@ -9,7 +9,7 @@ import { newFileOpts } from './config.js'
 // Eventos del menu
 import { clickItems } from './area/menu.js'
 // Code: Edicion
-import { addFocus, closeTabs, hideTextareas, enableClicksOnTabs } from './area/code.js'
+import { addFocus, hideTextareas } from './area/code.js'
 // Utilidades
 import { listFolderAndClickItem } from './area/sidebar.js'
 
@@ -45,6 +45,7 @@ function navigationBar (barOpts) {
   // Desplegar menus
   clickItems('sub-menu-file', 'menu-file') // File
   clickItems('sub-menu-edit', 'menu-edit') // Edit
+  clickItems('sub-menu-project', 'menu-project') // Edit
   // Continuar con el resto de items...
 }
 
@@ -88,46 +89,24 @@ function documentGenerator (file) {
   // CodeMirror
   // config: Es un objeto de configuraciones para CodeMirror
   let editor = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
-
-  // Habilitar clicks en las pestanas
-  // Agregar focus a los tabs seleccionados
-  enableClicksOnTabs()
-
-  // Habilitar funcion para cerrar las pestanas y textareas
-  closeTabs()
 }
 
 // Code: Sidebar
-function sidebar (filesOpts) {
-
+function sidebar (rootFolder) {
   // Crear lista desordenada [UL]
-  listUL('sidebar', 'base')
-  
-  for (let file of filesOpts) {
-    // Crear items en una lista (Tab, CodeMirror y Sidebar)
-    if (file.type !== 3) {
-      itemLIHorbitoSidebar('base', 'item', file.id, 'icon-folder', file.name)
-    } else {
-      itemLIHorbitoSidebar('base', 'item', file.id, 'icon-file', file.name)
-    }
-  }
+  // Crear item de la carpeta raiz (del proyecto)
+  $('.sidebar').append(`<ul class="subItem"><li class="item">
+    <div idhorbito="${rootFolder.id}">
+      <i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
+    </div>
+  <li></ul>`)
+
+  // Listar contenido (items) de la carpeta raiz del proyecto
+  listFolderAndClickItem(rootFolder.id)
 
   // Mostrar Sidebar
   $('.sidebar').show()
   $('.code').css('width', '80%')
-
-  // $()
-  $('div[idhorbito]').click(function () {
-    // ID de la carpeta
-    const id = $(this).attr('idhorbito')
-
-    if ($(`div[idhorbito='${id}']`).siblings()[0]) { // Determinar si la carpeta ya esta listada
-      // Plegar carpeta, eliminar la lista que contiene los archivos y carpetas desplegados
-      $(`div[idhorbito='${id}']`).siblings()[0].remove()
-    } else { // En caso de no estarlo, listartla (desplegarla)
-      listFolderAndClickItem(id)
-    }
-  })
 }
 
 // navigationBar: Renderiza el menus
