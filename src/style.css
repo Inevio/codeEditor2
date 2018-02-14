@@ -32,7 +32,7 @@ div.title {
 
 .ui-header {
   height: 40px;
-  background-color: #272a31;
+  background-color: #2c343d;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,7 +44,7 @@ div.title {
     width: 100%;
     height: 30px;
     position: relative;
-    background-color: #272a31;
+    background-color: #2c343d;
     z-index: 5;
     list-style: none;
     display: flex;
@@ -58,8 +58,8 @@ div.title {
     }
 
     nav.navigation ul.nav li.item:hover {
-      color: #49eecc;
-      /*border-bottom: 1px solid #49eecc;*/
+      color: #0cedd5;
+      /*border-bottom: 1px solid #0cedd5;*/
     }
     
     /* Desplegar menus */
@@ -71,19 +71,17 @@ div.title {
       position: absolute;
       z-index: 2;
       top: 30px;
-      background-color: #272a31;
+      background-color: #2c343d;
       user-select: none;
     }
 
       nav.navigation ul.nav li.item ul.sub-menu-file li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-project li.item:hover {
-        background-color: #2e3035;
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover {
+        background-color: #2e3942;
         border-bottom: 0;
       }
       nav.navigation ul.nav li.item ul.sub-menu-file li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-project li.item {
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item {
         padding: 5px 15px;
       }
       /* Continuar con el resto de items... */
@@ -115,10 +113,11 @@ div.sidebar ul.subItem {
     cursor: pointer;
     width: 100%;
   }
-
-    div.sidebar ul.subItem li.selected {
+    .selected {
       background-color: #3c4450;
       color: #fff;
+      padding: 0 10px;
+      margin-left: -10px;
     }
     div.sidebar ul.subItem li.item div i {
       margin-right: 5px;
@@ -137,7 +136,7 @@ i {
   i.icon-folder,
   i.icon-file,
   i.icon-menu {
-    color: #49eecc;
+    color: #5d6470;
     font-size: 18px;
   }
     i.icon-menu {
@@ -151,7 +150,7 @@ section.container {
   width: 100%;
   height: ~'calc(100% - 70px)';
   display: flex;
-  background-color: #34383e;
+  background-color: #20262c;
   overflow-x: scroll;
 }
   
@@ -177,7 +176,7 @@ section.container {
       border-radius: 26px;
   }
   ::-webkit-scrollbar-thumb {
-      background-color: rgba(78, 216, 188, .50);
+      background-color: #5d6470;
   }
   ::-webkit-scrollbar-corner {
       background: transparent;
@@ -202,13 +201,13 @@ section.container {
       /* Tab: individual */
       section.container div.code div.tabs-container ul.tabs li.tab {
         width: 180px;
-        color: #49eecc;
+        color: #0cedd5;
         font-weight: bold;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        background-color: #34383e;
+        background-color: #2c343d;
         position: relative;
       }
 
@@ -230,16 +229,16 @@ section.container {
         }
 
       section.container div.code div.tabs-container ul.tabs li.tab:hover {
-        background-color: #303238;
+        background-color: #2e3942;
       }
 
       section.container div.code div.tabs-container ul.tabs li.tab.on {
-        border-top: 2px solid #49eecc;
-        background-color: #404551;
+        border-top: 2px solid #0cedd5;
+        background-color: #373d47;
       }
 
     section.container div.code div.tabs-menu {
-      background-color: #34383e;
+      background-color: #20262c;
     }
       section.container div.code div.tabs-menu div.menu {
         padding: 8px;
@@ -249,7 +248,7 @@ section.container {
   section.container div.code div.text {
     height: 100%;
     width: 100%;
-    background-color: #3c4450;
+    background-color: #373d47;
     overflow: auto;
   }
     .CodeMirror {
@@ -259,4 +258,10 @@ section.container {
     .CodeMirror *{
       font-family: monospace;
       direction: ltr;
+    }
+    .CodeMirror-scrollbar-filler {
+      background-color: #272a31;
+    }
+    .CodeMirror-lines {
+      cursor: text !important;
     }

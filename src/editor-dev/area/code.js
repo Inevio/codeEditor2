@@ -7,11 +7,17 @@ import { filesOpened } from '../utils.js'
 function addFocus (idTab) {
   // Eliminar de todos los tabs la clase ON (el focus)
   filesOpened.forEach(element => {
-    $(`.tab[idhorbito='${element.id}']`).removeClass('on')
+    if (element.id === Number(idTab)) {
+      // Agregar el focus a la tab que se crea o que se clickea
+      $(`.tab[idhorbito='${idTab}']`).addClass('on')
+      // Activar el focus en el objeto correspondiente al archivo
+      element.focus = true
+    } else {
+      $(`.tab[idhorbito='${element.id}']`).removeClass('on')
+      // Desactivar el focus en el objeto correspondiente a cada archivo
+      element.focus = false
+    }
   })
-
-  // Agregar el focus a la tab que se crea o que se clickea
-  $(`.tab[idhorbito='${idTab}']`).addClass('on')
 }
 
 // Ocultar todos los textareas y mostrar el relacionado a cada tab
@@ -28,6 +34,8 @@ function hideTextareas (idTextArea) {
 $('.code').on('click', '.icon-close', function () {
   // Obtener las clases del tab
   const id = $(this).parent().attr('idhorbito')
+
+  // Contador de clicks
   let click = 0
 
   click++

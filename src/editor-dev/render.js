@@ -45,15 +45,14 @@ function navigationBar (barOpts) {
   // Desplegar menus
   clickItems('sub-menu-file', 'menu-file') // File
   clickItems('sub-menu-edit', 'menu-edit') // Edit
-  clickItems('sub-menu-project', 'menu-project') // Edit
   // Continuar con el resto de items...
 }
 
 // Code: Edicion
 // Renderiza una nueva area de edicion (pestana y area de texto)
-function newFile (id, name, type, content) {
+function newFile (id, horbiting, name, type, content) {
   // Se crea el objeto partiendo de la clase FileCreator
-  const file = new FileCreator(id, name, type, content)
+  const file = new FileCreator(id, horbiting, name, type, content, true)
 
   // En tester se almacena el resulado de la operacion de busqueda de igualdad
   let tester = filesOpened.find(element => { return element.id === file.id })
@@ -67,6 +66,7 @@ function newFile (id, name, type, content) {
   } else { // En caso de que el archivo no se encuentre abierto en el editor
     documentGenerator(file)
   }
+  console.log(filesOpened)
 }
 
 // Generador de areas de trabajo
@@ -88,7 +88,7 @@ function documentGenerator (file) {
 
   // CodeMirror
   // config: Es un objeto de configuraciones para CodeMirror
-  let editor = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
+  file.cm = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
 }
 
 // Code: Sidebar

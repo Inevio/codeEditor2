@@ -12,14 +12,14 @@ import './cm/addon/search/jump-to-line.js'
 // CodeMirror: Dialog
 import './cm/addon/dialog/dialog.js'
 // Utilidades
-import { listUL, itemLIBar, itemLIHorbito } from './editor-dev/utils.js'
+import { listUL, itemLIBar, itemLIHorbito, filesOpened, extension } from './editor-dev/utils.js'
 // Opciones del menu y creacion de una nueva zona de edicion
 import { barOpts } from './editor-dev/config.js'
 // Renderizado
 import { render } from './editor-dev/render.js'
 // Area de trabajo
 // Sidebar
-import { fsRead } from './editor-dev/area/sidebar.js'
+import { fsRead, saveFile, saveFileAs } from './editor-dev/area/sidebar.js'
 
 // TEST
 let tabs = 0
@@ -29,7 +29,8 @@ render.navigationBar(barOpts)
 
 // Nuevo Archivo
 $('.menu-file-new-file').on('click', () => {
-  render.newFile(tabs++, 'untitled', 'text/html')
+  // El parametro `false` indica que el archivo que se genera no estara horbiting
+  render.newFile(tabs++, false, 'untitled', 'text/html')
 })
 
 // Abrir Archivo
@@ -46,7 +47,8 @@ $('.open-file-event').on('click', () => {
     if (err) return console.log(err) // En caso de error
 
     // Leer archivo y renderizar contenido
-    fsRead(fsNodeId[0])
+    // El parametro `true` indica que el archivo que se genera si esta horbiting
+    fsRead(fsNodeId[0], true)
   })
 })
 
@@ -74,6 +76,49 @@ $('.open-folder-event').on('click', () => {
       // Array de objetos (que representan archivos en Horbito) de la carpeta raiz
       render.sidebar(fsNode)
     })
+  })
+})
+
+// Guardar
+$('.file-save-event').on('click', () => {
+  filesOpened.forEach((element, index) => {
+    // En caso de que el archivo que se desea guardar este seleccionado
+    if (element.focus && element.horbiting) { // Si el archivo esta seleccionado y esta horbiting
+      saveFile(element.id, element.cm.getValue())
+    } else if (element.focus && !element.horbiting) { // Si el archivo esta seleccionado y no esta horbiting
+      saveFileAs(index, {
+        title: 'Select destiny for the file',
+        mode: 'file',
+        name: element.name,
+        extension: extension(element.type)
+      })
+    }
+  })
+})
+
+// Guardar como...
+$('.file-save-as-event').on('click', () => {
+  // Objeto de configuracion para el explorador
+  const options = {
+    title: 'Select destiny for the file',
+    mode: 'file',
+    name: 'untitled',
+    extension: ''
+  }
+
+  filesOpened.forEach((element, index) => {
+    if (element.focus && element.horbiting) { // En caso de que el archivo este seleccionado y horbiting
+      saveFileAs(index, {
+        title: 'Select destiny for the file',
+        mode: 'file',
+        name: element.name,
+        extension: extension(element.type)
+      })
+    } else if (element.focus) { // En caso de que el archivo que se desea guardar este seleccionado
+      // Determinar la extension del archivo a guardar
+      options.extension = extension(element.type)
+      saveFileAs(index, options)
+    }
   })
 })
 

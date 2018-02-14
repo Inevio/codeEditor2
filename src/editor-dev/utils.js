@@ -56,11 +56,14 @@ function itemLIHorbitoTextarea (parentID, objectId) {
 
 // Generador de archivos
 class FileCreator {
-  constructor(id, name, type, content) {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-    this.content = content;
+  constructor(id, horbiting, name, type, content, focus, CodeMirror = null) {
+    this.id = id
+    this.horbiting = horbiting
+    this.name = name
+    this.type = type
+    this.content = content
+    this.focus = focus
+    this.cm = CodeMirror
   }
 }
 
@@ -75,10 +78,23 @@ function ellipsis(text, limit) {
   return text
 }
 
-// listUL: Crea una lista desordenada <ul><ul>
-// itemLIBar: Crear items en la Barra de Navegacion <li><li>
-// itemLIHorbito: Crear items en el contenedor de pestanas, el area de edicion y en el sidebar vinculados entre si <li><li>
-// FileCreator: Es una clase que crea objetos que representan un archivo dentro del editor
-// filesOpened: Es un array que contiene objetos que representan archivos dentro de editor
-// ellipsis: Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
-export { listUL, itemLIBar, itemLIHorbitoSidebar, baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened, ellipsis }
+// Determinar la extension de un archivo (a guardar)
+function extension (type) {
+  if (type === 'text/html') return '.html'
+  if (type === 'text/css') return '.css'
+  if (type === 'application/javascript') return '.js'
+}
+
+export {
+  listUL, // Crea una lista desordenada <ul><ul>
+  itemLIBar, // Crear items en la Barra de Navegacion <li><li>
+  itemLIHorbitoSidebar, // Crear items en el contenedor de pestanas, el area de edicion y en el sidebar vinculados entre si <li><li>
+  baseULHorbitoSidebarSUB, // Crea la base para los items en el Sidebar estructurados en forma de arbol
+  itemLIHorbitoSidebarSUB, // Crea items en el Sidebar estructurados en forma de arbol
+  itemLIHorbitoTab, // Crea una nueva pestana en el editor
+  itemLIHorbitoTextarea, // Crea un nuevo entorno de CodeMirror, es decir, crea un TextArea
+  FileCreator, // Es una clase que crea objetos que representan un archivo dentro del editor
+  filesOpened, // Es un array que contiene objetos que representan archivos dentro de editor
+  ellipsis, // Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
+  extension // Retorna la extension del tipo de archivo segun Horbito
+}

@@ -27,6 +27,16 @@ const barOpts = [
         "id": "menu-file-open-folder",
         "idEvent": "open-folder-event",
         "name": "Open Folder"
+      },
+      {
+        "id": "menu-file-save",
+        "idEvent": "file-save-event",
+        "name": "Save"
+      },
+      {
+        "id": "menu-file-save-as",
+        "idEvent": "file-save-as-event",
+        "name": "Save As"
       }
     ]
   },
@@ -60,17 +70,6 @@ const barOpts = [
   {
     "id": "menu-find",
     "name": "Find"
-  },
-  {
-    "id": "menu-project",
-    name: "Project",
-    subClass: "sub-menu-project",
-    sub: [
-      {
-        "id": "menu-file-open-project",
-        "name": "Open Project"
-      }
-    ]
   },
   {
     "id": "menu-view",
