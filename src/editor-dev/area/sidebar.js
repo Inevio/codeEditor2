@@ -66,12 +66,12 @@ $('.sidebar').on('dblclick', 'div[idhorbito]', function () {
         // Plegar carpeta, eliminar la lista que contiene los archivos y carpetas desplegados
         $(`div[idhorbito='${id}']`).siblings()[0].remove()
         $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
-        changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
+        if ($($(`div[idhorbito='${id}']`).children()[1]).attr('class') === 'icon-folder') changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
       } else { // En caso de no estarlo, listartla (desplegarla)
         listFolderAndClickItem(id)
         $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
         if ($(`div[idhorbito='${id}']`).children().attr('class') === 'icon-file') $(`div[idhorbito='${id}']`).addClass('selected')
-        changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
+        if ($($(`div[idhorbito='${id}']`).children()[1]).attr('class') === 'icon-folder') changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
       }
       click = 0
     }, 700)
