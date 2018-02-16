@@ -97,7 +97,7 @@ function sidebar (rootFolder) {
   // Crear item de la carpeta raiz (del proyecto)
   $('.sidebar').append(`<ul class="subItem"><li class="item">
     <div idhorbito="${rootFolder.id}">
-      <i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
+    <i class="icon-arrow-down"></i><i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
     </div>
   <li></ul>`)
 

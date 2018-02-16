@@ -35,8 +35,8 @@ function baseULHorbitoSidebarSUB (id, elementId) {
 }
 
 // Crear items (contenido) en una lista desordenada (UL) dentro de un directorio listado
-function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el) {
-  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}"><i class="${icon}"></i>${el}</div></li>`)
+function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el, arrow = '') {
+  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}">${arrow}<i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear items en una lista (Tab)
@@ -85,6 +85,16 @@ function extension (type) {
   if (type === 'application/javascript') return '.js'
 }
 
+// Rota la posicion de las flechas de Sidebar
+function changeArrow(item) {
+  // Cambio de flechas
+  if ($(item).attr('class') === 'icon-arrow-right') {
+    $(item).removeClass('icon-arrow-right').addClass('icon-arrow-down')
+  } else {
+    $(item).removeClass('icon-arrow-down').addClass('icon-arrow-right')
+  } // if ($(item).attr('class') === 'icon-arrow-down')
+}
+
 export {
   listUL, // Crea una lista desordenada <ul><ul>
   itemLIBar, // Crear items en la Barra de Navegacion <li><li>
@@ -96,5 +106,6 @@ export {
   FileCreator, // Es una clase que crea objetos que representan un archivo dentro del editor
   filesOpened, // Es un array que contiene objetos que representan archivos dentro de editor
   ellipsis, // Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
-  extension // Retorna la extension del tipo de archivo segun Horbito
+  extension, // Retorna la extension del tipo de archivo segun Horbito
+  changeArrow // Rota la posicion de la flecha que indica si una carpeta esta abierta o cerrada en el Sidebar
 }

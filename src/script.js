@@ -65,9 +65,6 @@ $('.open-folder-event').on('click', () => {
   api.fs.selectSource(options, (err, fsNodeId) => {
     if (err) return console.log(err) // En caso de error
 
-    // En caso de existir alguna carpeta abierta, eliminarla
-    if ($('.base')) $('.base').remove()
-
     // API FileSystem de Horbito
     api.fs(fsNodeId[0], (err, fsNode) => {
       if (err) return console.log(err) // En caso de error

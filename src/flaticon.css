@@ -24,8 +24,9 @@ font-style: normal;
 margin-left: 20px;
 }
 
-.icon-arrow:before { content: "\f100"; }
-.icon-folder:before { content: "\f101"; }
-.icon-close:before { content: "\f102"; }
-.icon-file:before { content: "\f103"; }
-.icon-menu:before { content: "\f104"; }
+.icon-arrow-down:before { content: "\f100"; }
+.icon-arrow-right:before { content: "\f101"; }
+.icon-folder:before { content: "\f102"; }
+.icon-close:before { content: "\f103"; }
+.icon-file:before { content: "\f104"; }
+.icon-menu:before { content: "\f105"; }
