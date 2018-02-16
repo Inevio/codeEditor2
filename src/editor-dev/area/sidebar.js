@@ -137,11 +137,11 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
   if (item.type() === 'folder') { // En caso de ser una carpeta
     menu.addOption('New File', () => { newFileFolder(item.id) } )
     menu.addOption('New Folder', () => { newFolderFolder(item.id) } )
-    menu.addOption('Rename', () => { renameItem(item.id) })
-    menu.addOption('Delete', () => { deleteItem(item.id, item.type()) })
+    menu.addOption('Rename', () => { renameItem(item) })
+    menu.addOption('Delete', () => { deleteItem(item) })
   } else { // En caso de ser un archivo
-    menu.addOption('Rename', () => { renameItem(item.id) })
-    menu.addOption('Delete', () => { deleteItem(item.id, item.type()) })
+    menu.addOption('Rename', () => { renameItem(item) })
+    menu.addOption('Delete', () => { deleteItem(item) })
   }
 
   // Rendelizado del ContextMenu
@@ -164,27 +164,44 @@ function newFolderFolder (id) {
 
 
 // [Folder|File] Delete
-function renameItem (id) {
-  api.fs(id, (err, item) => {
-    console.log('renameItem', item)
+function renameItem (item) {
+  prompt('Please, write the new name', res => {
+    // Si existe un nuevo nombre
+    if (res) {
+      api.fs(item.id, (err, fsNode) => {
+        // Renombrar
+        fsNode.rename(res, err => {
+          if (err) return console.log(err) // En caso de error
+          if (err) alert(`There was an error trying to rename the ${item.type()}: ${err}`) // En caso de error
+        
+          api.fs(item.id, (err, fsNode) => {
+            // Almacenar el elemento
+            const el = $(`div[idhorbito='${item.id}']`).html()
+            // Romper los elementos internos y obtener el nombre (texto !== </elements>)
+            const name = $(`div[idhorbito='${item.id}']`).text()
+            // Reemplazar nombre
+            $(`div[idhorbito='${item.id}']`).html(el.replace(name, fsNode.name))
+          })
+        })
+      })
+    }
   })
 }
 
 // [Folder|File] Rename
-function deleteItem (id, type) {
+function deleteItem (item) {
   // Mensaje de confirmacion sobre la eliminacion de unarchivo/directorio
-  confirm(`Are you sure you want to delete this ${type}?`, res => {
+  confirm(`Are you sure you want to delete this ${item.type()}?`, res => {
     if(res) {
-      api.fs(id, (err, item) => {
-        console.log(item)
-        item.remove((err, response) => {
-          if (err) alert(`There was an error trying to delete the ${type}: ${err}`) // En caso de error
+      api.fs(item.id, (err, fsNode) => {
+        fsNode.remove((err, response) => {
+          if (err) alert(`There was an error trying to delete the ${item.type()}: ${err}`) // En caso de error
           if (err) return console.log(err) // En caso de error
           // Remover item del sidebar
-          $(`div[idhorbito=${id}]`).remove()
+          $(`div[idhorbito='${item.id}']`).remove()
           // En caso de estar abierto el archivo, establecerlo como "fuera de la horbita"
           filesOpened.forEach(e => {
-            if (e.id === id) e.horbiting = false
+            if (e.id === item.id) e.horbiting = false
           })
         })
       })
