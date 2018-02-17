@@ -3,7 +3,7 @@
 // Renderizado
 import { render } from '../render.js'
 // Utilidades
-import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, filesOpened, changeArrow } from '../utils.js'
+import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, filesOpened, changeArrow } from '../utils.js'
 
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
@@ -36,46 +36,76 @@ function listFolderAndClickItem (id) {
 
         // Crear una lista desordenada (UL) para el contenido de la carpeta a listar (desplegar)
         baseULHorbitoSidebarSUB(id, 'subItem')
+        $(`ul[idhorbito='${id}']`).hide() // Ocultar el contenedor de items (a la espera que este lleno)
 
         for (let file of listFiles) {
           // Determinar si es una carpeta o un archivo y agregarle el icono correspondiente
           if (file.type !== 3) {
             itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-folder', file.name, '<i class="icon-arrow-right"></i>')
-            $('.icon-folder').parent().css('margin-left', '-20px') // Reajustar items de tipo carpeta
           } else {
             itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-file', file.name)
           }
         }
+
+        $(`ul[idhorbito='${id}']`).slideDown(110) // Ocultar el contenedor de items (a la espera que este lleno)
       })
     }
   })
 }
 
-// Evento click sobre un archivo o carpeta en el Sidebar
-$('.sidebar').on('dblclick', 'div[idhorbito]', function () {
+let requestRunningFolder = false
+// Evento click sobre una carpeta en el Sidebar
+$('.sidebar').on('click', 'div[type="folder"]', function () {
+console.log('Haz hecho un click sobre una carpeta...')
+  // En caso de que se este ejecutando el renderizado de los items
+  if (requestRunningFolder) return
+
   // ID de la carpeta
   const id = $(this).attr('idhorbito')
-  
-  // Contador de clicks
-  let click = 0
 
-  click++
-  if (click === 1) {
-    setTimeout(() => {
-      if ($(`div[idhorbito='${id}']`).siblings()[0]) { // Determinar si la carpeta ya esta listada
-        // Plegar carpeta, eliminar la lista que contiene los archivos y carpetas desplegados
-        $(`div[idhorbito='${id}']`).siblings()[0].remove()
-        $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
-        if ($($(`div[idhorbito='${id}']`).children()[1]).attr('class') === 'icon-folder') changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
-      } else { // En caso de no estarlo, listartla (desplegarla)
-        listFolderAndClickItem(id)
-        $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
-        if ($(`div[idhorbito='${id}']`).children().attr('class') === 'icon-file') $(`div[idhorbito='${id}']`).addClass('selected')
-        if ($($(`div[idhorbito='${id}']`).children()[1]).attr('class') === 'icon-folder') changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
-      }
-      click = 0
-    }, 700)
-  }
+  // Iniciar renderizado...
+  requestRunningFolder = true
+  setTimeout(() => {
+    if ($(`div[idhorbito='${id}']`).siblings()[0]) { // Determinar si la carpeta ya esta listada
+      // Plegar carpeta, eliminar la lista que contiene los archivos y carpetas desplegados
+      $($(`div[idhorbito='${id}']`).siblings()[0]).animate({ height: 0 }, 150) // Efecto de plegado para los subItems
+      // Esperar unos segundos para eliminar el elemento, de forma que el efecto ocurra sin problemas
+      setTimeout(() => {
+        $($(`div[idhorbito='${id}']`).siblings()[0]).remove()
+      }, 125)
+      $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
+      changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
+    } else { // En caso de no estarlo, listartla (desplegarla)
+      listFolderAndClickItem(id) // Desplegar carpeta
+      $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
+      changeArrow($(this).children()[0]) // Cambio de flechas en el Sidebar
+    }
+    // Finalizando renderizado...
+    requestRunningFolder = false
+  }, 500)
+})
+
+let requestRunningFile = false
+// Evento doble-click sobre un archivo en el Sidebar
+$('.sidebar').on('dblclick', 'div[type="file"]', function () {
+console.log('Haz hecho un doble-click sobre un archivo...')
+  // En caso de que se este ejecutando el renderizado de los items
+  if (requestRunningFile) return
+
+  // ID de la carpeta
+  const id = $(this).attr('idhorbito')
+
+  // Iniciar renderizado...
+  requestRunningFile = true
+  setTimeout(() => {
+    if ($(`div[idhorbito='${id}']`).attr('class') !== 'selected') { // Determinar si el archivo esta seleccionado
+      $(`div[idhorbito]`).removeClass('selected') // Remover la seleccion de todos los items
+      $(`div[idhorbito='${id}']`).addClass('selected')
+    }
+    listFolderAndClickItem(id) // Abrir archivo
+    // Finalizando renderizado...
+    requestRunningFile = false
+  }, 500)
 })
 
 // Guardar archivo
@@ -114,29 +144,13 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
   // Propiedades del item clickeado (con el click derecho)
   const item = {
     "id": Number($(this).attr('idhorbito')), 
-    "type": () => {
-      // Tipo: Folder|File
-      let t = null
-
-      // En caso de ser una carpeta, tendra un icono de flecha (cual hay que omitir) antes del "icon-folder"
-      if ($(this).children().length === 2) {
-        // Obtener el icono de directorio
-        t = $(this).children()[1]
-        // Obtener su clase: "icon-folder"
-        t = $(t).attr('class')
-      } else {
-        // Obtener su clase: "icon-file"
-        t = $(this).children().attr('class')
-      }
-      
-      return t.split('-')[1]
-    }
+    "type": $(this).attr('type')
   }
 
   // Determinar si se trata de un archivo o un directorio
-  if (item.type() === 'folder') { // En caso de ser una carpeta
-    menu.addOption('New File', () => { newFileFolder(item.id) } )
-    menu.addOption('New Folder', () => { newFolderFolder(item.id) } )
+  if (item.type === 'folder') { // En caso de ser una carpeta
+    menu.addOption('New File', () => { newFileFolder(item) } )
+    menu.addOption('New Folder', () => { newFolderFolder(item) } )
     menu.addOption('Rename', () => { renameItem(item) })
     menu.addOption('Delete', () => { deleteItem(item) })
   } else { // En caso de ser un archivo
@@ -149,16 +163,41 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
 })
 
 // [Folder] New File
-function newFileFolder (id) {
-  api.fs(id, (err, item) => {
-    console.log('newFileFolder', item)
+function newFileFolder (item) {
+  api.fs(item.id, (err, item) => {
+    console.log('newFileFolder', item.id)
   })
 }
 
 // [Folder] New Folder
-function newFolderFolder (id) {
-  api.fs(id, (err, item) => {
-    console.log('newFolderFolder', item)
+function newFolderFolder (item) {
+  prompt('Enter the name of the directory to create', res => {
+    if (res) {
+      api.fs(item.id, (err, fsNode) => {
+        fsNode.createDirectory(res, (err, folder) => {
+          if (err) return console.log(err) // En caso de error
+          if (err) alert(`There was an error trying to create the folder: ${err}`) // En caso de error
+
+          if ($(`div[idhorbito='${item.id}']`)[1] !== undefined) { // En caso de que la carpeta este vacia...
+            // Crear una lista desordenada (UL) para el contenido de la carpeta a listar (desplegar)
+            baseULHorbitoSidebarSUB(item.id, 'subItem')
+            $(`ul[idhorbito='${item.id}']`).hide() // Ocultar el contenedor de items (a la espera que este lleno)
+            
+            // Generar la nueva carpeta
+            itemLIHorbitoSidebarSUB(item.id, 'item', folder.id, 'icon-folder', folder.name, '<i class="icon-arrow-right"></i>')
+            
+            // Agregar item al Sidebar
+            // $(`div[idhorbito='${item.id}']`).animate({ left: '-500px'}, 100).animate({ left: '25px'}, 200)
+
+            $(`ul[idhorbito='${item.id}']`).slideDown(110) // Ocultar el contenedor de items (a la espera que este lleno)
+          } else {
+            // Generar la nueva carpeta
+            itemLIHorbitoSidebarSUBAddFolder(item.id, 'item', folder.id, 'icon-folder', folder.name, '<i class="icon-arrow-right"></i>')
+            $(`div[idhorbito='${folder.id}']`).animate({ left: '25px'}, 250).animate({ left: 0 }, 50) // Efecto de insercion de una carpeta al Sidebar
+          }
+        })
+      })
+    }
   })
 }
 
@@ -172,8 +211,7 @@ function renameItem (item) {
         // Renombrar
         fsNode.rename(res, err => {
           if (err) return console.log(err) // En caso de error
-          if (err) alert(`There was an error trying to rename the ${item.type()}: ${err}`) // En caso de error
-        
+          if (err) alert(`There was an error trying to rename the ${item.type}: ${err}`) // En caso de error
           api.fs(item.id, (err, fsNode) => {
             // Almacenar el elemento
             const el = $(`div[idhorbito='${item.id}']`).html()
@@ -191,14 +229,18 @@ function renameItem (item) {
 // [Folder|File] Rename
 function deleteItem (item) {
   // Mensaje de confirmacion sobre la eliminacion de unarchivo/directorio
-  confirm(`Are you sure you want to delete this ${item.type()}?`, res => {
+  confirm(`Are you sure you want to delete this ${item.type}?`, res => {
     if(res) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.remove((err, response) => {
-          if (err) alert(`There was an error trying to delete the ${item.type()}: ${err}`) // En caso de error
+          if (err) alert(`There was an error trying to delete the ${item.type}: ${err}`) // En caso de error
           if (err) return console.log(err) // En caso de error
           // Remover item del sidebar
-          $(`div[idhorbito='${item.id}']`).remove()
+          $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
+          // Esperar unos segundos para eliminar el elemento, de forma que el efecto ocurra sin problemas
+          setTimeout(() => {
+            $(`div[idhorbito='${item.id}']`).parent().remove()
+          }, 310)
           // En caso de estar abierto el archivo, establecerlo como "fuera de la horbita"
           filesOpened.forEach(e => {
             if (e.id === item.id) e.horbiting = false

@@ -24,7 +24,7 @@ function itemLIBar (parentID, elementId, objectId, el) {
  * icon: Icono que se asigna al item con el fin de mejorar su diseno, en este caso se ubica en la parte izquierda
  */
 function itemLIHorbitoSidebar (parentID, elementId, objectId, icon, el) {
-  $(`.${parentID}`).append(`<li class="${elementId}"><div idhorbito="${objectId}"><i class="${icon}"></i>${el}</div></li>`)
+  $(`.${parentID}`).append(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}"><i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear la base de una lista desordenada (UL) para el contenido de los directorios listados
@@ -36,7 +36,12 @@ function baseULHorbitoSidebarSUB (id, elementId) {
 
 // Crear items (contenido) en una lista desordenada (UL) dentro de un directorio listado
 function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el, arrow = '') {
-  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}">${arrow}<i class="${icon}"></i>${el}</div></li>`)
+  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}">${arrow}<i class="${icon}"></i>${el}</div></li>`)
+}
+
+// Crear items en el Sidebar por medio de ContextMenu
+function itemLIHorbitoSidebarSUBAddFolder (id, elementId, objectId, icon, el, arrow = '') {
+  $(`.subItem[idhorbito='${id}']`).prepend(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}" style="left: -500px;">${arrow}<i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear items en una lista (Tab)
@@ -101,6 +106,7 @@ export {
   itemLIHorbitoSidebar, // Crear items en el contenedor de pestanas, el area de edicion y en el sidebar vinculados entre si <li><li>
   baseULHorbitoSidebarSUB, // Crea la base para los items en el Sidebar estructurados en forma de arbol
   itemLIHorbitoSidebarSUB, // Crea items en el Sidebar estructurados en forma de arbol
+  itemLIHorbitoSidebarSUBAddFolder, // Crea items en el Sidenar por medio del ContextMenu
   itemLIHorbitoTab, // Crea una nueva pestana en el editor
   itemLIHorbitoTextarea, // Crea un nuevo entorno de CodeMirror, es decir, crea un TextArea
   FileCreator, // Es una clase que crea objetos que representan un archivo dentro del editor

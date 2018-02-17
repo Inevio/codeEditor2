@@ -123,6 +123,11 @@ div.sidebar ul.subItem {
     div.sidebar ul.subItem li.item div {
       padding-top: 2.5px;
       padding-bottom: 2.5px;
+      position: relative;
+    }
+
+    div.sidebar ul.subItem li.item div[type='folder'] {
+      margin-left: -20px;
     }
 
     div.sidebar ul.subItem li.item div i {
@@ -226,6 +231,7 @@ section.container {
         cursor: pointer;
         background-color: #2c343d;
         position: relative;
+        bottom: -45px;
       }
 
         section.container div.code div.tabs-container ul.tabs li.tab i.icon-close {

@@ -9,7 +9,7 @@ function addFocus (idTab) {
   filesOpened.forEach(element => {
     if (element.id === Number(idTab)) {
       // Agregar el focus a la tab que se crea o que se clickea
-      $(`.tab[idhorbito='${idTab}']`).addClass('on')
+      $(`.tab[idhorbito='${idTab}']`).animate({ bottom: '0' }, 200).addClass('on')
       // Activar el focus en el objeto correspondiente al archivo
       element.focus = true
     } else {
