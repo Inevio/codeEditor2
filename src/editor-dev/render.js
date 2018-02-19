@@ -66,7 +66,23 @@ function newFile (id, horbiting, name, type, content) {
   } else { // En caso de que el archivo no se encuentre abierto en el editor
     documentGenerator(file)
   }
-  console.log(filesOpened)
+
+  // Reajustar CodeMirror segun el tamano del Editor
+  function resize (h) {
+    if (filesOpened.length === 0) return // En caso de estar nada abierto en el Editor, no hacer nada
+    $('.CodeMirror').css('height', h)
+  }
+
+  // Eventos para modificar el alto del CodeMirror
+  $(window).on("mousemove", () => {
+    resize($('.text').height())
+  })
+
+  $('.ui-maximize').on("click", () => {
+    setTimeout(() => {
+      resize($('.text').height())
+    }, 100)
+  })
 }
 
 // Generador de areas de trabajo
