@@ -11,69 +11,69 @@
 const barOpts = [
   {
     "id": "menu-file",
-    "name": "File",
+    "name": lang.menuFile,
     "subClass": "sub-menu-file",
     "sub": [
       {
         "id": "menu-file-new-file",
-        "name": "New File"
+        "name": lang.menuFileNewFile
       },
       {
         "id": "menu-file-open-file",
         "idEvent": "open-file-event",
-        "name": "Open File"
+        "name": lang.menuFileOpenFile
       },
       {
         "id": "menu-file-open-folder",
         "idEvent": "open-folder-event",
-        "name": "Open Folder"
+        "name": lang.menuFileOpenFolder
       },
       {
         "id": "menu-file-save",
         "idEvent": "file-save-event",
-        "name": "Save"
+        "name": lang.menuFileSave
       },
       {
         "id": "menu-file-save-as",
         "idEvent": "file-save-as-event",
-        "name": "Save As"
+        "name": lang.menuFileSaveAs
       }
     ]
   },
   {
     "id": "menu-edit",
-    "name": "Edit",
+    "name": lang.menuEdit,
     "subClass": "sub-menu-edit",
     "sub": [
       {
         "id": "menu-edit-copy",
-        "name": "Copy"
+        "name": lang.menuEditCopy
       },
       {
         "id": "menu-edit-cut",
-        "name": "Cut"
+        "name": lang.menuEditCut
       },
       {
         "id": "menu-edit-paste",
-        "name": "Paste"
+        "name": lang.menuEditPaste
       }
     ]
   },
   {
     "id": "menu-view",
-    "name": "View"
+    "name": lang.menuView
   },
   {
     "id": "menu-selection",
-    "name": "Selection"
+    "name": lang.menuSelection
   },
   {
     "id": "menu-find",
-    "name": "Find"
+    "name": lang.menuFind
   },
   {
-    "id": "menu-view",
-    "name": "Packages"
+    "id": "menu-packages",
+    "name": lang.menuPackages
   }
 ]
 

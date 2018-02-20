@@ -30,7 +30,6 @@ render.navigationBar(barOpts)
 // Drag-Drop
 $('.text').on('wz-drop', function (e, item, list) {
   list.forEach(file => {
-console.log('Archivo a abrir', file.fsnode)
     // Determinar si es una carpeta o un archivo
     if (file.fsnode.type === 3) {
       // Leer archivo y renderizar contenido
@@ -52,7 +51,7 @@ $('.menu-file-new-file').on('click', () => {
 $('.open-file-event').on('click', () => {
   // Objeto de configuracion para el explorador
   const options = {
-    title: 'Select file to open',
+    title: lang.selectSourceFile,
     mode: 'file',
     multiple: false
   }
@@ -71,7 +70,7 @@ $('.open-file-event').on('click', () => {
 $('.open-folder-event').on('click', () => {
   // Objeto de configuracion para el explorador
   const options = {
-    title: 'Select folder to open',
+    title: lang.selectSourceFolder,
     mode: 'directory',
     multiple: false
   }
@@ -99,7 +98,7 @@ $('.file-save-event').on('click', () => {
       saveFile(element.id, element.cm.getValue())
     } else if (element.focus && !element.horbiting) { // Si el archivo esta seleccionado y no esta horbiting
       saveFileAs(index, {
-        title: 'Select destiny for the file',
+        title: lang.selectDestinyFile,
         mode: 'file',
         name: element.name,
         extension: extension(element.type)
@@ -112,7 +111,7 @@ $('.file-save-event').on('click', () => {
 $('.file-save-as-event').on('click', () => {
   // Objeto de configuracion para el explorador
   const options = {
-    title: 'Select destiny for the file',
+    title: lang.selectDestinyFile,
     mode: 'file',
     name: 'untitled',
     extension: ''
@@ -121,7 +120,7 @@ $('.file-save-as-event').on('click', () => {
   filesOpened.forEach((element, index) => {
     if (element.focus && element.horbiting) { // En caso de que el archivo este seleccionado y horbiting
       saveFileAs(index, {
-        title: 'Select destiny for the file',
+        title: lang.selectDestinyFile,
         mode: 'file',
         name: element.name,
         extension: extension(element.type)

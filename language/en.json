@@ -1,0 +1,42 @@
+{
+  "menuFile": "File",
+  "menuFileNewFile": "New File",
+  "menuFileOpenFile": "Open File",
+  "menuFileOpenFolder": "Open Folder",
+  "menuFileSave": "Save",
+  "menuFileSaveAs": "Save As",
+
+  "menuEdit": "Edit",
+  "menuEditCopy": "Copy",
+  "menuEditCut": "Cut",
+  "menuEditPaste":"Paste",
+
+  "menuView": "View",
+  "menuSelection": "Selection",
+  "menuFind": "Find",
+  "menuPackages": "Packages",
+
+  "selectSourceFile": "Select file to open",
+  "selectSourceFolder": "Select folder to open",
+  "selectDestinyFile": "Select destiny for the file",
+
+  "contextMenuNewFile": "New File",
+  "contextMenuNewFolder": "New Folder",
+  "contextMenuRename": "Rename",
+  "contextMenuDelete": "Delete",
+  "contextMenuCloseFolder": "Close Folder",
+
+  "contextMenuItemTypeFolder": "folder",
+  "contextMenuItemTypeFile": "file",
+
+  "contextMenuNewFolderSidebar": "Enter the name of the directory to create",
+  "contextMenuNewFolderSidebarERROR": "There was an error trying to create the folder",
+
+  "contextMenuRenameItem": "Please, write the new name",
+  "contextMenuRenameItemERROR": "There was an error trying to rename the",
+  
+  "contextMenuDeleteItem": "Are you sure you want to delete this",
+  "contextMenuDeleteItemERROR": "There was an error trying to delete the",
+
+  "contextMenuCloseFolderSidebar": "Are you sure you want to close this"
+}

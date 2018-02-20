@@ -1,0 +1,42 @@
+{
+  "menuFile": "Archivo",
+  "menuFileNewFile": "Nuevo Archivo",
+  "menuFileOpenFile": "Abrir Archivo",
+  "menuFileOpenFolder": "Abrir Carpeta",
+  "menuFileSave": "Guardar",
+  "menuFileSaveAs": "Guardar como",
+
+  "menuEdit": "Editar",
+  "menuEditCopy": "Copiar",
+  "menuEditCut": "Cortar",
+  "menuEditPaste":"Pegar",
+
+  "menuView": "Ver",
+  "menuSelection": "Seleccion",
+  "menuFind": "Buscar",
+  "menuPackages": "Paquetes",
+
+  "selectSourceFile": "Selecionar un archivo a abrir",
+  "selectSourceFolder": "Selecionar un directorio a abrir",
+  "selectDestinyFile": "Seleccione una carpeta de destino",
+
+  "contextMenuNewFile": "Nuevo Archivo",
+  "contextMenuNewFolder": "Nuevo Directorio",
+  "contextMenuRename": "Renombrar",
+  "contextMenuDelete": "Eliminar",
+  "contextMenuCloseFolder": "Cerrar Directorio",
+
+  "contextMenuItemTypeFolder": "directorio",
+  "contextMenuItemTypeFile": "archivo",
+
+  "contextMenuNewFolderSidebar": "Ingrese el nombre del directorio a crear",
+  "contextMenuNewFolderSidebarERROR": "Ocurrio un error al intentar crear el directorio",
+
+  "contextMenuRenameItem": "Por favor, escriba el nuevo nombre",
+  "contextMenuRenameItemERROR": "Ocurrio un error al intentar renombrar el",
+  
+  "contextMenuDeleteItem": "¿Esta seguro que desea eliminar este",
+  "contextMenuDeleteItemERROR": "Ocurrio un error al intentar eliminar este",
+
+  "contextMenuCloseFolderSidebar": "¿Esta seguro que desea cerrar este"
+}

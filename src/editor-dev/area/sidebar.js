@@ -56,7 +56,6 @@ function listFolderAndClickItem (id) {
 let requestRunningFolder = false
 // Evento click sobre una carpeta en el Sidebar
 $('.sidebar').on('click', 'div[type="folder"]', function () {
-console.log('Haz hecho un click sobre una carpeta...')
   // En caso de que se este ejecutando el renderizado de los items
   if (requestRunningFolder) return
 
@@ -88,7 +87,6 @@ console.log('Haz hecho un click sobre una carpeta...')
 let requestRunningFile = false
 // Evento doble-click sobre un archivo en el Sidebar
 $('.sidebar').on('dblclick', 'div[type="file"]', function () {
-console.log('Haz hecho un doble-click sobre un archivo...')
   // En caso de que se este ejecutando el renderizado de los items
   if (requestRunningFile) return
 
@@ -149,14 +147,16 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
 
   // Determinar si se trata de un archivo o un directorio
   if (item.type === 'folder') { // En caso de ser una carpeta
-    menu.addOption('New File', () => { newFileSidebar(item) } )
-    menu.addOption('New Folder', () => { newFolderSidebar(item) } )
-    menu.addOption('Rename', () => { renameItem(item) })
-    menu.addOption('Delete', () => { deleteItem(item) })
-    menu.addOption('Close Folder', () => { closeFolder(item) })
+    item.type = lang.contextMenuItemTypeFolder // Configurar idioma al tipo de item
+    menu.addOption(lang.contextMenuNewFile, () => { newFileSidebar(item) } )
+    menu.addOption(lang.contextMenuNewFolder, () => { newFolderSidebar(item) } )
+    menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
+    menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
+    menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
   } else { // En caso de ser un archivo
-    menu.addOption('Rename', () => { renameItem(item) })
-    menu.addOption('Delete', () => { deleteItem(item) })
+    item.type = lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
+    menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
+    menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
   }
 
   // Rendelizado del ContextMenu
@@ -172,12 +172,12 @@ function newFileSidebar (item) {
 
 // [Folder] New Folder
 function newFolderSidebar (item) {
-  prompt('Enter the name of the directory to create', res => {
+  prompt(lang.contextMenuNewFolderSidebar, res => {
     if (res) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.createDirectory(res, (err, folder) => {
           if (err) return console.log(err) // En caso de error
-          if (err) alert(`There was an error trying to create the folder: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuNewFolderSidebarERROR}: ${err}`) // En caso de error
 
           if ($(`div[idhorbito='${item.id}']`)[1] !== undefined) { // En caso de que la carpeta este vacia...
             // Crear una lista desordenada (UL) para el contenido de la carpeta a listar (desplegar)
@@ -205,14 +205,14 @@ function newFolderSidebar (item) {
 
 // [Folder|File] Rename
 function renameItem (item) {
-  prompt('Please, write the new name', res => {
+  prompt(lang.contextMenuRenameItem, res => {
     // Si existe un nuevo nombre
     if (res) {
       api.fs(item.id, (err, fsNode) => {
         // Renombrar
         fsNode.rename(res, err => {
           if (err) return console.log(err) // En caso de error
-          if (err) alert(`There was an error trying to rename the ${item.type}: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuRenameItemERROR} ${item.type}: ${err}`) // En caso de error
           api.fs(item.id, (err, fsNode) => {
             // Almacenar el elemento
             const el = $(`div[idhorbito='${item.id}']`).html()
@@ -230,11 +230,11 @@ function renameItem (item) {
 // [Folder|File] Delete
 function deleteItem (item) {
   // Mensaje de confirmacion sobre la eliminacion de unarchivo/directorio
-  confirm(`Are you sure you want to delete this ${item.type}?`, res => {
+  confirm(`${lang.contextMenuDeleteItem} ${item.type}?`, res => {
     if(res) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.remove((err, response) => {
-          if (err) alert(`There was an error trying to delete the ${item.type}: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuDeleteItemERROR} ${item.type}: ${err}`) // En caso de error
           if (err) return console.log(err) // En caso de error
           // Remover item del sidebar
           $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
@@ -258,7 +258,7 @@ function deleteItem (item) {
 // [Folder] Close
 function closeFolder (item) {
   // Mensaje de confirmacion sobre la remocion del directorio
-  confirm(`Are you sure you want to close this ${item.type}?`, res => {
+  confirm(`${lang.contextMenuCloseFolderSidebar} ${item.type}?`, res => {
     if(res) {
       // Remover item del sidebar
       $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
