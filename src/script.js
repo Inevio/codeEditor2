@@ -19,13 +19,28 @@ import { barOpts } from './editor-dev/config.js'
 import { render } from './editor-dev/render.js'
 // Area de trabajo
 // Sidebar
-import { fsRead, saveFile, saveFileAs } from './editor-dev/area/sidebar.js'
+import { fsRead, listFolderAndClickItem, saveFile, saveFileAs } from './editor-dev/area/sidebar.js'
 
 // TEST
 let tabs = 0
 
 // Renderizar el menu
 render.navigationBar(barOpts)
+
+// Drag-Drop
+$('.text').on('wz-drop', function (e, item, list) {
+  list.forEach(file => {
+console.log('Archivo a abrir', file.fsnode)
+    // Determinar si es una carpeta o un archivo
+    if (file.fsnode.type === 3) {
+      // Leer archivo y renderizar contenido
+      fsRead(file.fsnode.id, true)
+    } else {
+      // Array de objetos (que representan archivos en Horbito) de la carpeta raiz
+      render.sidebar(file.fsnode)
+    }
+  })
+})
 
 // Nuevo Archivo
 $('.menu-file-new-file').on('click', () => {

@@ -3,7 +3,7 @@
 // Renderizado
 import { render } from '../render.js'
 // Utilidades
-import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, filesOpened, changeArrow } from '../utils.js'
+import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, filesOpened, changeArrow, closeSidebar } from '../utils.js'
 
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
@@ -149,10 +149,11 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
 
   // Determinar si se trata de un archivo o un directorio
   if (item.type === 'folder') { // En caso de ser una carpeta
-    menu.addOption('New File', () => { newFileFolder(item) } )
-    menu.addOption('New Folder', () => { newFolderFolder(item) } )
+    menu.addOption('New File', () => { newFileSidebar(item) } )
+    menu.addOption('New Folder', () => { newFolderSidebar(item) } )
     menu.addOption('Rename', () => { renameItem(item) })
     menu.addOption('Delete', () => { deleteItem(item) })
+    menu.addOption('Close Folder', () => { closeFolder(item) })
   } else { // En caso de ser un archivo
     menu.addOption('Rename', () => { renameItem(item) })
     menu.addOption('Delete', () => { deleteItem(item) })
@@ -163,14 +164,14 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
 })
 
 // [Folder] New File
-function newFileFolder (item) {
+function newFileSidebar (item) {
   api.fs(item.id, (err, item) => {
-    console.log('newFileFolder', item.id)
+    console.log('newFileSidebar', item.id)
   })
 }
 
 // [Folder] New Folder
-function newFolderFolder (item) {
+function newFolderSidebar (item) {
   prompt('Enter the name of the directory to create', res => {
     if (res) {
       api.fs(item.id, (err, fsNode) => {
@@ -202,7 +203,7 @@ function newFolderFolder (item) {
 }
 
 
-// [Folder|File] Delete
+// [Folder|File] Rename
 function renameItem (item) {
   prompt('Please, write the new name', res => {
     // Si existe un nuevo nombre
@@ -226,7 +227,7 @@ function renameItem (item) {
   })
 }
 
-// [Folder|File] Rename
+// [Folder|File] Delete
 function deleteItem (item) {
   // Mensaje de confirmacion sobre la eliminacion de unarchivo/directorio
   confirm(`Are you sure you want to delete this ${item.type}?`, res => {
@@ -239,7 +240,10 @@ function deleteItem (item) {
           $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
           // Esperar unos segundos para eliminar el elemento, de forma que el efecto ocurra sin problemas
           setTimeout(() => {
-            $(`div[idhorbito='${item.id}']`).parent().remove()
+            $(`div[idhorbito='${item.id}']`).parent().parent().remove()
+
+            // Si no hay carpetas en el Sidebar ocultarlo
+            closeSidebar($('.sidebar').children()[0] === undefined)
           }, 310)
           // En caso de estar abierto el archivo, establecerlo como "fuera de la horbita"
           filesOpened.forEach(e => {
@@ -247,6 +251,25 @@ function deleteItem (item) {
           })
         })
       })
+    }
+  })
+}
+
+// [Folder] Close
+function closeFolder (item) {
+  // Mensaje de confirmacion sobre la remocion del directorio
+  confirm(`Are you sure you want to close this ${item.type}?`, res => {
+    if(res) {
+      // Remover item del sidebar
+      $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
+      // Esperar unos segundos para eliminar el elemento, de forma que el efecto ocurra sin problemas
+      setTimeout(() => {
+        $(`div[idhorbito='${item.id}']`).parent().parent().remove()
+        
+        // Si no hay carpetas en el Sidebar ocultarlo
+        closeSidebar($('.sidebar').children()[0] === undefined)
+      }, 310)
+
     }
   })
 }

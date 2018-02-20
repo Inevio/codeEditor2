@@ -136,7 +136,8 @@ function sidebar (rootFolder) {
 
   // Mostrar Sidebar
   $('.sidebar').show()
-  $('.code').css('width', '80%')
+  $('.sidebar').css('width', '200px').css('padding', '3px 10px')
+  $('.code').css('width', 'calc(100% - 200px)')
 }
 
 // navigationBar: Renderiza el menus

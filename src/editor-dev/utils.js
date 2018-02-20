@@ -100,6 +100,18 @@ function changeArrow(item) {
   } // if ($(item).attr('class') === 'icon-arrow-down')
 }
 
+// Cerrar Sidebar
+function closeSidebar (response) {
+  if (response) {
+    // Ocultar Sidebar
+    $('.sidebar').animate({ width: 0, padding: 0 }, 100)
+    setTimeout(() => {
+      $('.sidebar').hide()
+    }, 300)
+    $('.code').animate({ width: '100%' }, 100)
+  }
+}
+
 export {
   listUL, // Crea una lista desordenada <ul><ul>
   itemLIBar, // Crear items en la Barra de Navegacion <li><li>
@@ -113,5 +125,6 @@ export {
   filesOpened, // Es un array que contiene objetos que representan archivos dentro de editor
   ellipsis, // Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
   extension, // Retorna la extension del tipo de archivo segun Horbito
-  changeArrow // Rota la posicion de la flecha que indica si una carpeta esta abierta o cerrada en el Sidebar
+  changeArrow, // Rota la posicion de la flecha que indica si una carpeta esta abierta o cerrada en el Sidebar
+  closeSidebar // Determina si el Sidebar esta vacio (sin archivos ni carpetas) y si es asi lo cierra
 }

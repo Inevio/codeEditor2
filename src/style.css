@@ -180,7 +180,7 @@ section.container {
     color: white;
     width: 20%;
     overflow: auto;
-    padding: 3px 10px;
+    /*padding: 3px 10px;*/
   }
 
   /* Area de trabajo: Codigo + tabs */
@@ -217,7 +217,7 @@ section.container {
       section.container div.code div.tabs-container ul.tabs {
         color: white;
         display: flex;
-        width: 95%;
+        width: 94%;
       }
 
       /* Tab: individual */
