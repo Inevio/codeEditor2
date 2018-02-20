@@ -72,6 +72,8 @@ function newFile (id, horbiting, name, type, content) {
     if (filesOpened.length === 0) return // En caso de estar nada abierto en el Editor, no hacer nada
     $('.CodeMirror').css('height', h)
   }
+  // Llamar a la funcion de forma que se ajuste al crear una nueva pestana
+  resize($('.text').height())
 
   // Eventos para modificar el alto del CodeMirror
   $(window).on("mousemove", () => {
@@ -82,6 +84,16 @@ function newFile (id, horbiting, name, type, content) {
     setTimeout(() => {
       resize($('.text').height())
     }, 100)
+  })
+
+  // Eliminar marcado luego de buscar
+  filesOpened.forEach(file => {
+    if (file.focus === true) {
+      // Al clickear el CodeMirror, eliminar texto marcado (con find)
+      file.cm.on("mousedown", () => {
+        $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
+      })
+    }
   })
 }
 
