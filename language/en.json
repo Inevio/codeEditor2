@@ -1,4 +1,6 @@
 {
+  "loading": "Loading",
+
   "menuFile": "File",
   "menuFileNewFile": "New File",
   "menuFileOpenFile": "Open File",

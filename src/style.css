@@ -7,7 +7,7 @@
   background: transparent;
 }
 
-.app-title {
+.app-title, .loading {
   color: #cbd4d9;
 }
   section.ui-header {
@@ -287,4 +287,12 @@ section.container {
     }
     .CodeMirror-lines {
       cursor: text !important;
+    }
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }

@@ -111,6 +111,9 @@ function documentGenerator (file) {
   // Ocultar todos los textareas NO RELACIONADOS a la nueva tab
   hideTextareas(file.id)
 
+  // Eliminar mensaje de carga
+  $('.loading').remove()
+
   // Adjuntar textarea-div en el editor (en el HTML)
   itemLIHorbitoTextarea('text', file.id)
 
@@ -136,7 +139,7 @@ function sidebar (rootFolder) {
 
   // Mostrar Sidebar
   $('.sidebar').show()
-  $('.sidebar').css('width', '200px').css('padding', '3px 10px')
+  $('.sidebar').css('width', '180px').css('padding', '3px 10px')
   $('.code').css('width', 'calc(100% - 200px)')
 }
 

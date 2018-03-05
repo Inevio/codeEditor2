@@ -1,4 +1,6 @@
 {
+  "loading": "Cargando",
+
   "menuFile": "Archivo",
   "menuFileNewFile": "Nuevo Archivo",
   "menuFileOpenFile": "Abrir Archivo",

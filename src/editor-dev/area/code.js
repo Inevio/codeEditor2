@@ -22,6 +22,9 @@ function addFocus (idTab) {
 
 // Ocultar todos los textareas y mostrar el relacionado a cada tab
 function hideTextareas (idTextArea) {
+  // Eliminar mensaje de carga
+  $('.loading').remove()
+
   // Ocultar todos los textareas
   filesOpened.forEach(element => {
     $(`.myTextArea-${element.id}`).hide()

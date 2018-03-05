@@ -12,6 +12,14 @@ function fsRead (idFile, horbiting) {
   api.fs(idFile, (err, fsNode) => {
     if (err) return console.log(err) // En caso de error
 
+    // En tester se almacena el resulado de la operacion de busqueda de igualdad
+    let tester = filesOpened.find(element => { return element.id === Number(idFile) })
+
+    if (!tester) {
+      // Agregar mensaje de carga
+      $('.text').prepend(`<div class="loading">${lang.loading}...</div>`)
+    }
+
     fsNode.read(function (err, fileContent) {
       if (err) return console.log(err) // En caso de error
 
