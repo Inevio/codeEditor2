@@ -3,7 +3,7 @@
 // Renderizado
 import { render } from '../render.js'
 // Utilidades
-import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, filesOpened, changeArrow, closeSidebar } from '../utils.js'
+import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, changeArrow, closeSidebar } from '../utils.js'
 
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
@@ -12,20 +12,8 @@ function fsRead (idFile, horbiting) {
   api.fs(idFile, (err, fsNode) => {
     if (err) return console.log(err) // En caso de error
 
-    // En tester se almacena el resulado de la operacion de busqueda de igualdad
-    let tester = filesOpened.find(element => { return element.id === Number(idFile) })
-
-    if (!tester) {
-      // Agregar mensaje de carga
-      $('.text').prepend(`<div class="loading">${lang.loading}...</div>`)
-    }
-
-    fsNode.read(function (err, fileContent) {
-      if (err) return console.log(err) // En caso de error
-
-      // Crear nuevo archivo: Crear tab y textarea
-      render.newFile(fsNode.id, horbiting, fsNode.name, fsNode.mime, fileContent)
-    })
+    // Crear nuevo archivo: Crear tab y textarea
+    render.newFile(fsNode.id, horbiting, fsNode.name, fsNode.mime)
   })
 }
 
@@ -36,7 +24,7 @@ function listFolderAndClickItem (id) {
     if (err) return console.log(err) // En caso de error
 
     if (fsNode.type === 3) { // Leer archivos
-      fsRead(id)
+      fsRead(id, true)
     } else { // Listar directorios
       // Listar carpeta y archivos: $ ls
       fsNode.list(function (err, listFiles) {

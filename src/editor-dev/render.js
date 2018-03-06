@@ -50,9 +50,9 @@ function navigationBar (barOpts) {
 
 // Code: Edicion
 // Renderiza una nueva area de edicion (pestana y area de texto)
-function newFile (id, horbiting, name, type, content) {
+function newFile (id, horbiting, name, type) {
   // Se crea el objeto partiendo de la clase FileCreator
-  const file = new FileCreator(id, horbiting, name, type, content, true)
+  const file = new FileCreator(id, horbiting, name, type, '', true)
 
   // En tester se almacena el resulado de la operacion de busqueda de igualdad
   let tester = filesOpened.find(element => { return element.id === file.id })
@@ -71,6 +71,7 @@ function newFile (id, horbiting, name, type, content) {
   function resize (h) {
     if (filesOpened.length === 0) return // En caso de estar nada abierto en el Editor, no hacer nada
     $('.CodeMirror').css('height', h)
+    if ($('.loading')[0] !== undefined) $('.loading').css('height', h)
   }
   // Llamar a la funcion de forma que se ajuste al crear una nueva pestana
   resize($('.text').height())
@@ -87,14 +88,11 @@ function newFile (id, horbiting, name, type, content) {
   })
 
   // Eliminar marcado luego de buscar
-  filesOpened.forEach(file => {
-    if (file.focus === true) {
-      // Al clickear el CodeMirror, eliminar texto marcado (con find)
-      file.cm.on("mousedown", () => {
-        $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
-      })
-    }
-  })
+  // filesOpened.forEach(file => {
+  //   if (file.focus === true) {
+      
+  //   }
+  // })
 }
 
 // Generador de areas de trabajo
@@ -111,15 +109,52 @@ function documentGenerator (file) {
   // Ocultar todos los textareas NO RELACIONADOS a la nueva tab
   hideTextareas(file.id)
 
-  // Eliminar mensaje de carga
-  $('.loading').remove()
-
   // Adjuntar textarea-div en el editor (en el HTML)
   itemLIHorbitoTextarea('text', file.id)
 
-  // CodeMirror
-  // config: Es un objeto de configuraciones para CodeMirror
-  file.cm = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
+  // Agregar mensaje de carga
+  $(`.myTextArea-${file.id}`).prepend(`<div class="loading l-${file.id}">${lang.loading}...</div>`)
+console.log('horbiting', file)
+  if (file.horbiting) {
+    // Leer archivo
+    api.fs(file.id, (err, fsNode) => {
+      fsNode.read(function (err, fileContent) {
+        if (err) return console.log(err) // En caso de error
+
+        // Agregar contenido del archivo al array de los archivos abiertos
+        for (let el of filesOpened) {
+          if (el.id === file.id) {
+            el.content = fileContent
+console.log('el-filesOpened', file)
+            // Eliminar mensaje de carga
+            $(`.l-${file.id}`).remove()
+
+            // CodeMirror
+            // config: Es un objeto de configuraciones para CodeMirror
+            el.cm = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
+
+            // Al clickear el CodeMirror, eliminar texto marcado (con find)
+            el.cm.on("mousedown", () => {
+              $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
+            })
+          }
+        }
+      })
+    })
+  } else {
+console.log('file-filesOpened', file)
+    // Eliminar mensaje de carga
+    $(`.l-${file.id}`).remove()
+
+    // CodeMirror
+    // config: Es un objeto de configuraciones para CodeMirror
+    file.cm = CodeMirror($(`.myTextArea-${file.id}`)[0], newFileOpts(file.type, file.content))
+
+    // Al clickear el CodeMirror, eliminar texto marcado (con find)
+    file.cm.on("mousedown", () => {
+      $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
+    })
+  }
 }
 
 // Code: Sidebar
