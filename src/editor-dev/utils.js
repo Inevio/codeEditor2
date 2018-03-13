@@ -35,13 +35,13 @@ function baseULHorbitoSidebarSUB (id, elementId) {
 }
 
 // Crear items (contenido) en una lista desordenada (UL) dentro de un directorio listado
-function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el, arrow = '') {
-  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}">${arrow}<i class="${icon}"></i>${el}</div></li>`)
+function itemLIHorbitoSidebarSUB (id, elementId, objectId, icon, el, arrow = '', special) {
+  $(`div[idhorbito='${id}']`).siblings(`.subItem[idhorbito='${id}']`).append(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}" special="${special}">${arrow}<i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear items en el Sidebar por medio de ContextMenu
-function itemLIHorbitoSidebarSUBAddFolder (id, elementId, objectId, icon, el, arrow = '') {
-  $(`.subItem[idhorbito='${id}']`).prepend(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}" style="left: -500px;">${arrow}<i class="${icon}"></i>${el}</div></li>`)
+function itemLIHorbitoSidebarSUBAddFolder (id, elementId, objectId, icon, el, arrow = '',  special) {
+  $(`.subItem[idhorbito='${id}']`).prepend(`<li class="${elementId}"><div idhorbito="${objectId}" type="${icon.split('-')[1]}" special="${special} style="left: -500px;">${arrow}<i class="${icon}"></i>${el}</div></li>`)
 }
 
 // Crear items en una lista (Tab)

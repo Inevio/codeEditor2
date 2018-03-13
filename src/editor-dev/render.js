@@ -86,13 +86,6 @@ function newFile (id, horbiting, name, type) {
       resize($('.text').height())
     }, 100)
   })
-
-  // Eliminar marcado luego de buscar
-  // filesOpened.forEach(file => {
-  //   if (file.focus === true) {
-      
-  //   }
-  // })
 }
 
 // Generador de areas de trabajo
@@ -163,7 +156,7 @@ function sidebar (rootFolder) {
   // Crear item de la carpeta raiz (del proyecto)
   $('.sidebar').append(`<ul class="subItem">
     <li class="item">
-      <div idhorbito="${rootFolder.id}" type="folder">
+      <div idhorbito="${rootFolder.id}" type="folder" special="root">
       <i class="icon-arrow-down"></i><i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
       </div>
     <li>

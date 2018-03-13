@@ -37,7 +37,11 @@ function listFolderAndClickItem (id) {
         for (let file of listFiles) {
           // Determinar si es una carpeta o un archivo y agregarle el icono correspondiente
           if (file.type !== 3) {
-            itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-folder', file.name, '<i class="icon-arrow-right"></i>')
+            if (file.type === 0 || file.type === 1) {
+              itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-folder', file.name, '<i class="icon-arrow-right"></i>', 'folder')
+            } else {
+              itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-folder', file.name, '<i class="icon-arrow-right"></i>')
+            }
           } else {
             itemLIHorbitoSidebarSUB(id, 'item', file.id, 'icon-file', file.name)
           }
@@ -138,7 +142,8 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
   // Propiedades del item clickeado (con el click derecho)
   const item = {
     "id": Number($(this).attr('idhorbito')), 
-    "type": $(this).attr('type')
+    "type": $(this).attr('type'),
+    "special": $(this).attr('special')
   }
 
   // Determinar si se trata de un archivo o un directorio
@@ -146,9 +151,13 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
     item.type = lang.contextMenuItemTypeFolder // Configurar idioma al tipo de item
     menu.addOption(lang.contextMenuNewFile, () => { newFileSidebar(item) } )
     menu.addOption(lang.contextMenuNewFolder, () => { newFolderSidebar(item) } )
-    menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
-    menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
-    menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
+    console.log(item.special)
+    if (item.special === 'undefined') {
+      menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
+      menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
+    }
+    // Agregar la opcion de cerrar solo a la raiz
+    if (item.special === 'root') menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
   } else { // En caso de ser un archivo
     item.type = lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
     menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
@@ -189,7 +198,7 @@ function newFolderSidebar (item) {
             $(`ul[idhorbito='${item.id}']`).slideDown(110) // Ocultar el contenedor de items (a la espera que este lleno)
           } else {
             // Generar la nueva carpeta
-            itemLIHorbitoSidebarSUBAddFolder(item.id, 'item', folder.id, 'icon-folder', folder.name, '<i class="icon-arrow-right"></i>')
+            itemLIHorbitoSidebarSUBAddFolder(item.id, 'item', folder.id, 'icon-folder', folder.name, '<i class="icon-arrow-right"></i>', )
             $(`div[idhorbito='${folder.id}']`).animate({ left: '25px'}, 250).animate({ left: 0 }, 50) // Efecto de insercion de una carpeta al Sidebar
           }
         })
