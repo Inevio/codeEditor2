@@ -151,7 +151,7 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
     item.type = lang.contextMenuItemTypeFolder // Configurar idioma al tipo de item
     menu.addOption(lang.contextMenuNewFile, () => { newFileSidebar(item) } )
     menu.addOption(lang.contextMenuNewFolder, () => { newFolderSidebar(item) } )
-    console.log(item.special)
+    // Si la carpeta no es ni raiz ni un directorio especial de Horbito
     if (item.special === 'undefined') {
       menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
       menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
