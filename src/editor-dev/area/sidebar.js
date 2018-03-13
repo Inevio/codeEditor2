@@ -182,7 +182,7 @@ function newFolderSidebar (item) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.createDirectory(res, (err, folder) => {
           if (err) return console.log(err) // En caso de error
-          if (err) alert(`${lang.contextMenuNewFolderSidebarERROR}: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuNewFolderSidebarERROR}`) // En caso de error
 
           if ($(`div[idhorbito='${item.id}']`)[1] !== undefined) { // En caso de que la carpeta este vacia...
             // Crear una lista desordenada (UL) para el contenido de la carpeta a listar (desplegar)
@@ -217,7 +217,7 @@ function renameItem (item) {
         // Renombrar
         fsNode.rename(res, err => {
           if (err) return console.log(err) // En caso de error
-          if (err) alert(`${lang.contextMenuRenameItemERROR} ${item.type}: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuRenameItemERROR} ${item.type}`) // En caso de error
           api.fs(item.id, (err, fsNode) => {
             // Almacenar el elemento
             const el = $(`div[idhorbito='${item.id}']`).html()
@@ -239,7 +239,7 @@ function deleteItem (item) {
     if(res) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.remove((err, response) => {
-          if (err) alert(`${lang.contextMenuDeleteItemERROR} ${item.type}: ${err}`) // En caso de error
+          if (err) alert(`${lang.contextMenuDeleteItemERROR} ${item.type}`) // En caso de error
           if (err) return console.log(err) // En caso de error
           // Remover item del sidebar
           $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
