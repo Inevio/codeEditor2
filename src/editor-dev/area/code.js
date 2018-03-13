@@ -54,6 +54,21 @@ $('.code').on('click', '.icon-close', function () {
       filesOpened.forEach(function (element, index) {
         // Si el ID es igual al de un objeto, eliminarlo
         if (element.id === Number(id)) filesOpened.splice(index, 1)
+
+        // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+        if (element.focus) {
+          const length = filesOpened.length - 1
+          // Si existen archivos abiertos en el editor
+          if (length > -1) {
+            // Obtener el ID del ultimo archivo abierto
+            const idNEW = filesOpened[length].id
+            // Agregar focus al tab :)
+            addFocus(idNEW)
+
+            // Mostrar textarea relacionada a la tab
+            hideTextareas(idNEW)
+          }
+        }
       })
       click = 0
     }, 500)
@@ -62,7 +77,9 @@ $('.code').on('click', '.icon-close', function () {
 
 // Activar FOCUS al hacer click en una pestana
 // Obtener elemento (tab) clickeado
-$('.code').on('click', '.tab', function () {
+$('.code').on('click', '.tab', function (e) {
+  if (e.target !== this) return
+
   // Obtener las clases del tab
   const className = $(this).attr('class')
 

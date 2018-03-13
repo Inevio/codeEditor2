@@ -107,7 +107,6 @@ function documentGenerator (file) {
 
   // Agregar mensaje de carga
   $(`.myTextArea-${file.id}`).prepend(`<div class="loading l-${file.id}">${lang.loading}...</div>`)
-console.log('horbiting', file)
   if (file.horbiting) {
     // Leer archivo
     api.fs(file.id, (err, fsNode) => {
@@ -118,7 +117,6 @@ console.log('horbiting', file)
         for (let el of filesOpened) {
           if (el.id === file.id) {
             el.content = fileContent
-console.log('el-filesOpened', file)
             // Eliminar mensaje de carga
             $(`.l-${file.id}`).remove()
 
@@ -135,7 +133,6 @@ console.log('el-filesOpened', file)
       })
     })
   } else {
-console.log('file-filesOpened', file)
     // Eliminar mensaje de carga
     $(`.l-${file.id}`).remove()
 
