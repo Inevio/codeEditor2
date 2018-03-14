@@ -2,6 +2,8 @@
 
 // Renderizado
 import { render } from '../render.js'
+// Code: Edicion
+import { addFocus, hideTextareas } from './code.js'
 // Utilidades
 import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, changeArrow, closeSidebar } from '../utils.js'
 
@@ -257,7 +259,40 @@ function deleteItem (item) {
           $(`div[idhorbito='${item.id}']`).animate({ left: '25px'}, 100).animate({ left: '-500px'}, 200)
           // Esperar unos segundos para eliminar el elemento, de forma que el efecto ocurra sin problemas
           setTimeout(() => {
-            $(`div[idhorbito='${item.id}']`).parent().parent().remove()
+            // En caso de que este abierto el Sidebar
+            if ($(`div[idhorbito='${item.id}']`)[0]) {
+              $(`div[idhorbito='${item.id}']`).parent().remove()
+            }
+
+            // En caso de que este abierto en el Editor el archivo (no importa que este enfocado)
+            if ($(`.tab[idhorbito='${item.id}']`)[0] && $(`.myTextArea-${item.id}`)[0]) {
+              // Cerrar tab
+              $(`.tab[idhorbito='${item.id}']`).remove()
+
+              // Cerrar Textarea
+              $(`.myTextArea-${item.id}`).remove()
+
+              // Eliminar documento del array que contiene los archivos abiertos en el editor
+              filesOpened.forEach(function (element, index) {
+                // Si el ID es igual al de un objeto, eliminarlo
+                if (element.id === Number(item.id)) filesOpened.splice(index, 1)
+
+                // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+                if (element.focus) {
+                  const length = filesOpened.length - 1
+                  // Si existen archivos abiertos en el editor
+                  if (length > -1) {
+                    // Obtener el ID del ultimo archivo abierto
+                    const idNEW = filesOpened[length].id
+                    // Agregar focus al tab :)
+                    addFocus(idNEW)
+
+                    // Mostrar textarea relacionada a la tab
+                    hideTextareas(idNEW)
+                  }
+                }
+              })
+            }
 
             // Si no hay carpetas en el Sidebar ocultarlo
             closeSidebar($('.sidebar').children()[0] === undefined)

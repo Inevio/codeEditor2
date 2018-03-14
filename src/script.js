@@ -143,11 +143,11 @@ $('.edit-rename-event').on('click', () => {
         // Objeto
         const item = {
           "id": file.id,
-          "type": "file"
+          "type": lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
         }
         // Renombra un archivo o directorio
         renameItem(item, 'li')
-      } else { // En caso de que el archivo no este horbiting
+      } else if (file.focus && file.horbiting === false) { // En caso de que el archivo no este horbiting
         alert(lang.fileIsNotHorbiting)
       }
     })
@@ -164,11 +164,11 @@ $('.edit-delete-event').on('click', () => {
         // Objeto
         const item = {
           "id": file.id,
-          "type": "file"
+          "type": lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
         }
         // Elimina un archivo o directorio
         deleteItem(item)
-      } else { // En caso de que el archivo no este horbiting
+      } else if (file.focus && file.horbiting === false) { // En caso de que el archivo no este horbiting
         alert(lang.fileIsNotHorbiting)
       }
     })
