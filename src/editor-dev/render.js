@@ -21,11 +21,12 @@ function navigationBar (barOpts) {
 
   // File, Edit, View, ...
   barOpts.forEach(element => {
-    // [LI] Crear items dentro de UL
-    itemLIBar('nav', 'item', element.id, element.name)
 
     // En caso de existir un sub-menu
     if (element.sub) {
+      // [LI] Crear items dentro de UL
+      itemLIBar('nav', 'item', element.id, element.name)
+
       // [UL] Crear lista desordenada
       listUL(element.id, element.subClass)
 
@@ -151,13 +152,15 @@ function documentGenerator (file) {
 function sidebar (rootFolder) {
   // Crear lista desordenada [UL]
   // Crear item de la carpeta raiz (del proyecto)
-  $('.sidebar').append(`<ul class="subItem">
-    <li class="item">
-      <div idhorbito="${rootFolder.id}" type="folder" special="root">
-      <i class="icon-arrow-down"></i><i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
-      </div>
-    <li>
-  </ul>`)
+  api.fs(rootFolder.id, (err, fsNode) => {
+    $('.sidebar').append(`<ul class="subItem">
+      <li class="item">
+        <div idhorbito="${rootFolder.id}" type="folder" special="${(fsNode.type === 0 || fsNode.type === 1) ? 'folder' : undefined}" root>
+        <i class="icon-arrow-down"></i><i class="icon-folder"></i>${(rootFolder.type === 0) ? 'Home' : rootFolder.name}
+        </div>
+      <li>
+    </ul>`)
+  })
 
   // Listar contenido (items) de la carpeta raiz del proyecto
   listFolderAndClickItem(rootFolder.id)

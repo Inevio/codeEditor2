@@ -143,7 +143,8 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
   const item = {
     "id": Number($(this).attr('idhorbito')), 
     "type": $(this).attr('type'),
-    "special": $(this).attr('special')
+    "special": $(this).attr('special'),
+    "root": $(this).attr('root')
   }
 
   // Determinar si se trata de un archivo o un directorio
@@ -157,7 +158,7 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
       menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
     }
     // Agregar la opcion de cerrar solo a la raiz
-    if (item.special === 'root') menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
+    if (item.root === '') menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
   } else { // En caso de ser un archivo
     item.type = lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
     menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
