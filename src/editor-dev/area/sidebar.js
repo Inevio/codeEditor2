@@ -154,14 +154,14 @@ $('.sidebar').on('contextmenu', 'div[idhorbito]', function () {
     menu.addOption(lang.contextMenuNewFolder, () => { newFolderSidebar(item) } )
     // Si la carpeta no es ni raiz ni un directorio especial de Horbito
     if (item.special === 'undefined') {
-      menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
+      menu.addOption(lang.contextMenuRename, () => { renameItem(item, 'div') })
       menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
     }
     // Agregar la opcion de cerrar solo a la raiz
     if (item.root === '') menu.addOption(lang.contextMenuCloseFolder, () => { closeFolder(item) })
   } else { // En caso de ser un archivo
     item.type = lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
-    menu.addOption(lang.contextMenuRename, () => { renameItem(item) })
+    menu.addOption(lang.contextMenuRename, () => { renameItem(item, 'div') })
     menu.addOption(lang.contextMenuDelete, () => { deleteItem(item) })
   }
 
@@ -210,7 +210,7 @@ function newFolderSidebar (item) {
 
 
 // [Folder|File] Rename
-function renameItem (item) {
+function renameItem (item, elementHTML) {
   prompt(lang.contextMenuRenameItem, res => {
     // Si existe un nuevo nombre
     if (res) {
@@ -221,11 +221,22 @@ function renameItem (item) {
           if (err) alert(`${lang.contextMenuRenameItemERROR} ${item.type}`) // En caso de error
           api.fs(item.id, (err, fsNode) => {
             // Almacenar el elemento
-            const el = $(`div[idhorbito='${item.id}']`).html()
+            const el = $(`${elementHTML}[idhorbito='${item.id}']`).html()
             // Romper los elementos internos y obtener el nombre (texto !== </elements>)
-            const name = $(`div[idhorbito='${item.id}']`).text()
+            const name = $(`${elementHTML}[idhorbito='${item.id}']`).text()
             // Reemplazar nombre
-            $(`div[idhorbito='${item.id}']`).html(el.replace(name, fsNode.name))
+            $(`${elementHTML}[idhorbito='${item.id}']`).html(el.replace(name, fsNode.name))
+
+            // En caso de que se renombre desde el Sidebar y tambien este abierto el archivo en el editor, o al contrario
+            const newElHTML = (elementHTML === 'div') ? 'li' : 'div'
+            if (newElHTML !== elementHTML && $(`${newElHTML}[idhorbito='${item.id}']`)[0]) {
+              // Almacenar el elemento
+              const el = $(`${newElHTML}[idhorbito='${item.id}']`).html()
+              // Romper los elementos internos y obtener el nombre (texto !== </elements>)
+              const name = $(`${newElHTML}[idhorbito='${item.id}']`).text()
+              // Reemplazar nombre
+              $(`${newElHTML}[idhorbito='${item.id}']`).html(el.replace(name, fsNode.name))
+            }
           })
         })
       })
@@ -284,4 +295,6 @@ function closeFolder (item) {
 // listFolderAndClickItem: Al hacer click en una carpeta del sibar, la lista (desplega) y en un archivo lo abre :)
 // saveFile: Al hacer click sobreescribe el archivo y salva los cambios
 // saveFileAs: Al hacer click te pide la ubicacion de donde salvar los cambios del archivo
-export { fsRead, listFolderAndClickItem, saveFile, saveFileAs }
+// renameItem: Renombra un archivo o carpeta segun si ID de Horbito
+// deleteItem: Elimina un archivo o carpeta segun si ID de Horbito
+export { fsRead, listFolderAndClickItem, saveFile, saveFileAs, renameItem, deleteItem }

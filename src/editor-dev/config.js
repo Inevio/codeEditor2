@@ -45,7 +45,7 @@ const barOpts = [
     "name": lang.menuEdit,
     "subClass": "sub-menu-edit",
     "sub": [
-      {
+      /*{
         "id": "menu-edit-copy",
         "name": lang.menuEditCopy
       },
@@ -56,6 +56,16 @@ const barOpts = [
       {
         "id": "menu-edit-paste",
         "name": lang.menuEditPaste
+      },*/
+      {
+        "id": "menu-edit-rename",
+        "idEvent": "edit-rename-event",
+        "name": lang.menuEditRename
+      },
+      {
+        "id": "menu-edit-delete",
+        "idEvent": "edit-delete-event",
+        "name": lang.menuEditDelete
       }
     ]
   },

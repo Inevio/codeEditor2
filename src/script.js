@@ -19,7 +19,7 @@ import { barOpts } from './editor-dev/config.js'
 import { render } from './editor-dev/render.js'
 // Area de trabajo
 // Sidebar
-import { fsRead, listFolderAndClickItem, saveFile, saveFileAs } from './editor-dev/area/sidebar.js'
+import { fsRead, listFolderAndClickItem, saveFile, saveFileAs, renameItem, deleteItem } from './editor-dev/area/sidebar.js'
 
 // TEST
 let tabs = 0
@@ -41,6 +41,7 @@ $('.text').on('wz-drop', function (e, item, list) {
   })
 })
 
+// - Archivo
 // Nuevo Archivo
 $('.menu-file-new-file').on('click', () => {
   // El parametro `false` indica que el archivo que se genera no estara horbiting
@@ -131,6 +132,49 @@ $('.file-save-as-event').on('click', () => {
       saveFileAs(index, options)
     }
   })
+})
+
+// - Editar
+// Renombrar
+$('.edit-rename-event').on('click', () => {
+  if (filesOpened.length > 0) {
+    filesOpened.forEach(file => {
+      if (file.focus && file.horbiting) { // En caso de que el archivo este horbiting :)
+        // Objeto
+        const item = {
+          "id": file.id,
+          "type": "file"
+        }
+        // Renombra un archivo o directorio
+        renameItem(item, 'li')
+      } else { // En caso de que el archivo no este horbiting
+        alert(lang.fileIsNotHorbiting)
+      }
+    })
+  } else { // En caso de que ningun archivo este seleccionado
+    alert(lang.emptyEditor)
+  }
+})
+
+// Eliminar
+$('.edit-delete-event').on('click', () => {
+  if (filesOpened.length > 0) {
+    filesOpened.forEach(file => {
+      if (file.focus && file.horbiting) { // En caso de que el archivo este horbiting :)
+        // Objeto
+        const item = {
+          "id": file.id,
+          "type": "file"
+        }
+        // Elimina un archivo o directorio
+        deleteItem(item)
+      } else { // En caso de que el archivo no este horbiting
+        alert(lang.fileIsNotHorbiting)
+      }
+    })
+  } else { // En caso de que ningun archivo este seleccionado
+    alert(lang.emptyEditor)
+  }
 })
 
 // var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;

@@ -11,7 +11,9 @@
   "menuEdit": "Edit",
   "menuEditCopy": "Copy",
   "menuEditCut": "Cut",
-  "menuEditPaste":"Paste",
+  "menuEditPaste": "Paste",
+  "menuEditRename": "Rename",
+  "menuEditDelete": "Delete",
 
   "menuView": "View",
   "menuSelection": "Selection",
@@ -40,5 +42,8 @@
   "contextMenuDeleteItem": "Are you sure you want to delete this",
   "contextMenuDeleteItemERROR": "There was an error trying to delete the",
 
-  "contextMenuCloseFolderSidebar": "Are you sure you want to close this"
+  "contextMenuCloseFolderSidebar": "Are you sure you want to close this",
+
+  "fileIsNotHorbiting": "You are working with a file that has not yet been saved in Horbito!",
+  "emptyEditor": "Currently you are not working with any file!"
 }

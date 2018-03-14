@@ -40,13 +40,12 @@ function navigationBar (barOpts) {
           itemLIBar(element.subClass, 'item', subElement.id, subElement.name)
         }
       })
+
+      // Desplegar menus
+      clickItems(element.subClass, element.id) // File, Edit, ...
+      // Continuar con el resto de items...
     }
   })
-
-  // Desplegar menus
-  clickItems('sub-menu-file', 'menu-file') // File
-  clickItems('sub-menu-edit', 'menu-edit') // Edit
-  // Continuar con el resto de items...
 }
 
 // Code: Edicion

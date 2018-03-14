@@ -12,6 +12,8 @@
   "menuEditCopy": "Copiar",
   "menuEditCut": "Cortar",
   "menuEditPaste":"Pegar",
+  "menuEditRename": "Renombrar",
+  "menuEditDelete": "Eliminar",
 
   "menuView": "Ver",
   "menuSelection": "Seleccion",
@@ -40,5 +42,8 @@
   "contextMenuDeleteItem": "¿Esta seguro que desea eliminar este",
   "contextMenuDeleteItemERROR": "Ocurrio un error al intentar eliminar este",
 
-  "contextMenuCloseFolderSidebar": "¿Esta seguro que desea cerrar este"
+  "contextMenuCloseFolderSidebar": "¿Esta seguro que desea cerrar este",
+
+  "fileIsNotHorbiting": "Usted está trabajando con un archivo que aún no ha sido guardado en Horbito!",
+  "emptyEditor": "Actualmente no está trabajando con ningún archivo!"
 }
