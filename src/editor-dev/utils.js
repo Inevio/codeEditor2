@@ -112,6 +112,20 @@ function closeSidebar (response) {
   }
 }
 
+// Retorna el nombre del archivo segun su ID
+function getName (id) {
+  let name = null
+
+  // Encontrar nombre :)
+  filesOpened.forEach(file => {
+    if (file.id === Number(id)) {
+      name = file.name
+    }
+  })
+
+  return name
+}
+
 export {
   listUL, // Crea una lista desordenada <ul><ul>
   itemLIBar, // Crear items en la Barra de Navegacion <li><li>
@@ -126,5 +140,6 @@ export {
   ellipsis, // Toma una cadena de texto y si es mayor al limite la corta y le agrega unos puntos suspensivos
   extension, // Retorna la extension del tipo de archivo segun Horbito
   changeArrow, // Rota la posicion de la flecha que indica si una carpeta esta abierta o cerrada en el Sidebar
-  closeSidebar // Determina si el Sidebar esta vacio (sin archivos ni carpetas) y si es asi lo cierra
+  closeSidebar, // Determina si el Sidebar esta vacio (sin archivos ni carpetas) y si es asi lo cierra
+  getName // Retorna el nombre de un archivo abierto en el Editor segun su ID
 }

@@ -36,10 +36,10 @@
   "contextMenuNewFolderSidebar": "Ingrese el nombre del directorio a crear",
   "contextMenuNewFolderSidebarERROR": "Ocurrio un error al intentar crear el directorio",
 
-  "contextMenuRenameItem": "Por favor, escriba el nuevo nombre",
+  "contextMenuRenameItem": "Por favor, escriba el nuevo nombre para el",
   "contextMenuRenameItemERROR": "Ocurrio un error al intentar renombrar el",
   
-  "contextMenuDeleteItem": "¿Esta seguro que desea eliminar este",
+  "contextMenuDeleteItem": "¿Esta seguro que desea eliminar el",
   "contextMenuDeleteItemERROR": "Ocurrio un error al intentar eliminar este",
 
   "contextMenuCloseFolderSidebar": "¿Esta seguro que desea cerrar este",

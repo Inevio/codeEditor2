@@ -5,7 +5,7 @@ import { render } from '../render.js'
 // Code: Edicion
 import { addFocus, hideTextareas } from './code.js'
 // Utilidades
-import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, changeArrow, closeSidebar } from '../utils.js'
+import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, ellipsis, changeArrow, closeSidebar, getName } from '../utils.js'
 
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
@@ -210,10 +210,9 @@ function newFolderSidebar (item) {
   })
 }
 
-
 // [Folder|File] Rename
 function renameItem (item, elementHTML) {
-  prompt(lang.contextMenuRenameItem, res => {
+  prompt(`${lang.contextMenuRenameItem} ${item.type} ${(elementHTML === 'li' ? getName(item.id) : $(`div[idhorbito='${item.id}']`).text())}`, res => {
     // Si existe un nuevo nombre
     if (res) {
       api.fs(item.id, (err, fsNode) => {
@@ -237,7 +236,7 @@ function renameItem (item, elementHTML) {
               // Romper los elementos internos y obtener el nombre (texto !== </elements>)
               const name = $(`${newElHTML}[idhorbito='${item.id}']`).text()
               // Reemplazar nombre
-              $(`${newElHTML}[idhorbito='${item.id}']`).html(el.replace(name, fsNode.name))
+              $(`${newElHTML}[idhorbito='${item.id}']`).html(el.replace(name, ellipsis(fsNode.name, 12)))
             }
           })
         })
@@ -247,9 +246,9 @@ function renameItem (item, elementHTML) {
 }
 
 // [Folder|File] Delete
-function deleteItem (item) {
+function deleteItem (item, elementHTML = 'div') {
   // Mensaje de confirmacion sobre la eliminacion de unarchivo/directorio
-  confirm(`${lang.contextMenuDeleteItem} ${item.type}?`, res => {
+  confirm(`${lang.contextMenuDeleteItem} ${item.type} ${(elementHTML === 'li' ? getName(item.id) : $(`div[idhorbito='${item.id}']`).text())}?`, res => {
     if(res) {
       api.fs(item.id, (err, fsNode) => {
         fsNode.remove((err, response) => {

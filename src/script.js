@@ -167,7 +167,7 @@ $('.edit-delete-event').on('click', () => {
           "type": lang.contextMenuItemTypeFile // Configurar idioma al tipo de item
         }
         // Elimina un archivo o directorio
-        deleteItem(item)
+        deleteItem(item, 'li')
       } else if (file.focus && file.horbiting === false) { // En caso de que el archivo no este horbiting
         alert(lang.fileIsNotHorbiting)
       }
