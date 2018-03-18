@@ -2,11 +2,11 @@
   "loading": "Loading",
 
   "menuFile": "File",
-  "menuFileNewFile": "New File",
-  "menuFileOpenFile": "Open File",
-  "menuFileOpenFolder": "Open Folder",
+  "menuFileNewFile": "New file",
+  "menuFileOpenFile": "Open file",
+  "menuFileOpenFolder": "Open folder",
   "menuFileSave": "Save",
-  "menuFileSaveAs": "Save As",
+  "menuFileSaveAs": "Save as",
 
   "menuEdit": "Edit",
   "menuEditCopy": "Copy",
@@ -24,11 +24,11 @@
   "selectSourceFolder": "Select folder to open",
   "selectDestinyFile": "Select destiny for the file",
 
-  "contextMenuNewFile": "New File",
-  "contextMenuNewFolder": "New Folder",
+  "contextMenuNewFile": "New file",
+  "contextMenuNewFolder": "New folder",
   "contextMenuRename": "Rename",
   "contextMenuDelete": "Delete",
-  "contextMenuCloseFolder": "Close Folder",
+  "contextMenuCloseFolder": "Close folder",
 
   "contextMenuItemTypeFolder": "folder",
   "contextMenuItemTypeFile": "file",

@@ -2,9 +2,9 @@
   "loading": "Cargando",
 
   "menuFile": "Archivo",
-  "menuFileNewFile": "Nuevo Archivo",
-  "menuFileOpenFile": "Abrir Archivo",
-  "menuFileOpenFolder": "Abrir Carpeta",
+  "menuFileNewFile": "Nuevo archivo",
+  "menuFileOpenFile": "Abrir archivo",
+  "menuFileOpenFolder": "Abrir carpeta",
   "menuFileSave": "Guardar",
   "menuFileSaveAs": "Guardar como",
 
@@ -24,11 +24,11 @@
   "selectSourceFolder": "Selecionar un directorio a abrir",
   "selectDestinyFile": "Seleccione una carpeta de destino",
 
-  "contextMenuNewFile": "Nuevo Archivo",
-  "contextMenuNewFolder": "Nuevo Directorio",
+  "contextMenuNewFile": "Nuevo archivo",
+  "contextMenuNewFolder": "Nuevo directorio",
   "contextMenuRename": "Renombrar",
   "contextMenuDelete": "Eliminar",
-  "contextMenuCloseFolder": "Cerrar Directorio",
+  "contextMenuCloseFolder": "Cerrar directorio",
 
   "contextMenuItemTypeFolder": "directorio",
   "contextMenuItemTypeFile": "archivo",
