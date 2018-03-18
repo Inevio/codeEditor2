@@ -296,3 +296,12 @@ section.container {
       align-items: center;
       justify-content: center;
     }
+
+    .saved {
+      bottom: 8px;
+      right: 12px;
+      font-size: 10px;
+      position: fixed;
+      z-index: 10;
+      color: #d0d0d0;
+    }

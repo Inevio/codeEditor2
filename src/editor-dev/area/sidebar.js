@@ -117,10 +117,13 @@ function saveFile (fileID, content) {
     // Sobreescribir archivo
     file.write(content, (err) => {
       if (err) return console.log(err) // En caso de error
+        $('.code').prepend(`<div class="saved">${lang.saved}</div>`)
+        // Eliminar despues de 2 segundos...
+        setTimeout(() => {
+          $('.saved').remove()
+        }, 2000)
     })
   })
-
-  console.log('Guardar')
 }
 
 // Guardar archivo como...

@@ -45,5 +45,7 @@
   "contextMenuCloseFolderSidebar": "Are you sure you want to close this",
 
   "fileIsNotHorbiting": "You are working with a file that has not yet been saved in Horbito!",
-  "emptyEditor": "Currently you are not working with any file!"
+  "emptyEditor": "Currently you are not working with any file!",
+
+  "saved": "Saved"
 }
