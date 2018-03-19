@@ -109,19 +109,42 @@ $('.sidebar').on('dblclick', 'div[type="file"]', function () {
 })
 
 // Guardar archivo
-function saveFile (fileID, content) {
+function saveFile (fileID, content, index) {
   console.log("saveFile: ", fileID, content)
+  console.log(index)
+  console.log(filesOpened[index])
   // Obtener metodos del archivo a guardar
   api.fs(fileID, (err, file) => {
     if (err) return console.log(err) // En caso de error
     // Sobreescribir archivo
     file.write(content, (err) => {
       if (err) return console.log(err) // En caso de error
-        $('.code').prepend(`<div class="saved">${lang.saved}</div>`)
-        // Eliminar despues de 2 segundos...
-        setTimeout(() => {
-          $('.saved').remove()
-        }, 2000)
+        
+      $('.code').prepend(`<div class="saved">${lang.saved}</div>`)
+      // Eliminar despues de 2 segundos...
+      setTimeout(() => {
+        $('.saved').remove()
+      }, 2000)
+
+      // Actualizar contenido en el filesOpened
+      filesOpened[index].content = content
+
+      // Agregar los colores por defecto (SetUI)
+      $(`li[idhorbito='${fileID}']`).children().css('color', '#979da4')
+      $(`li[idhorbito='${fileID}']`).children().css('background', 'transparent')
+      // Eliminar evento hover que quita la bolita y agrega la equis sola
+      $(`li[idhorbito='${fileID}']`).children().unbind('mouseenter')
+      // Agregar Hover por defecto
+      $(`li[idhorbito='${file.id}']`).children().on({
+        mouseenter: function () {
+          $(this).css('color', '#e0e2e5')
+          $(this).css('background', 'transparent')
+        },
+        mouseleave: function () {
+          $(this).css('color', '#979da4')
+          $(this).css('background', 'transparent')
+        }
+      })
     })
   })
 }

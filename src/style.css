@@ -237,14 +237,15 @@ section.container {
         section.container div.code div.tabs-container ul.tabs li.tab i.icon-close {
           position: absolute;
           right: 15px;
-          top: 14px;
+          top: 17px;
           color: #979da4;
-          width: 18px;
-          height: 18px;
+          width: 12px;
+          height: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 8px;
+          border-radius: 10px;
         }
 
         section.container div.code div.tabs-container ul.tabs li.tab i.icon-close:hover {

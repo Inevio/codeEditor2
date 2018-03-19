@@ -90,6 +90,8 @@ function newFile (id, horbiting, name, type) {
 
 // Generador de areas de trabajo
 function documentGenerator (file) {
+  let doc
+
   // Agregar un objeto (que representa a un archivo) al arreglo "Archivos Abiertos"
   filesOpened.push(file)
 
@@ -128,6 +130,45 @@ function documentGenerator (file) {
             el.cm.on("mousedown", () => {
               $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
             })
+
+            // Escuchar cambios
+            el.cm.on('change', () => {
+              if (el.content !== el.cm.getValue()) { 
+               // Agregar color verde si se han realizado cambios
+                $(`li[idhorbito='${el.id}']`).children().css('color', '#0cedd5')
+                $(`li[idhorbito='${el.id}']`).children().css('background', '#0cedd5')
+                // Eliminar hover por defecto
+
+                // Agregar bolita verde como SetUI
+                $(`li[idhorbito='${el.id}']`).children().on({
+                  mouseenter: function () {
+                    $(this).css('color', '#979da4')
+                    $(this).css('background', 'transparent')
+                  },
+                  mouseleave: function () {
+                    $(this).css('color', '#0cedd5')
+                    $(this).css('background', '#0cedd5')
+                  }
+                })
+              } else {
+                // Agregar los colores por defecto
+                $(`li[idhorbito='${el.id}']`).children().css('color', '#979da4')
+                $(`li[idhorbito='${el.id}']`).children().css('background', 'transparent')
+                // Eliminar evento hover que quita la bolita y agrega la equis sola
+                $(`li[idhorbito='${el.id}']`).children().unbind('mouseenter')
+                // Agregar Hover por defecto
+                $(`li[idhorbito='${el.id}']`).children().on({
+                  mouseenter: function () {
+                    $(this).css('color', '#e0e2e5')
+                    $(this).css('background', 'transparent')
+                  },
+                  mouseleave: function () {
+                    $(this).css('color', '#979da4')
+                    $(this).css('background', 'transparent')
+                  }
+                })
+              }
+            })
           }
         }
       })
@@ -143,6 +184,45 @@ function documentGenerator (file) {
     // Al clickear el CodeMirror, eliminar texto marcado (con find)
     file.cm.on("mousedown", () => {
       $('.cm-searching').removeClass('cm-searching') // Eliminar marcado
+    })
+
+    // Escuchar cambios
+    file.cm.on('change', () => {
+      if (file.content !== file.cm.getValue()) { 
+       // Agregar color verde si se han realizado cambios
+        $(`li[idhorbito='${file.id}']`).children().css('color', '#0cedd5')
+        $(`li[idhorbito='${file.id}']`).children().css('background', '#0cedd5')
+        // Eliminar hover por defecto
+
+        // Agregar bolita verde como SetUI
+        $(`li[idhorbito='${file.id}']`).children().on({
+          mouseenter: function () {
+            $(this).css('color', '#979da4')
+            $(this).css('background', 'transparent')
+          },
+          mouseleave: function () {
+            $(this).css('color', '#0cedd5')
+            $(this).css('background', '#0cedd5')
+          }
+        })
+      } else {
+        // Agregar los colores por defecto
+        $(`li[idhorbito='${file.id}']`).children().css('color', '#979da4')
+        $(`li[idhorbito='${file.id}']`).children().css('background', 'transparent')
+        // Eliminar evento hover que quita la bolita y agrega la equis sola
+        $(`li[idhorbito='${file.id}']`).children().unbind('mouseenter')
+        // Agregar Hover por defecto
+        $(`li[idhorbito='${file.id}']`).children().on({
+          mouseenter: function () {
+            $(this).css('color', '#e0e2e5')
+            $(this).css('background', 'transparent')
+          },
+          mouseleave: function () {
+            $(this).css('color', '#979da4')
+            $(this).css('background', 'transparent')
+          }
+        })
+      }
     })
   }
 }
