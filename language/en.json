@@ -47,5 +47,9 @@
   "fileIsNotHorbiting": "You are working with a file that has not yet been saved in Horbito!",
   "emptyEditor": "Currently you are not working with any file!",
 
-  "saved": "Saved"
+  "saved": "Saved",
+  "beforeClousing": "Before closing you want to save the changes of",
+  "yes": "Yes",
+  "cancel": "Cancel",
+  "no": "No"
 }

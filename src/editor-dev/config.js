@@ -102,7 +102,17 @@ function newFileOpts (mode, value = '') {
     keyMap: "sublime",
     theme: "joe",
     mode: mode,
-    value: value
+    value: value,
+    extraKeys: {
+      "Ctrl-Alt-M": function (cm) {
+        cm.display.cachedTextHeight += 1
+        $('.CodeMirror').css('font-size', cm.display.cachedTextHeight)
+      },
+      "Ctrl-Alt-N": function (cm) {
+        cm.display.cachedTextHeight -= 1
+        $('.CodeMirror').css('font-size', cm.display.cachedTextHeight)
+      }
+    }
   }
 }
 

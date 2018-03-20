@@ -1,6 +1,6 @@
 'use strict'
 
-import { filesOpened, extension } from '../utils.js'
+import { filesOpened, extension, getName } from '../utils.js'
 // Sidebar
 import { saveFile, saveFileAs } from './sidebar.js'
 
@@ -48,11 +48,11 @@ $('.code').on('click', '.icon-close', function () {
     setTimeout(function () {
       const dialog = api.dialog()
 
-      dialog.setTitle('Desea guardar los cambios de [file].[ext] antes de cerrar?')
+      dialog.setTitle(`${lang.beforeClousing} ${getName(id)}?`)
 
-      dialog.setButton(0, 'No', 'red')
-      dialog.setButton(1, 'Cancelar', 'blue')
-      dialog.setButton(2, 'Si', 'green')
+      dialog.setButton(0, lang.no, 'red')
+      dialog.setButton(1, lang.cancel, 'blue')
+      dialog.setButton(2, lang.yes, 'green')
 
       filesOpened.forEach((element, index) => {
         // Encontrar el elemento segun su ID en filesOpenend
