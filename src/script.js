@@ -97,7 +97,7 @@ $('.file-save-event').on('click', () => {
     // En caso de que el archivo que se desea guardar este seleccionado
     if (element.focus && element.horbiting) { // Si el archivo esta seleccionado y esta horbiting
       saveFile(element.id, element.cm.getValue(), index)
-    } else if (element.focus && !element.horbiting) { // Si el archivo esta seleccionado y no esta horbiting
+    } else if (element.focus && element.horbiting === false) { // Si el archivo esta seleccionado y no esta horbiting
       saveFileAs(index, {
         title: lang.selectDestinyFile,
         mode: 'file',

@@ -1,6 +1,8 @@
 'use strict'
 
-import { filesOpened } from '../utils.js'
+import { filesOpened, extension } from '../utils.js'
+// Sidebar
+import { saveFile, saveFileAs } from './sidebar.js'
 
 // Agregar FOCUS
 // Al clickear en una pestana agregar focus
@@ -36,7 +38,7 @@ function hideTextareas (idTextArea) {
 // Cerrar pestanas
 $('.code').on('click', '.icon-close', function () {
   // Obtener las clases del tab
-  const id = $(this).parent().attr('idhorbito')
+  const id = Number($(this).parent().attr('idhorbito'))
 
   // Contador de clicks
   let click = 0
@@ -44,32 +46,119 @@ $('.code').on('click', '.icon-close', function () {
   click++
   if (click === 1) {
     setTimeout(function () {
-      // Cerrar tab
-      $(`.tab[idhorbito='${id}']`).remove()
+      const dialog = api.dialog()
 
-      // Cerrar Textarea
-      $(`.myTextArea-${id}`).remove()
+      dialog.setTitle('Desea guardar los cambios de [file].[ext] antes de cerrar?')
 
-      // Eliminar documento del array que contiene los archivos abiertos en el editor
-      filesOpened.forEach(function (element, index) {
-        // Si el ID es igual al de un objeto, eliminarlo
-        if (element.id === Number(id)) filesOpened.splice(index, 1)
+      dialog.setButton(0, 'No', 'red')
+      dialog.setButton(1, 'Cancelar', 'blue')
+      dialog.setButton(2, 'Si', 'green')
 
-        // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
-        if (element.focus) {
-          const length = filesOpened.length - 1
-          // Si existen archivos abiertos en el editor
-          if (length > -1) {
-            // Obtener el ID del ultimo archivo abierto
-            const idNEW = filesOpened[length].id
-            // Agregar focus al tab :)
-            addFocus(idNEW)
+      filesOpened.forEach((element, index) => {
+        // Encontrar el elemento segun su ID en filesOpenend
+        if (element.id === id) {
+          // En caso de existan cambios sin guardar
+          if (element.content !== element.cm.getValue()) {
+            dialog.render(function (doIt) {
+              console.log(doIt)
+              // En caso de que sea clickeado [Cancelar] no hacer nada
+              if (doIt === 1) return
 
-            // Mostrar textarea relacionada a la tab
-            hideTextareas(idNEW)
+              // En caso de no querer guardar
+              if (doIt === 0) {
+                // Cerrar tab
+                $(`.tab[idhorbito='${id}']`).remove()
+
+                // Cerrar Textarea
+                $(`.myTextArea-${id}`).remove()
+
+                // Si el ID es igual al de un objeto, eliminarlo
+                if (element.id === id) filesOpened.splice(index, 1)
+
+                // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+                if (element.focus) {
+                  const length = filesOpened.length - 1
+                  // Si existen archivos abiertos en el editor
+                  if (length > -1) {
+                    // Obtener el ID del ultimo archivo abierto
+                    const idNEW = filesOpened[length].id
+                    // Agregar focus al tab :)
+                    addFocus(idNEW)
+
+                    // Mostrar textarea relacionada a la tab
+                    hideTextareas(idNEW)
+                  }
+                }
+              }
+
+              // Eliminar documento del array que contiene los archivos abiertos en el editor
+              if (doIt === 2) {
+                // En caso de que el archivo este horbiting
+                if (element.horbiting) {
+                  saveFile(element.id, element.cm.getValue(), index)
+                } else {
+                  // No horbiting
+                  saveFileAs(index, {
+                    title: lang.selectDestinyFile,
+                    mode: 'file',
+                    name: element.name,
+                    extension: extension(element.type)
+                  })
+                }
+              
+                // Cerrar tab
+                $(`.tab[idhorbito='${id}']`).remove()
+
+                // Cerrar Textarea
+                $(`.myTextArea-${id}`).remove()
+
+                // Si el ID es igual al de un objeto, eliminarlo
+                if (element.id === id) filesOpened.splice(index, 1)
+
+                // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+                if (element.focus) {
+                  const length = filesOpened.length - 1
+                  // Si existen archivos abiertos en el editor
+                  if (length > -1) {
+                    // Obtener el ID del ultimo archivo abierto
+                    const idNEW = filesOpened[length].id
+                    // Agregar focus al tab :)
+                    addFocus(idNEW)
+
+                    // Mostrar textarea relacionada a la tab
+                    hideTextareas(idNEW)
+                  }
+                }
+              }
+            })
+          } else {
+            // Cerrar tab
+            $(`.tab[idhorbito='${id}']`).remove()
+
+            // Cerrar Textarea
+            $(`.myTextArea-${id}`).remove()
+
+            // Si el ID es igual al de un objeto, eliminarlo
+            if (element.id === id) filesOpened.splice(index, 1)
+
+            // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+            if (element.focus) {
+              const length = filesOpened.length - 1
+              // Si existen archivos abiertos en el editor
+              if (length > -1) {
+                // Obtener el ID del ultimo archivo abierto
+                const idNEW = filesOpened[length].id
+                // Agregar focus al tab :)
+                addFocus(idNEW)
+
+                // Mostrar textarea relacionada a la tab
+                hideTextareas(idNEW)
+              }
+            }
           }
         }
       })
+
       click = 0
     }, 500)
   }
