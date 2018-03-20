@@ -66,6 +66,16 @@ const barOpts = [
         "id": "menu-edit-delete",
         "idEvent": "edit-delete-event",
         "name": lang.menuEditDelete
+      },
+      {
+        "id": "menu-edit-zoom",
+        "idEvent": "edit-zoom-event",
+        "name": lang.menuEditZoom
+      },
+      {
+        "id": "menu-edit-reduce",
+        "idEvent": "edit-reduce-event",
+        "name": lang.menuEditReduce
       }
     ]
   },
@@ -105,12 +115,16 @@ function newFileOpts (mode, value = '') {
     value: value,
     extraKeys: {
       "Ctrl-Alt-M": function (cm) {
-        cm.display.cachedTextHeight += 1
-        $('.CodeMirror').css('font-size', cm.display.cachedTextHeight)
+        let fontSize = $('.CodeMirror').css('font-size')
+        fontSize = Number(fontSize.split('px')[0]) + 1
+
+        $('.CodeMirror').css('font-size', fontSize)
       },
       "Ctrl-Alt-N": function (cm) {
-        cm.display.cachedTextHeight -= 1
-        $('.CodeMirror').css('font-size', cm.display.cachedTextHeight)
+        let fontSize = $('.CodeMirror').css('font-size')
+        fontSize = Number(fontSize.split('px')[0]) - 1
+
+        $('.CodeMirror').css('font-size', fontSize)
       }
     }
   }

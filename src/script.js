@@ -177,5 +177,21 @@ $('.edit-delete-event').on('click', () => {
   }
 })
 
+// Aumentar
+$('.edit-zoom-event').on('click', () => {
+  let fontSize = $('.CodeMirror').css('font-size')
+  fontSize = Number(fontSize.split('px')[0]) + 1
+
+  $('.CodeMirror').css('font-size', fontSize)
+})
+
+// Reducir
+$('.edit-reduce-event').on('click', () => {
+  let fontSize = $('.CodeMirror').css('font-size')
+  fontSize = Number(fontSize.split('px')[0]) - 1
+
+  $('.CodeMirror').css('font-size', fontSize)
+})
+
 // var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
 // var document = window.document;
