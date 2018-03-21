@@ -19,6 +19,11 @@ function itemLIBar (parentID, elementId, objectId, el) {
   $(`.${parentID}`).append(`<li class="${elementId} ${objectId}">${el}</li>`)
 }
 
+// Tiene la misma funcion que itemLIBar con la diferencia que agrega un atajo de teclado en la perde derecha
+function itemLIBarKeyboardShortcuts (parentID, elementId, objectId, el, keyboardShortcuts) {
+  $(`.${parentID}`).append(`<li class="${elementId} ${objectId}">${el}<span class="keyboardShortcuts">${keyboardShortcuts}</span></li>`)
+}
+
 // Crear items en una lista (Sidebar)
 /* objectId: ID personalizado que se le aplicara al item que se adjunta
  * icon: Icono que se asigna al item con el fin de mejorar su diseno, en este caso se ubica en la parte izquierda
@@ -129,6 +134,7 @@ function getName (id) {
 export {
   listUL, // Crea una lista desordenada <ul><ul>
   itemLIBar, // Crear items en la Barra de Navegacion <li><li>
+  itemLIBarKeyboardShortcuts, // Crear items en la Barra de Navegacion <li><li> y agrega un atajo de teclado en la parte derecha
   itemLIHorbitoSidebar, // Crear items en el contenedor de pestanas, el area de edicion y en el sidebar vinculados entre si <li><li>
   baseULHorbitoSidebarSUB, // Crea la base para los items en el Sidebar estructurados en forma de arbol
   itemLIHorbitoSidebarSUB, // Crea items en el Sidebar estructurados en forma de arbol

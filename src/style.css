@@ -64,7 +64,8 @@ div.title {
     
     /* Desplegar menus */
     nav.navigation ul.nav li.menu-file ul.sub-menu-file,
-    nav.navigation ul.nav li.menu-edit ul.sub-menu-edit {
+    nav.navigation ul.nav li.menu-edit ul.sub-menu-edit,
+    nav.navigation ul.nav li.menu-view ul.sub-menu-view {
       list-style: none;
       padding: 0;
       position: absolute;
@@ -76,13 +77,17 @@ div.title {
     }
 
       nav.navigation ul.nav li.item ul.sub-menu-file li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover {
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover,
+      nav.navigation ul.nav li.item ul.sub-menu-view li.item:hover {
         background-color: #2e3942;
         border-bottom: 0;
       }
       nav.navigation ul.nav li.item ul.sub-menu-file li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item {
+      nav.navigation ul.nav li.item ul.sub-menu-edit li.item,
+      nav.navigation ul.nav li.item ul.sub-menu-view li.item {
         padding: 5px 15px;
+        display: flex;
+        justify-content: space-between;
       }
       /* Continuar con el resto de items... */
 
@@ -305,4 +310,10 @@ section.container {
       position: fixed;
       z-index: 10;
       color: #d0d0d0;
+    }
+
+    span.keyboardShortcuts {
+      color: #4e5860;
+      font-size: 15px;
+      margin-left: 30px;
     }

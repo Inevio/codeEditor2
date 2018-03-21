@@ -3,7 +3,7 @@
 // CodeMirror
 import CodeMirror from '../cm/lib/codemirror.js'
 // Utilidades
-import { listUL, itemLIBar, itemLIHorbitoSidebar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened } from './utils.js'
+import { listUL, itemLIBar, itemLIBarKeyboardShortcuts, itemLIHorbitoSidebar, itemLIHorbitoTab, itemLIHorbitoTextarea, FileCreator, filesOpened } from './utils.js'
 // Opciones del menu y creacion de una nueva zona de edicion
 import { newFileOpts } from './config.js'
 // Eventos del menu
@@ -33,7 +33,9 @@ function navigationBar (barOpts) {
       // New File, Open File, Open Folder...
       element.sub.forEach(subElement => {
         // [LI] Crear items dentro de UL
-        if (subElement.idEvent) {
+        if (subElement.idEvent && subElement.keyboardShortcuts) {
+          itemLIBarKeyboardShortcuts(element.subClass, `item ${subElement.idEvent}`, subElement.id, subElement.name, subElement.keyboardShortcuts)
+        } else if (subElement.idEvent) {
           // subElement.idEvent: Id del evento a ejecutar dentro de Horbito
           itemLIBar(element.subClass, `item ${subElement.idEvent}`, subElement.id, subElement.name)
         } else {

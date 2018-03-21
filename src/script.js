@@ -178,7 +178,7 @@ $('.edit-delete-event').on('click', () => {
 })
 
 // Aumentar
-$('.edit-zoom-event').on('click', () => {
+$('.view-zoom-event').on('click', () => {
   let fontSize = $('.CodeMirror').css('font-size')
   fontSize = Number(fontSize.split('px')[0]) + 1
 
@@ -186,7 +186,7 @@ $('.edit-zoom-event').on('click', () => {
 })
 
 // Reducir
-$('.edit-reduce-event').on('click', () => {
+$('.view-reduce-event').on('click', () => {
   let fontSize = $('.CodeMirror').css('font-size')
   fontSize = Number(fontSize.split('px')[0]) - 1
 

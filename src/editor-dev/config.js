@@ -66,22 +66,27 @@ const barOpts = [
         "id": "menu-edit-delete",
         "idEvent": "edit-delete-event",
         "name": lang.menuEditDelete
-      },
-      {
-        "id": "menu-edit-zoom",
-        "idEvent": "edit-zoom-event",
-        "name": lang.menuEditZoom
-      },
-      {
-        "id": "menu-edit-reduce",
-        "idEvent": "edit-reduce-event",
-        "name": lang.menuEditReduce
       }
     ]
   },
   {
     "id": "menu-view",
-    "name": lang.menuView
+    "name": lang.menuView,
+    "subClass": "sub-menu-view",
+    "sub": [
+      {
+        "id": "menu-view-zoom",
+        "idEvent": "view-zoom-event",
+        "name": lang.menuEditZoom,
+        "keyboardShortcuts": "Ctrl-Alt-M"
+      },
+      {
+        "id": "menu-view-reduce",
+        "idEvent": "view-reduce-event",
+        "name": lang.menuEditReduce,
+        "keyboardShortcuts": "Ctrl-Alt-N"
+      }
+    ]
   },
   {
     "id": "menu-selection",
