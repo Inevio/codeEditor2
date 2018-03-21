@@ -16,17 +16,21 @@ const barOpts = [
     "sub": [
       {
         "id": "menu-file-new-file",
-        "name": lang.menuFileNewFile
+        "name": lang.menuFileNewFile,
+        "idEvent": "file-new-file",
+        "keyboardShortcuts": "Ctrl-Alt-T"
       },
       {
         "id": "menu-file-open-file",
         "idEvent": "open-file-event",
-        "name": lang.menuFileOpenFile
+        "name": lang.menuFileOpenFile,
+        "keyboardShortcuts": "Ctrl-Alt-O"
       },
       {
         "id": "menu-file-open-folder",
         "idEvent": "open-folder-event",
-        "name": lang.menuFileOpenFolder
+        "name": lang.menuFileOpenFolder,
+        "keyboardShortcuts": "Ctrl-Alt-P"
       },
       {
         "id": "menu-file-save",
@@ -36,7 +40,7 @@ const barOpts = [
       {
         "id": "menu-file-save-as",
         "idEvent": "file-save-as-event",
-        "name": lang.menuFileSaveAs
+        "name": `${lang.menuFileSaveAs}...`
       }
     ]
   },
@@ -60,7 +64,8 @@ const barOpts = [
       {
         "id": "menu-edit-rename",
         "idEvent": "edit-rename-event",
-        "name": lang.menuEditRename
+        "name": lang.menuEditRename,
+        "keyboardShortcuts": "Ctrl-Alt-R"
       },
       {
         "id": "menu-edit-delete",

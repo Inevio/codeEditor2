@@ -85,7 +85,7 @@ div.title {
       nav.navigation ul.nav li.item ul.sub-menu-file li.item,
       nav.navigation ul.nav li.item ul.sub-menu-edit li.item,
       nav.navigation ul.nav li.item ul.sub-menu-view li.item {
-        padding: 5px 15px;
+        padding: 6px 15px;
         display: flex;
         justify-content: space-between;
       }
@@ -316,4 +316,10 @@ section.container {
       color: #4e5860;
       font-size: 15px;
       margin-left: 30px;
+      width: 70px;
+    }
+
+    span.logo:before {
+      content: url('logo.png');
+      margin-right: 5px;
     }
