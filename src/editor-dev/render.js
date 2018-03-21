@@ -86,6 +86,11 @@ function newFile (id, horbiting, name, type) {
   $('.ui-maximize').on("click", () => {
     setTimeout(() => {
       resize($('.text').height())
+      filesOpened.forEach(element => {
+        if (element.focus) {
+          element.cm.refresh()
+        }
+      })
     }, 100)
   })
 }
