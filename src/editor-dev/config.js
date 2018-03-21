@@ -35,7 +35,8 @@ const barOpts = [
       {
         "id": "menu-file-save",
         "idEvent": "file-save-event",
-        "name": lang.menuFileSave
+        "name": lang.menuFileSave,
+        "keyboardShortcuts": "Ctrl-Alt-S"
       },
       {
         "id": "menu-file-save-as",
