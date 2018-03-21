@@ -63,9 +63,7 @@ div.title {
     }
     
     /* Desplegar menus */
-    nav.navigation ul.nav li.menu-file ul.sub-menu-file,
-    nav.navigation ul.nav li.menu-edit ul.sub-menu-edit,
-    nav.navigation ul.nav li.menu-view ul.sub-menu-view {
+    nav.navigation ul.nav li[class*='menu-'] ul[class^='sub-menu-'] {
       list-style: none;
       padding: 0;
       position: absolute;
@@ -76,15 +74,11 @@ div.title {
       box-shadow:  3.5px 3.5px 7.5px rgba(0, 0, 0, 0.05);
     }
 
-      nav.navigation ul.nav li.item ul.sub-menu-file li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item:hover,
-      nav.navigation ul.nav li.item ul.sub-menu-view li.item:hover {
+      nav.navigation ul.nav li.item ul[class^='sub-menu-'] li.item:hover {
         background-color: #2e3942;
         border-bottom: 0;
       }
-      nav.navigation ul.nav li.item ul.sub-menu-file li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-edit li.item,
-      nav.navigation ul.nav li.item ul.sub-menu-view li.item {
+      nav.navigation ul.nav li.item ul[class^='sub-menu-'] li.item {
         padding: 6px 15px;
         display: flex;
         justify-content: space-between;
@@ -319,7 +313,26 @@ section.container {
       width: 70px;
     }
 
+
+    .about {
+      text-align:center;
+      margin-top: 10px;
+      margin-bottom: 0;
+      font-size: 16px;
+    }
     span.logo:before {
       content: url('logo.png');
       margin-right: 5px;
+    }
+    .about span.logo {
+      font-weight: bold;
+      font-size: 20px !important;
+    }
+    .about div {
+      text-align:center;
+      margin: 0;
+    }
+    .joe {
+      text-decoration: none;
+      color: #051726;
     }

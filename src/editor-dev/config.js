@@ -105,6 +105,18 @@ const barOpts = [
   {
     "id": "menu-packages",
     "name": lang.menuPackages
+  },
+  {
+    "id": "menu-help",
+    "name": lang.menuHelp,
+    "subClass": "sub-menu-help",
+    "sub": [
+      {
+        "id": "help-about",
+        "idEvent": "help-about-event",
+        "name": lang.menuHelpAbout
+      }
+    ]
   }
 ]
 

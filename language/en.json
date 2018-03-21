@@ -22,6 +22,9 @@
   "menuFind": "Find",
   "menuPackages": "Packages",
 
+  "menuHelp": "Help",
+  "menuHelpAbout": "About...",
+
   "selectSourceFile": "Select file to open",
   "selectSourceFolder": "Select folder to open",
   "selectDestinyFile": "Select destiny for the file",

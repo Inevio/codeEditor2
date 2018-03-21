@@ -193,5 +193,17 @@ $('.view-reduce-event').on('click', () => {
   $('.CodeMirror').css('font-size', fontSize)
 })
 
+// - Ayuda
+// Acerca de
+$('.help-about-event').on('click', () => {
+  alert(`
+<div class="about">
+  <span class="logo">Code editor</span> v1.0
+  <div>Developed by <a href="https://twitter.com/JoaquinAraujoJS" target="_blank" class="joe">JoaquinAraujo</a> for Horbito</div>
+  <div>Copyright © 2018 - INEVIO SPAIN</div>
+</div>
+  `)
+})
+
 // var window = $(':first').parents().slice(-1)[0].parentNode.defaultView;
 // var document = window.document;

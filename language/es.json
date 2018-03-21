@@ -22,6 +22,9 @@
   "menuFind": "Buscar",
   "menuPackages": "Paquetes",
 
+  "menuHelp": "Ayuda",
+  "menuHelpAbout": "Acerca de...",
+
   "selectSourceFile": "Selecionar un archivo a abrir",
   "selectSourceFolder": "Selecionar un directorio a abrir",
   "selectDestinyFile": "Seleccione una carpeta de destino",
