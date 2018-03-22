@@ -74,6 +74,9 @@ $('.code').on('click', '.icon-close', function () {
 
                 // Si el ID es igual al de un objeto, eliminarlo
                 if (element.id === id) filesOpened.splice(index, 1)
+                // Actualizar barra de pestanas y contador del menu de hamburguesa
+                shortTabs()
+                badgeCounter()
 
                 // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
                 if (element.focus) {
@@ -114,6 +117,9 @@ $('.code').on('click', '.icon-close', function () {
 
                 // Si el ID es igual al de un objeto, eliminarlo
                 if (element.id === id) filesOpened.splice(index, 1)
+                // Actualizar barra de pestanas y contador del menu de hamburguesa
+                shortTabs()
+                badgeCounter()
 
                 // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
                 if (element.focus) {
@@ -140,6 +146,9 @@ $('.code').on('click', '.icon-close', function () {
 
             // Si el ID es igual al de un objeto, eliminarlo
             if (element.id === id) filesOpened.splice(index, 1)
+            // Actualizar barra de pestanas y contador del menu de hamburguesa
+            shortTabs()
+            badgeCounter()
 
             // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
             if (element.focus) {
@@ -186,7 +195,74 @@ $('.code').on('click', '.tab', function (e) {
   hideTextareas(id)
 })
 
+// Desplegar pestanas
+let requestRunningMenu = false
+$('.icon-menu').on('click', () => {
+  if (requestRunningMenu) return
+
+  requestRunningMenu = true
+  setTimeout(() => {
+    if ($('.menu-tabs').css('right') <= '-92.5px') {
+      $('.menu-tabs').animate({ right: '0'}, 100)
+    } else {
+      $('.menu-tabs').animate({ right: '-185px'}, 100)
+    }
+    // Finalizar despliegue...
+    requestRunningMenu = false
+  }, 150)
+})
+
+// Determinar la cantidad de pestanas que caben en el editor
+function widthMeter () {
+  // Obtener el ancho de la barra del editor
+  const width = parseInt($('.tabs').css('width'))
+
+  // Determinar la cantidad de pestanas que caben en la barra principal
+  const tabs = parseInt(width / 180)
+  // Deteminar la cantidad de pestanas que ya estan en la barra principal
+  const tabsOpenend = $('.tabs').children().length
+
+  // Si es true es porque la cantidad de pestanas abiertas son menores a la cantidad de pestanas que se puedne abrir
+  return (tabsOpenend < tabs)
+}
+
+// Determinar la cantidad de pestanas en el menu de hamburguesa para el badge
+function badgeCounter () {
+  // Contar la cantidad de pestanas en el menu de hamburguesa
+  const tabs = $('.menu-tabs').children().length
+
+  // Almacenar el elemento
+  const el = $('.counter').html()
+  // Romper los elementos internos y obtener el nombre (texto !== </elements>)
+  const name = $('.counter').text()
+  // Reemplazar nombre
+  $('.counter').html(el.replace(name, tabs))
+
+  if (Number($('.counter').text()) > 0) {
+    $('.counter').show()
+  } else {
+    $('.counter').hide()
+  }
+}
+
+// Re-organizar pestanas
+function shortTabs () {
+  if (widthMeter()) {
+    if ($('.menu-tabs').children(':first')) {
+      // Mover la primera pestana del menu de hamburguesa a la ultima parte del menu principal
+      $('.tabs').append($('.menu-tabs').children(':first'))
+      // Eliminar el elemento del menu de hamburguesa
+      $('.menu-tabs').children(':first').remove()
+    }
+    // Actualizar contador del menu de hamburguesa
+    badgeCounter()
+  }
+}
+
 // addFocus: Marca como seleccionada una carpeta, como parametro se le pasa el ID del archivo
 // closeTabs: Cierra un archivo en el editor, como parametro se le pasa el ID del archivo
 // hideTextareas: Se encarga de cerrar todos los textareas y mostrar el relacionado con la pestana activa, como parametro se le pasa el ID del archivo
-export { addFocus, hideTextareas }
+// widthMeter: Calcula la cantidad de pestanas que caben en el Editor
+// badgeCounter: Actualiza el badge del menu de hamburguesa
+// shortTabs: Mueve las pestanas del menu de hamburguesa al menu principal en caso de existir espacio
+export { addFocus, hideTextareas, widthMeter, badgeCounter, shortTabs }

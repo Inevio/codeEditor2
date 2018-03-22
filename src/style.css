@@ -155,7 +155,21 @@ i {
         font-size: 28px;
         border-left: 6px;
         cursor: pointer;
+        position: relative;
       }
+      span.counter {
+        font-size: 13px;
+        text-align: center;
+        border-radius: 15px;
+        width: 15px;
+        height: 15px;
+        background: #0cedd5;
+        color: #5d6470;
+        position: absolute;
+        top: -2px;
+        right: -5px;
+      }
+
         i.icon-arrow-down,
         i.icon-arrow-right {
           margin: 0 !important;
@@ -187,6 +201,7 @@ section.container {
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
   ::-webkit-scrollbar {
     width: 5px;
@@ -216,11 +231,12 @@ section.container {
       section.container div.code div.tabs-container ul.tabs {
         color: white;
         display: flex;
-        width: 94%;
+        width: 85%;
       }
 
       /* Tab: individual */
-      section.container div.code div.tabs-container ul.tabs li.tab {
+      section.container div.code div.tabs-container ul.tabs li.tab,
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab {
         width: 180px;
         color: #0cedd5;
         font-weight: bold;
@@ -232,8 +248,11 @@ section.container {
         position: relative;
         bottom: -45px;
       }
-
-        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close {
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab {
+        height: 45.11px;
+      }
+        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close,
+        section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab i.icon-close {
           position: absolute;
           right: 15px;
           top: 17px;
@@ -247,24 +266,40 @@ section.container {
           border-radius: 10px;
         }
 
-        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close:hover {
+        section.container div.code div.tabs-container ul.tabs li.tab i.icon-close:hover,
+        section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab i.icon-close:hover {
           color: #e0e2e5;
         }
 
-      section.container div.code div.tabs-container ul.tabs li.tab:hover {
+      section.container div.code div.tabs-container ul.tabs li.tab:hover,
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab:hover {
         background-color: #2e3942;
       }
 
-      section.container div.code div.tabs-container ul.tabs li.tab.on {
+      section.container div.code div.tabs-container ul.tabs li.tab.on,
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab.on {
         border-top: 2px solid #0cedd5;
         background-color: #373d47;
       }
 
     section.container div.code div.tabs-menu {
       background-color: #20262c;
+      width: 5%;
     }
       section.container div.code div.tabs-menu div.menu {
         padding: 8px;
+      }
+
+      /* Menu de pestanas */
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs {
+        /*display: none;*/
+        width: 185px;
+        max-height: 446px; /* Altura por defecto del editor */
+        position: absolute;
+        z-index: 5;
+        top: 45px;
+        box-shadow:  3.5px 3.5px 7.5px rgba(0, 0, 0, 0.20);
+        overflow: auto;
       }
 
   /* Codemirror */

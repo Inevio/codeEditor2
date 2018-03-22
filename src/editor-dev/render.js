@@ -9,7 +9,7 @@ import { newFileOpts } from './config.js'
 // Eventos del menu
 import { clickItems } from './area/menu.js'
 // Code: Edicion
-import { addFocus, hideTextareas } from './area/code.js'
+import { addFocus, hideTextareas, widthMeter, badgeCounter, shortTabs } from './area/code.js'
 // Utilidades
 import { listFolderAndClickItem } from './area/sidebar.js'
 
@@ -81,11 +81,17 @@ function newFile (id, horbiting, name, type) {
   // Eventos para modificar el alto del CodeMirror
   $(window).on("mousemove", () => {
     resize($('.text').height())
+    $('.menu-tabs').css('max-height', `${($('.CodeMirror').height() - 150)}px`)
+    // Verificar si existe espacio en el menu principal y mover las pestanas a el
+    shortTabs()
   })
 
   $('.ui-maximize').on("click", () => {
     setTimeout(() => {
       resize($('.text').height())
+      $('.menu-tabs').css('max-height', `${($('.CodeMirror').height() - 150)}px`)
+      // Verificar si existe espacio en el menu principal y mover las pestanas a el
+      shortTabs()
       filesOpened.forEach(element => {
         if (element.focus) {
           element.cm.refresh()
@@ -102,8 +108,16 @@ function documentGenerator (file) {
   // Agregar un objeto (que representa a un archivo) al arreglo "Archivos Abiertos"
   filesOpened.push(file)
 
-  // Adjuntar tab en el editor (en el HTML)
-  itemLIHorbitoTab('tabs', 'tab', file.id, file.name, 'icon-close')
+  if (widthMeter()) {
+    // Adjuntar tab en el editor (en el HTML)
+    itemLIHorbitoTab('tabs', 'tab', file.id, file.name, 'icon-close')
+  } else {
+    // Abrir el menu de hamburguesa
+    $('.menu-tabs').animate({ right: '0'}, 100)
+    itemLIHorbitoTab('menu-tabs', 'tab', file.id, file.name, 'icon-close')
+    // Actualizar badge del menu de hamburguesa
+    badgeCounter()
+  }
 
   // Agregar ON a la tab que se crea segun su ID
   addFocus(file.id)
