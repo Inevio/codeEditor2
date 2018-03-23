@@ -240,17 +240,21 @@ section.container {
         width: 180px;
         color: #0cedd5;
         font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         cursor: pointer;
         background-color: #2c343d;
         position: relative;
         bottom: -45px;
       }
-      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab {
+      
+      section.container div.code div.tabs-container ul.tabs li.tab div.tab-container,
+      section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab div.tab-container {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
         height: 45.11px;
+        width: 180px;
       }
+
         section.container div.code div.tabs-container ul.tabs li.tab i.icon-close,
         section.container div.code div.tabs-menu div.menu ul.menu-tabs li.tab i.icon-close {
           position: absolute;

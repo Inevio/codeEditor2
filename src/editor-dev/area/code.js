@@ -35,16 +35,14 @@ function hideTextareas (idTextArea) {
   $(`.myTextArea-${idTextArea}`).show()
 }
 
+let requestRunningCloseDocument = false
 // Cerrar pestanas
 $('.code').on('click', '.icon-close', function () {
   // Obtener las clases del tab
-  const id = Number($(this).parent().attr('idhorbito'))
+  const id = Number($(this).parent().parent().attr('idhorbito'))
 
-  // Contador de clicks
-  let click = 0
-
-  click++
-  if (click === 1) {
+  requestRunningCloseDocument = true
+  if (requestRunningCloseDocument) {
     setTimeout(function () {
       const dialog = api.dialog()
 
@@ -59,39 +57,15 @@ $('.code').on('click', '.icon-close', function () {
         if (element.id === id) {
           // En caso de existan cambios sin guardar
           if (element.content !== element.cm.getValue()) {
-            dialog.render(function (doIt) {
-              console.log(doIt)
+            dialog.render( doIt => {
               // En caso de que sea clickeado [Cancelar] no hacer nada
               if (doIt === 1) return
 
               // En caso de no querer guardar
               if (doIt === 0) {
                 // Cerrar tab
-                $(`.tab[idhorbito='${id}']`).remove()
-
                 // Cerrar Textarea
-                $(`.myTextArea-${id}`).remove()
-
-                // Si el ID es igual al de un objeto, eliminarlo
-                if (element.id === id) filesOpened.splice(index, 1)
-                // Actualizar barra de pestanas y contador del menu de hamburguesa
-                shortTabs()
-                badgeCounter()
-
-                // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
-                if (element.focus) {
-                  const length = filesOpened.length - 1
-                  // Si existen archivos abiertos en el editor
-                  if (length > -1) {
-                    // Obtener el ID del ultimo archivo abierto
-                    const idNEW = filesOpened[length].id
-                    // Agregar focus al tab :)
-                    addFocus(idNEW)
-
-                    // Mostrar textarea relacionada a la tab
-                    hideTextareas(idNEW)
-                  }
-                }
+                closeDocument(element, index, id)
               }
 
               // Eliminar documento del array que contiene los archivos abiertos en el editor
@@ -108,67 +82,21 @@ $('.code').on('click', '.icon-close', function () {
                     extension: extension(element.type)
                   })
                 }
-              
+                
                 // Cerrar tab
-                $(`.tab[idhorbito='${id}']`).remove()
-
                 // Cerrar Textarea
-                $(`.myTextArea-${id}`).remove()
-
-                // Si el ID es igual al de un objeto, eliminarlo
-                if (element.id === id) filesOpened.splice(index, 1)
-                // Actualizar barra de pestanas y contador del menu de hamburguesa
-                shortTabs()
-                badgeCounter()
-
-                // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
-                if (element.focus) {
-                  const length = filesOpened.length - 1
-                  // Si existen archivos abiertos en el editor
-                  if (length > -1) {
-                    // Obtener el ID del ultimo archivo abierto
-                    const idNEW = filesOpened[length].id
-                    // Agregar focus al tab :)
-                    addFocus(idNEW)
-
-                    // Mostrar textarea relacionada a la tab
-                    hideTextareas(idNEW)
-                  }
-                }
+                closeDocument(element, index, id)
               }
             })
           } else {
             // Cerrar tab
-            $(`.tab[idhorbito='${id}']`).remove()
-
             // Cerrar Textarea
-            $(`.myTextArea-${id}`).remove()
-
-            // Si el ID es igual al de un objeto, eliminarlo
-            if (element.id === id) filesOpened.splice(index, 1)
-            // Actualizar barra de pestanas y contador del menu de hamburguesa
-            shortTabs()
-            badgeCounter()
-
-            // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
-            if (element.focus) {
-              const length = filesOpened.length - 1
-              // Si existen archivos abiertos en el editor
-              if (length > -1) {
-                // Obtener el ID del ultimo archivo abierto
-                const idNEW = filesOpened[length].id
-                // Agregar focus al tab :)
-                addFocus(idNEW)
-
-                // Mostrar textarea relacionada a la tab
-                hideTextareas(idNEW)
-              }
-            }
+            closeDocument(element, index, id)
           }
         }
       })
 
-      click = 0
+      requestRunningCloseDocument = false
     }, 500)
   }
 })
@@ -176,7 +104,7 @@ $('.code').on('click', '.icon-close', function () {
 // Activar FOCUS al hacer click en una pestana
 // Obtener elemento (tab) clickeado
 $('.code').on('click', '.tab', function (e) {
-  if (e.target !== this) return
+  if (e.target.lastChild === this) return
 
   // Obtener las clases del tab
   const className = $(this).attr('class')
@@ -212,6 +140,35 @@ $('.icon-menu').on('click', () => {
   }, 150)
 })
 
+// Elimina un documento del editor y enfoca otra (el ultimo en caos de cerrar el enfocado)
+function closeDocument (element, index, id) {
+  // Cerrar tab
+  $(`.tab[idhorbito='${id}']`).remove()
+
+  // Cerrar Textarea
+  $(`.myTextArea-${id}`).remove()
+
+  // Si el ID es igual al de un objeto, eliminarlo
+  if (element.id === id) filesOpened.splice(index, 1)
+  // Actualizar barra de pestanas y contador del menu de hamburguesa
+  shortTabs()
+
+  // En caso de estar enfocada la pestana, al cerrarla enfocar la ultima
+  if (element.focus) {
+    const length = filesOpened.length - 1
+    // Si existen archivos abiertos en el editor
+    if (length > -1) {
+      // Obtener el ID del ultimo archivo abierto
+      const idNEW = filesOpened[length].id
+      // Agregar focus al tab :)
+      addFocus(idNEW)
+
+      // Mostrar textarea relacionada a la tab
+      hideTextareas(idNEW)
+    }
+  }
+}
+
 // Determinar la cantidad de pestanas que caben en el editor
 function widthMeter () {
   // Obtener el ancho de la barra del editor
@@ -221,7 +178,6 @@ function widthMeter () {
   const tabs = parseInt(width / 180)
   // Deteminar la cantidad de pestanas que ya estan en la barra principal
   const tabsOpenend = $('.tabs').children().length
-
   // Si es true es porque la cantidad de pestanas abiertas son menores a la cantidad de pestanas que se puedne abrir
   return (tabsOpenend < tabs)
 }
@@ -247,16 +203,15 @@ function badgeCounter () {
 
 // Re-organizar pestanas
 function shortTabs () {
-  if (widthMeter()) {
-    if ($('.menu-tabs').children(':first')) {
-      // Mover la primera pestana del menu de hamburguesa a la ultima parte del menu principal
-      $('.tabs').append($('.menu-tabs').children(':first'))
-      // Eliminar el elemento del menu de hamburguesa
-      $('.menu-tabs').children(':first').remove()
-    }
-    // Actualizar contador del menu de hamburguesa
-    badgeCounter()
+  if (widthMeter() && $('.menu-tabs .tab:first')) {
+    // Mover la primera pestana del menu de hamburguesa a la ultima parte del menu principal
+    $('.tabs').append($('.menu-tabs .tab:first'))
+  } else {
+    // Mueve la ultima pestana del menu principal y la agrega de primera en el menu de hamburguesa
+    $('.menu-tabs').prepend($('.tabs .tab:last'))
   }
+  // Actualizar contador del menu de hamburguesa
+  badgeCounter()
 }
 
 // addFocus: Marca como seleccionada una carpeta, como parametro se le pasa el ID del archivo
