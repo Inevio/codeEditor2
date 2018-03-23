@@ -114,6 +114,7 @@ function closeSidebar (response) {
       $('.sidebar').hide()
     }, 300)
     $('.code').animate({ width: '100%' }, 100)
+    $('.menu').css('padding', '8px 0')
   }
 }
 

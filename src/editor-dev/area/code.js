@@ -207,8 +207,10 @@ function shortTabs () {
     // Mover la primera pestana del menu de hamburguesa a la ultima parte del menu principal
     $('.tabs').append($('.menu-tabs .tab:first'))
   } else {
-    // Mueve la ultima pestana del menu principal y la agrega de primera en el menu de hamburguesa
-    $('.menu-tabs').prepend($('.tabs .tab:last'))
+    if (widthMeter()) {
+      // Mueve la ultima pestana del menu principal y la agrega de primera en el menu de hamburguesa
+      $('.menu-tabs').prepend($('.tabs .tab:last'))
+    }
   }
   // Actualizar contador del menu de hamburguesa
   badgeCounter()

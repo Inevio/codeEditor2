@@ -269,6 +269,7 @@ function sidebar (rootFolder) {
   $('.sidebar').show()
   $('.sidebar').css('width', '180px').css('padding', '3px 10px')
   $('.code').css('width', 'calc(100% - 200px)')
+  $('.menu').css('padding', '8px 0')
 }
 
 // navigationBar: Renderiza el menus
