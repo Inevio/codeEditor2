@@ -110,9 +110,6 @@ $('.sidebar').on('dblclick', 'div[type="file"]', function () {
 
 // Guardar archivo
 function saveFile (fileID, content, index) {
-  console.log("saveFile: ", fileID, content)
-  console.log(index)
-  console.log(filesOpened[index])
   // Obtener metodos del archivo a guardar
   api.fs(fileID, (err, file) => {
     if (err) return console.log(err) // En caso de error
@@ -151,14 +148,58 @@ function saveFile (fileID, content, index) {
 
 // Guardar archivo como...
 function saveFileAs (index, options) {
-
   // Abrir ventana para seleccionar
   api.fs.selectDestiny(options, (err, response) => {
     if (err) return console.log(err) // En caso de error
-    console.log('Destino: ', response)
-  })
+    // Contenido del archivo a guardar
+    const content = filesOpened[index].cm.getValue()
+    api.fs.create({
+      destiny: response.destiny,
+      name: response.name,
+      data: content
+    }, function (err, fsNode) {
+      const idOld = filesOpened[index].id
 
-  console.log('Guardar como...', index, options)
+      const file = {
+        id: fsNode.id,
+        horbiting: true,
+        name: response.name,
+        type: fsNode.mime,
+        content: content
+      }
+      
+      // Agregar datos al objeto del archivo
+      filesOpened[index] = Object.assign(filesOpened[index], file)
+
+      // Almacenar el elemento
+      const el = $(`li[idhorbito='${idOld}']`).html()
+      // Romper los elementos internos y obtener el nombre (texto !== </elements>)
+      const name = $(`li[idhorbito='${idOld}']`).text()
+      // Reemplazar nombre
+      $(`li[idhorbito='${idOld}']`).html(el.replace(name, ellipsis(file.name)))
+      // Actualizar ID de la pestaña
+      $(`li[idhorbito='${idOld}']`).attr('idhorbito', file.id)
+      // Actualizar ID del textarea de CodeMirror
+      $(`div[class='myTextArea-${idOld}']`).attr('class', `myTextArea-${file.id}`)
+
+      // Agregar los colores por defecto (SetUI)
+      $(`li[idhorbito='${file.id}']`).children().css('color', '#979da4')
+      $(`li[idhorbito='${file.id}']`).children().css('background', 'transparent')
+      // Eliminar evento hover que quita la bolita y agrega la equis sola
+      $(`li[idhorbito='${file.id}']`).children().unbind('mouseenter')
+      // Agregar Hover por defecto
+      $(`li[idhorbito='${file.id}']`).children().on({
+        mouseenter: function () {
+          $(this).css('color', '#e0e2e5')
+          $(this).css('background', 'transparent')
+        },
+        mouseleave: function () {
+          $(this).css('color', '#979da4')
+          $(this).css('background', 'transparent')
+        }
+      })
+    })
+  })
 }
 
 // Click derecho sobre los items del sidebar

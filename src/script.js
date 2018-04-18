@@ -102,7 +102,7 @@ $('.file-save-event').on('click', () => {
         title: lang.selectDestinyFile,
         mode: 'file',
         name: element.name,
-        extension: extension(element.type)
+        extension: ''
       })
     }
   })
@@ -123,12 +123,9 @@ $('.file-save-as-event').on('click', () => {
       saveFileAs(index, {
         title: lang.selectDestinyFile,
         mode: 'file',
-        name: element.name,
-        extension: extension(element.type)
+        name: element.name
       })
     } else if (element.focus) { // En caso de que el archivo que se desea guardar este seleccionado
-      // Determinar la extension del archivo a guardar
-      options.extension = extension(element.type)
       saveFileAs(index, options)
     }
   })

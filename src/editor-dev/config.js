@@ -18,7 +18,7 @@ const barOpts = [
         "id": "menu-file-new-file",
         "name": lang.menuFileNewFile,
         "idEvent": "file-new-file",
-        "keyboardShortcuts": "Ctrl-Alt-T"
+        "keyboardShortcuts": "Ctrl-Alt-F"
       },
       {
         "id": "menu-file-open-file",
