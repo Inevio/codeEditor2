@@ -167,9 +167,9 @@ function saveFileAs (index, options) {
         type: fsNode.mime,
         content: content
       }
-      
       // Agregar datos al objeto del archivo
       filesOpened[index] = Object.assign(filesOpened[index], file)
+      filesOpened[index].cm.setOption('mode', file.type)
 
       // Almacenar el elemento
       const el = $(`li[idhorbito='${idOld}']`).html()

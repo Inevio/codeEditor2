@@ -3,6 +3,8 @@
 import './style.css'
 // CodeMirror: Mode
 import './cm/mode/htmlmixed/htmlmixed.js'
+import './cm/mode/css/css.js'
+import './cm/mode/javascript/javascript.js'
 // CodeMirror: KeyMap
 import './cm/keymap/sublime.js'
 // CodeMirror: Addon
