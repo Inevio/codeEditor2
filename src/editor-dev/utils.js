@@ -132,6 +132,47 @@ function getName (id) {
   return name
 }
 
+// Escucha los cambios de un archivo y notifica los cambios sin guardar
+function changes (element) {
+console.log('ELEMENT =========>', element)
+  if (element.content !== element.cm.getValue()) {
+    // Agregar color verde si se han realizado cambios
+    $(`li[idhorbito='${element.id}']`).children().children().css('color', '#0cedd5')
+    $(`li[idhorbito='${element.id}']`).children().children().css('background', '#0cedd5')
+    // Eliminar hover por defecto
+
+    // Agregar bolita verde como SetUI
+    $(`li[idhorbito='${element.id}']`).children().children().on({
+      mouseenter: function () {
+        $(this).css('color', '#979da4')
+        $(this).css('background', 'transparent')
+      },
+      mouseleave: function () {
+        $(this).css('color', '#0cedd5')
+        $(this).css('background', '#0cedd5')
+      }
+    })
+  } else {
+    // Agregar los colores por defecto
+    $(`li[idhorbito='${element.id}']`).children().children().css('color', '#979da4')
+    $(`li[idhorbito='${element.id}']`).children().children().css('background', 'transparent')
+    // Eliminar evento hover que quita la bolita y agrega la equis sola
+    $(`li[idhorbito='${element.id}']`).children().children().unbind('mouseenter')
+    $(`li[idhorbito='${element.id}']`).children().children().unbind('mouseleave')
+    // Agregar Hover por defecto
+    $(`li[idhorbito='${element.id}']`).children().children().on({
+      mouseenter: function () {
+        $(this).css('color', '#e0e2e5')
+        $(this).css('background', 'transparent')
+      },
+      mouseleave: function () {
+        $(this).css('color', '#979da4')
+        $(this).css('background', 'transparent')
+      }
+    })
+  }
+}
+
 export {
   listUL, // Crea una lista desordenada <ul><ul>
   itemLIBar, // Crear items en la Barra de Navegacion <li><li>
@@ -148,5 +189,6 @@ export {
   extension, // Retorna la extension del tipo de archivo segun Horbito
   changeArrow, // Rota la posicion de la flecha que indica si una carpeta esta abierta o cerrada en el Sidebar
   closeSidebar, // Determina si el Sidebar esta vacio (sin archivos ni carpetas) y si es asi lo cierra
-  getName // Retorna el nombre de un archivo abierto en el Editor segun su ID
+  getName, // Retorna el nombre de un archivo abierto en el Editor segun su ID
+  changes, // Notifica los cambios sin guardar
 }

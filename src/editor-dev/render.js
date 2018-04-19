@@ -10,8 +10,10 @@ import { newFileOpts } from './config.js'
 import { clickItems } from './area/menu.js'
 // Code: Edicion
 import { addFocus, hideTextareas, widthMeter, badgeCounter, shortTabs } from './area/code.js'
-// Utilidades
+// Sidebar
 import { listFolderAndClickItem } from './area/sidebar.js'
+// Utilidades
+import { changes } from './utils'
 
 // Menu:
 // Renderiza el menu basado en el objeto de opciones
@@ -154,41 +156,7 @@ function documentGenerator (file) {
 
             // Escuchar cambios
             el.cm.on('change', () => {
-              if (el.content !== el.cm.getValue()) { 
-               // Agregar color verde si se han realizado cambios
-                $(`li[idhorbito='${el.id}']`).children().css('color', '#0cedd5')
-                $(`li[idhorbito='${el.id}']`).children().css('background', '#0cedd5')
-                // Eliminar hover por defecto
-
-                // Agregar bolita verde como SetUI
-                $(`li[idhorbito='${el.id}']`).children().on({
-                  mouseenter: function () {
-                    $(this).css('color', '#979da4')
-                    $(this).css('background', 'transparent')
-                  },
-                  mouseleave: function () {
-                    $(this).css('color', '#0cedd5')
-                    $(this).css('background', '#0cedd5')
-                  }
-                })
-              } else {
-                // Agregar los colores por defecto
-                $(`li[idhorbito='${el.id}']`).children().css('color', '#979da4')
-                $(`li[idhorbito='${el.id}']`).children().css('background', 'transparent')
-                // Eliminar evento hover que quita la bolita y agrega la equis sola
-                $(`li[idhorbito='${el.id}']`).children().unbind('mouseenter')
-                // Agregar Hover por defecto
-                $(`li[idhorbito='${el.id}']`).children().on({
-                  mouseenter: function () {
-                    $(this).css('color', '#e0e2e5')
-                    $(this).css('background', 'transparent')
-                  },
-                  mouseleave: function () {
-                    $(this).css('color', '#979da4')
-                    $(this).css('background', 'transparent')
-                  }
-                })
-              }
+              changes(el)
             })
           }
         }
@@ -209,41 +177,7 @@ function documentGenerator (file) {
 
     // Escuchar cambios
     file.cm.on('change', () => {
-      if (file.content !== file.cm.getValue()) { 
-       // Agregar color verde si se han realizado cambios
-        $(`li[idhorbito='${file.id}']`).children().css('color', '#0cedd5')
-        $(`li[idhorbito='${file.id}']`).children().css('background', '#0cedd5')
-        // Eliminar hover por defecto
-
-        // Agregar bolita verde como SetUI
-        $(`li[idhorbito='${file.id}']`).children().on({
-          mouseenter: function () {
-            $(this).css('color', '#979da4')
-            $(this).css('background', 'transparent')
-          },
-          mouseleave: function () {
-            $(this).css('color', '#0cedd5')
-            $(this).css('background', '#0cedd5')
-          }
-        })
-      } else {
-        // Agregar los colores por defecto
-        $(`li[idhorbito='${file.id}']`).children().css('color', '#979da4')
-        $(`li[idhorbito='${file.id}']`).children().css('background', 'transparent')
-        // Eliminar evento hover que quita la bolita y agrega la equis sola
-        $(`li[idhorbito='${file.id}']`).children().unbind('mouseenter')
-        // Agregar Hover por defecto
-        $(`li[idhorbito='${file.id}']`).children().on({
-          mouseenter: function () {
-            $(this).css('color', '#e0e2e5')
-            $(this).css('background', 'transparent')
-          },
-          mouseleave: function () {
-            $(this).css('color', '#979da4')
-            $(this).css('background', 'transparent')
-          }
-        })
-      }
+      changes(file)
     })
   }
 }

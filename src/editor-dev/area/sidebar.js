@@ -5,7 +5,7 @@ import { render } from '../render.js'
 // Code: Edicion
 import { addFocus, hideTextareas } from './code.js'
 // Utilidades
-import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, ellipsis, changeArrow, closeSidebar, getName } from '../utils.js'
+import { baseULHorbitoSidebarSUB, itemLIHorbitoSidebarSUB, itemLIHorbitoSidebarSUBAddFolder, itemLIHorbitoTextarea, filesOpened, ellipsis, changeArrow, closeSidebar, getName, changes } from '../utils.js'
 
 // Leer archivos con FS de Horbito
 /* folder: ID del archivo a leer
@@ -127,21 +127,7 @@ function saveFile (fileID, content, index) {
       filesOpened[index].content = content
 
       // Agregar los colores por defecto (SetUI)
-      $(`li[idhorbito='${fileID}']`).children().css('color', '#979da4')
-      $(`li[idhorbito='${fileID}']`).children().css('background', 'transparent')
-      // Eliminar evento hover que quita la bolita y agrega la equis sola
-      $(`li[idhorbito='${fileID}']`).children().unbind('mouseenter')
-      // Agregar Hover por defecto
-      $(`li[idhorbito='${file.id}']`).children().on({
-        mouseenter: function () {
-          $(this).css('color', '#e0e2e5')
-          $(this).css('background', 'transparent')
-        },
-        mouseleave: function () {
-          $(this).css('color', '#979da4')
-          $(this).css('background', 'transparent')
-        }
-      })
+      changes(filesOpened[index])
     })
   })
 }
@@ -176,28 +162,14 @@ function saveFileAs (index, options) {
       // Romper los elementos internos y obtener el nombre (texto !== </elements>)
       const name = $(`li[idhorbito='${idOld}']`).text()
       // Reemplazar nombre
-      $(`li[idhorbito='${idOld}']`).html(el.replace(name, ellipsis(file.name)))
+      $(`li[idhorbito='${idOld}']`).html(el.replace(name, ellipsis(file.name, 12)))
       // Actualizar ID de la pestaña
       $(`li[idhorbito='${idOld}']`).attr('idhorbito', file.id)
       // Actualizar ID del textarea de CodeMirror
       $(`div[class='myTextArea-${idOld}']`).attr('class', `myTextArea-${file.id}`)
 
       // Agregar los colores por defecto (SetUI)
-      $(`li[idhorbito='${file.id}']`).children().css('color', '#979da4')
-      $(`li[idhorbito='${file.id}']`).children().css('background', 'transparent')
-      // Eliminar evento hover que quita la bolita y agrega la equis sola
-      $(`li[idhorbito='${file.id}']`).children().unbind('mouseenter')
-      // Agregar Hover por defecto
-      $(`li[idhorbito='${file.id}']`).children().on({
-        mouseenter: function () {
-          $(this).css('color', '#e0e2e5')
-          $(this).css('background', 'transparent')
-        },
-        mouseleave: function () {
-          $(this).css('color', '#979da4')
-          $(this).css('background', 'transparent')
-        }
-      })
+      changes(filesOpened[index])
     })
   })
 }
